@@ -2,6 +2,8 @@
 // DOM properly initialized (courtesy jquery)
 $(function() {
 
+
+    var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
@@ -65,6 +67,7 @@ $(function() {
     $('#textAddBtn').on('click', function() {
         var textToadd = $('#textAddArea').val()
         var newtext = new fabric.IText(textToadd, {
+            fontFamily: selectedFont,
             left: canvas.getWidth() / 1.5,
             top: canvas.getHeight() / 1.5
         });
@@ -136,6 +139,14 @@ canvas.renderAll();
     // the canvas.
     canvas.add(hi);
 
+    $('.fontSelector').on('click', function(){
+        selectedFont = $(this).attr('id');
+    });
+
+    // canvas.on('text:changed', function(e) {
+    //     console.log(e, e.target)
+    // $
+// });
 
 
 });
