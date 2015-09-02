@@ -12,6 +12,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static "comic/css/comicgen.css" %}" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -125,6 +126,19 @@
                     <label for="comment">Text:</label>
                     <textarea class="form-control" rows="5" id="textAddArea"></textarea>
                 </div>
+                <div class="form-group dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Select Font
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
+    <li><a href="#" class="fontSelector" id="Dyuthi">ദ്യുതി</a></li>
+    <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
+    <li><a href="#" class="fontSelector" id="Suruma">സുറുമ</a></li>
+    <li><a href="#" class="fontSelector" id="Suruma">ഉറൂബ്</a></li>
+  </ul>
+</div>
                 <button type="button" class="btn btn-success" id="textAddBtn">Insert Text</button>
             </div>
         </div>
@@ -136,7 +150,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="{% static "comic/comicmachine.js" %}"></script>
+    <script src="{% static "comic/js/comicmachine.js" %}"></script>
 </body>
 
 </html>

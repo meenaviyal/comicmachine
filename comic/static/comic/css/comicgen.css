@@ -1,8 +1,41 @@
 @font-face {
-    font-family: consola;
-    src: url('fonts/consola.ttf');
+    font-family: 'Chilanka';
+    src: url('../fonts/Chilanka.woff');
 }
-
+@font-face {
+    font-family: 'Dyuthi';
+    src: url('../fonts/Dyuthi.woff');
+}
+@font-face {
+    font-family: 'Keraleeyam';
+    src: url('../fonts/Keraleeyam.woff');
+}
+@font-face {
+    font-family: 'Suruma';
+    src: url('../fonts/Suruma.woff');
+}
+@font-face {
+    font-family: 'Uroob';
+    src: url('../fonts/Uroob.woff');
+}
 .thumb {
     margin-bottom: 30px;
+}
+.fontSelector {
+        font-size:20px;
+}
+#Chilanka {
+    font-family:'Chilanka';
+}
+#Dyuthi {
+    font-family:'Dyuthi';
+}
+#Keraleeyam {
+    font-family:'Keraleeyam';
+}
+#Suruma {
+    font-family:'Suruma';
+}
+#Uroob {
+    font-family:'Uroob';
 }
