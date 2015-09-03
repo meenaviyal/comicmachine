@@ -134,6 +134,7 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#" class="fontSelector" id="sans-serif">Default</a></li>
     <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
     <li><a href="#" class="fontSelector" id="Dyuthi">ദ്യുതി</a></li>
     <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
@@ -152,6 +153,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Include the plugin's CSS and JS: -->
+<script type="text/javascript" src="{% static "comic/js/bootstrap-multiselect.js" %}"></script>
+<link rel="stylesheet" href="{% static "comic/css/bootstrap-multiselect.css" %}" type="text/css"/>
     <script src="{% static "comic/js/comicmachine.js" %}"></script>
 </body>
 

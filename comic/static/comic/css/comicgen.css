@@ -18,6 +18,16 @@
     font-family: 'Uroob';
     src: url('../fonts/Uroob.woff');
 }
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+.pull-right {
+  float: right !important;
+}
+
 .thumb {
     margin-bottom: 30px;
 }
