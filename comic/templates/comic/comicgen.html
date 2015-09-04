@@ -36,7 +36,44 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <div class="row">
+                <select id="moodSelector" multiple="multiple">
+                    <option value="happy">Happy</option>
+                    <option value="speaking">Speaking</option>
+                </select>
+                <button type="button" id="moodSelectorBtn" class="btn btn-info">Go!</button>
+                <div class="panel panel-default">
+                    <!--<div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collections</a>
+                        </h4>
+                    </div>-->
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row" id="libraryView">
+                                <!-- {% for cimage in coll1 %}
+                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <a class="thumbnail" href="#">
+                                        <img class="img-responsive" src={{cimage.image.url}} alt="">
+                                    </a>
+                                </div>
+
+                                {% endfor %} -->
+
+                            </div>
+                            <div class="row">
+                                <nav>
+                                    <ul class="pager">
+                                        <li><a href="#">Previous</a></li>
+                                        <li><a href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Accordion -->
+                <!-- <div class="row">
                     <div id="accordion" class="panel-group">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -52,40 +89,9 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collections</a>
-            </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <div class="row">
-                    {% for cimage in coll1 %}
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a class="thumbnail" href="#">
-                            <img class="img-responsive" src={{cimage.image.url}} alt="">
-                        </a>
-                    </div>
 
-                    {% endfor %}
-
-                </div>
-                <div class="row">
-                    <nav>
-                        <ul class="pager">
-                            <li><a href="#">Previous</a></li>
-                            <li><a href="#">Next</a></li>
-                        </ul>
-                    </nav>
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
-                </div>
+</div>-->
 
                 <!-- <div class="row">
                     <ol class="breadcrumb">
@@ -156,6 +162,8 @@
     <!-- Include the plugin's CSS and JS: -->
 <script type="text/javascript" src="{% static "comic/js/bootstrap-multiselect.js" %}"></script>
 <link rel="stylesheet" href="{% static "comic/css/bootstrap-multiselect.css" %}" type="text/css"/>
+
+    <script src="{% static "comic/js/jquery.cookie.js" %}"></script>
     <script src="{% static "comic/js/comicmachine.js" %}"></script>
 </body>
 

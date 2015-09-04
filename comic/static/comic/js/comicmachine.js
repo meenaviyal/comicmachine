@@ -1,15 +1,81 @@
 // Run only when HTML is loaded and
 // DOM properly initialized (courtesy jquery)
-$(function() {
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
 
+$(function() {
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
 
     var selectedFont = "sans-serif";
+    var csrftoken = $.cookie('csrftoken');
     // Obtain a canvas drawing surface from fabric.js
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
     var newleft = 0;
     canvas.selection = false;
+
+
+//image library population
+var selectedMoods;
+$('#moodSelector').multiselect({
+    maxHeight: '300',
+    buttonWidth: '235',
+    onChange: function(element, checked) {
+        selectedMoods = $('#moodSelector').val();
+    }
+});
+
+$('#moodSelectorBtn').on('click', function(){
+
+    var data_dict = {
+        'search_in': 'all',
+        'tags': selectedMoods
+    }
+
+    dataToSend = JSON.stringify(data_dict)
+    console.log(dataToSend);
+    // var dataToSend = JSON.stringify(data_dict);
+    $.ajax({
+"url" : "library/", // the endpoint
+"type" : "POST", // http method
+"data" : dataToSend, // data sent with the post request
+
+// handle a successful response
+success : function(data) {
+    recieved_data = JSON.parse(data)
+    $('#libraryView').html("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
+    <a class='thumbnail' href='#'><img class='img-responsive' src='"+recieved_data+
+    "' alt=''></a></div>");
+    $(".img-responsive").click(function () {
+        var thisImage = $(this).attr('src');
+
+        fabric.Image.fromURL(thisImage, function(oImg) {
+            // scale image down, and flip it, before adding it onto canvas
+            //oImg.scale(0.5);
+            canvas.add(oImg);
+        });
+});//bind click
+    console.log(data); // log the returned json to the console
+    console.log("success"); // another sanity check
+},
+
+// handle a non-successful response
+error : function(xhr,errmsg,err) {
+    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+}
+});
+});
+
+
 
     var state = [];
     var mods = 0;
@@ -147,6 +213,10 @@ canvas.renderAll();
     //     console.log(e, e.target)
     // $
 // });
+
+
+
+
 
 
 });

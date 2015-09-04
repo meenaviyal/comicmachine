@@ -1,9 +1,43 @@
 from django.shortcuts import render
+from django.core.context_processors import csrf
 from models import ComicImage, ComicCollection
+import json
+from django.http import HttpResponse
 
+def search_library(search_in, tags):
+    if search_in == 'all':
+        images = ComicImage.objects.filter(tags__slug__in=tags).distinct()
+        return images
+    else:
+        coll = ComicCollection.objects.get(name =search_in)
+        images = ""
+        if tags is None:
+            images = ComicImage.objects.filter(collection=coll)
+        else:
+            images = ComicImage.objects.filter(collection=coll, tags__slug__in=tags).distinct()
+        return images
 
 def comicgen(request):
     coll = ComicCollection.objects.first()
-    coll1 = ComicImage.objects.filter(collection=coll)
-    context = {'coll1': coll1}
+    images = ComicImage.objects.filter(collection=coll)
+    context = {'coll1': images}
+    context.update(csrf(request))
     return render(request, 'comic/comicgen.html', context)
+
+def library(request):
+    if request.is_ajax():
+        recieved_data = json.loads(request.body)
+        print "values: "
+        # print request.POST.get('search_in')
+        # print request.POST.get('tags')
+        # print recieved_data
+        print recieved_data
+
+        images = search_library(recieved_data['search_in'], recieved_data['tags'])
+        images_list = []
+        for i in images:
+            images_list.append(i.image.url)
+
+        return HttpResponse(json.dumps(images_list))
+    else:
+        print "GETTTTTTTT"
