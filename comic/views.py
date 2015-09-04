@@ -3,6 +3,7 @@ from django.core.context_processors import csrf
 from models import ComicImage, ComicCollection
 import json
 from django.http import HttpResponse
+from taggit.models import Tag
 
 def search_library(search_in, tags):
     if search_in == 'all':
@@ -17,21 +18,17 @@ def search_library(search_in, tags):
             images = ComicImage.objects.filter(collection=coll, tags__slug__in=tags).distinct()
         return images
 
+
 def comicgen(request):
-    coll = ComicCollection.objects.first()
-    images = ComicImage.objects.filter(collection=coll)
-    context = {'coll1': images}
+    tags = Tag.objects.all()
+    context = {'tags': tags}
     context.update(csrf(request))
     return render(request, 'comic/comicgen.html', context)
+
 
 def library(request):
     if request.is_ajax():
         recieved_data = json.loads(request.body)
-        print "values: "
-        # print request.POST.get('search_in')
-        # print request.POST.get('tags')
-        # print recieved_data
-        print recieved_data
 
         images = search_library(recieved_data['search_in'], recieved_data['tags'])
         images_list = []
@@ -39,5 +36,14 @@ def library(request):
             images_list.append(i.image.url)
 
         return HttpResponse(json.dumps(images_list))
-    else:
-        print "GETTTTTTTT"
+
+
+def tags(request):
+    if request.is_ajax() and request.method == 'GET':
+
+        tags = Tag.objects.all()
+        tags_list = []
+        for t in tags:
+            tags_list.append({'tag_name': t.name, 'tag_slug': t.slug})
+
+        return HttpResponse(json.dumps(tags_list))

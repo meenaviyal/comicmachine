@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>ചളിമിഷ്യൻ ബീറ്റ</title>
+    <title>Oley Oley Oley!</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -37,8 +37,9 @@
         <div class="row">
             <div class="col-md-3">
                 <select id="moodSelector" multiple="multiple">
-                    <option value="happy">Happy</option>
-                    <option value="speaking">Speaking</option>
+                    {% for t in tags %}
+                    <option value="{{ t.slug }}">{{ t.name }}</option>
+                    {% endfor %}
                 </select>
                 <button type="button" id="moodSelectorBtn" class="btn btn-info">Go!</button>
                 <div class="panel panel-default">
@@ -50,14 +51,12 @@
                     <div id="collapseTwo" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <div class="row" id="libraryView">
-                                <!-- {% for cimage in coll1 %}
+                                <!-- Populate this with AJAX
                                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                     <a class="thumbnail" href="#">
-                                        <img class="img-responsive" src={{cimage.image.url}} alt="">
+                                        <img class="img-responsive" src= alt="">
                                     </a>
-                                </div>
-
-                                {% endfor %} -->
+                                </div> -->
 
                             </div>
                             <div class="row">

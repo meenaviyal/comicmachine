@@ -22,18 +22,17 @@ $(function() {
     canvas.counter = 0;
     var newleft = 0;
     canvas.selection = false;
-
+    var selectedMoods;
+    $('#moodSelector').multiselect({
+        maxHeight: '300',
+        buttonWidth: '235',
+        nonSelectedText: 'Select the Mood',
+        onChange: function(element, checked) {
+            selectedMoods = $('#moodSelector').val();
+        }
+    });
 
 //image library population
-var selectedMoods;
-$('#moodSelector').multiselect({
-    maxHeight: '300',
-    buttonWidth: '235',
-    onChange: function(element, checked) {
-        selectedMoods = $('#moodSelector').val();
-    }
-});
-
 $('#moodSelectorBtn').on('click', function(){
 
     var data_dict = {
@@ -73,6 +72,9 @@ error : function(xhr,errmsg,err) {
     console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 }
 });
+
+
+
 });
 
 
