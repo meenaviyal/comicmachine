@@ -5,14 +5,18 @@ import json
 from django.http import HttpResponse
 from taggit.models import Tag
 
+
 def search_library(search_in, tags):
-    if search_in == 'all':
+    if search_in == 'all' and tags == 'all':
+        images = ComicImage.objects.all()
+        return images
+    elif search_in == 'all':
         images = ComicImage.objects.filter(tags__slug__in=tags).distinct()
         return images
     else:
         coll = ComicCollection.objects.get(name =search_in)
         images = ""
-        if tags is None:
+        if tags == 'all':
             images = ComicImage.objects.filter(collection=coll)
         else:
             images = ComicImage.objects.filter(collection=coll, tags__slug__in=tags).distinct()

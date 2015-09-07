@@ -5,6 +5,7 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+//document load
 $(function() {
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -23,6 +24,60 @@ $(function() {
     var newleft = 0;
     canvas.selection = false;
     var selectedMoods;
+
+    var get_images = function(dataToSend) {
+
+        $.ajax({
+            "url": "library/", // the endpoint
+            "type": "POST", // http method
+            "data": dataToSend, // data sent with the post request
+
+            // handle a successful response
+            success: function(data) {
+                recieved_data = JSON.parse(data)
+                $('#libraryView').empty();
+                $.each(recieved_data, function(index, value){
+                    console.log(value);
+                    $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
+        <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
+                        "' alt=''></a></div>");
+                });//each
+
+                $(".img-responsive").click(function() {
+                    var thisImage = $(this).attr('src');
+
+                    fabric.Image.fromURL(thisImage, function(oImg) {
+                        // scale image down, and flip it, before adding it onto canvas
+                        //oImg.scale(0.5);
+                        canvas.add(oImg);
+                    });
+                }); //bind click
+                console.log(data); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });//ajax
+
+
+    }//fn get_images
+
+    var get_images_firstRun = function(){
+        var data_dict = {
+            'search_in': 'all',
+            'tags': 'all'
+        }
+
+        var dataToSend = JSON.stringify(data_dict)
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
+        get_images(dataToSend)
+    }//get_images_firstRun
+
+
     $('#moodSelector').multiselect({
         maxHeight: '300',
         buttonWidth: '235',
@@ -32,50 +87,22 @@ $(function() {
         }
     });
 
-//image library population
-$('#moodSelectorBtn').on('click', function(){
+    get_images_firstRun();
+    //image library population on btn click
+    $('#moodSelectorBtn').on('click', function() {
 
-    var data_dict = {
-        'search_in': 'all',
-        'tags': selectedMoods
-    }
+        var data_dict = {
+            'search_in': 'all',
+            'tags': selectedMoods
+        }
 
-    dataToSend = JSON.stringify(data_dict)
-    console.log(dataToSend);
-    // var dataToSend = JSON.stringify(data_dict);
-    $.ajax({
-"url" : "library/", // the endpoint
-"type" : "POST", // http method
-"data" : dataToSend, // data sent with the post request
-
-// handle a successful response
-success : function(data) {
-    recieved_data = JSON.parse(data)
-    $('#libraryView').html("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
-    <a class='thumbnail' href='#'><img class='img-responsive' src='"+recieved_data+
-    "' alt=''></a></div>");
-    $(".img-responsive").click(function () {
-        var thisImage = $(this).attr('src');
-
-        fabric.Image.fromURL(thisImage, function(oImg) {
-            // scale image down, and flip it, before adding it onto canvas
-            //oImg.scale(0.5);
-            canvas.add(oImg);
-        });
-});//bind click
-    console.log(data); // log the returned json to the console
-    console.log("success"); // another sanity check
-},
-
-// handle a non-successful response
-error : function(xhr,errmsg,err) {
-    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-}
-});
+        var dataToSend = JSON.stringify(data_dict)
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
+        get_images(dataToSend);
 
 
-
-});
+    });
 
 
 
@@ -161,12 +188,12 @@ error : function(xhr,errmsg,err) {
             alert('This browser doesn\'t provide means to serialize canvas to an image');
         } else {
             activeObj.hasBorders = false;
-activeObj.hasControls = false;
-canvas.renderAll();
+            activeObj.hasControls = false;
+            canvas.renderAll();
             window.open(canvas.toDataURL('png'));
             activeObj.hasBorders = true;
-activeObj.hasControls = true;
-canvas.renderAll();
+            activeObj.hasControls = true;
+            canvas.renderAll();
         }
     });
 
@@ -180,9 +207,9 @@ canvas.renderAll();
 
     function handleImage(e) {
         var reader = new FileReader();
-        reader.onload = function (event) {
+        reader.onload = function(event) {
             var img = new Image();
-            img.onload = function () {
+            img.onload = function() {
                 var imgInstance = new fabric.Image(img, {
                     scaleX: 0.2,
                     scaleY: 0.2
@@ -198,7 +225,7 @@ canvas.renderAll();
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.IText('hello! Click Me! :)', {
+    var hi = new fabric.IText(':)', {
         left: canvas.getWidth() / 2,
         top: canvas.getHeight() / 2
     });
@@ -207,14 +234,14 @@ canvas.renderAll();
     // the canvas.
     canvas.add(hi);
 
-    $('.fontSelector').on('click', function(){
+    $('.fontSelector').on('click', function() {
         selectedFont = $(this).attr('id');
     });
 
     // canvas.on('text:changed', function(e) {
     //     console.log(e, e.target)
     // $
-// });
+    // });
 
 
 
