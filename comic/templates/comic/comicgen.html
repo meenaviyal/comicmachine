@@ -112,7 +112,7 @@
                             <button type="button" class="btn btn-default" id="deleteBtn">Delete</button>
                         </div>
                         <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" id="saveBtn">Export</button>
+                            <button type="button" class="btn btn-default" id="exportBtn">Export</button>
                             <!--<button type="button" class="btn btn-default" id="dimentionsBtn">Dimentions</button>-->
                         </div>
                     </div>
@@ -141,16 +141,49 @@
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
       <li><a href="#" class="fontSelector" id="sans-serif">Default</a></li>
     <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
-    <li><a href="#" class="fontSelector" id="Dyuthi">ദ്യുതി</a></li>
     <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
-    <li><a href="#" class="fontSelector" id="Suruma">സുറുമ</a></li>
-    <li><a href="#" class="fontSelector" id="Suruma">ഉറൂബ്</a></li>
+    <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
   </ul>
 </div>
                 <button type="button" class="btn btn-success" id="textAddBtn">Insert</button>
             </div>
         </div>
     </div>
+
+    <!-- modal -->
+    <div class="modal fade" role="dialog" id="exportModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Export your Comic!</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-8">
+                <p>
+                    Preview:
+                </p>
+                <div id="imagePreview"></div>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    Download in:
+                </p>
+                <select id="sizeSelector">
+                    <option value="800x600">800 x 600 (Default)</option>
+                    <option value="400x300">400 x 300 (50%)</option>
+                </select>
+                <p>
+                    Or Share:
+                </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!-- Fabric.js from CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>

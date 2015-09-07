@@ -24,6 +24,7 @@ $(function() {
     var newleft = 0;
     canvas.selection = false;
     var selectedMoods;
+    var imageURI;
 
     var get_images = function(dataToSend) {
 
@@ -181,22 +182,30 @@ $(function() {
         //alert(srcText);
     });
 
-    $('#saveBtn').on('click', function() {
-        var activeObj = canvas.getActiveObject()
+    $('#exportBtn').on('click', function() {
+        var activeObj = canvas.getActiveObject();
+        // activeObj.hasBorders = false;
+        // activeObj.hasControls = false;
+        canvas.renderAll();
+        imageURI = canvas.toDataURL('png');
+        // activeObj.hasBorders = true;
+        // activeObj.hasControls = true;
+        canvas.renderAll();
 
         if (!fabric.Canvas.supports('toDataURL')) {
             alert('This browser doesn\'t provide means to serialize canvas to an image');
         } else {
-            activeObj.hasBorders = false;
-            activeObj.hasControls = false;
-            canvas.renderAll();
-            window.open(canvas.toDataURL('png'));
-            activeObj.hasBorders = true;
-            activeObj.hasControls = true;
-            canvas.renderAll();
+
+            $('#exportModal').modal('show');
+
         }
     });
 
+    $('#exportModal').on('shown.bs.modal', function () {
+        console.log(imageURI);
+        $('#imagePreview').empty();
+        $("#imagePreview").html("<img src='"+ imageURI +"' alt='Preview Image' width='200px;' height='150px'/>");
+    });
 
     // Image adding
     // TODO: Same image cant be added one after the other

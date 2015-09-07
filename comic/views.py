@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.core.context_processors import csrf
-from models import ComicImage, ComicCollection
+from models import ComicImage, ComicCollection, ComicStrip
 import json
 from django.http import HttpResponse
 from taggit.models import Tag
+import base64
+from django.core.files.base import ContentFile
+import time
 
 
 def search_library(search_in, tags):
@@ -51,3 +54,14 @@ def tags(request):
             tags_list.append({'tag_name': t.name, 'tag_slug': t.slug})
 
         return HttpResponse(json.dumps(tags_list))
+
+
+def comicstrip(request):
+    if request.is_ajax() and request.method == 'POST':
+        recieved_data = json.loads(request.body)
+        imgdata = base64.b64decode(recieved_data['img_URI'])
+        new_strip = comicstrip()
+        filename = time.strftime("%Y%m%d%H%M%S")
+        new_strip.image = ContentFile(imgdata, '{}.png'.format(filename))
+        new_strip.save()
+        return HttpResponse(json.dumps({'message': 'done'}))
