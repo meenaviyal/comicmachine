@@ -22,7 +22,7 @@ class ComicImage(models.Model):
 
 class ComicStrip(models.Model):
     name = models.CharField(max_length=100, default='Comic with No Name')
-    image = models.ImageField(upload_to="images/comicstrips/")
+    image = models.ImageField(upload_to="images")
 
     def __str__(self):              # __unicode__ on Python 2
         return self.name

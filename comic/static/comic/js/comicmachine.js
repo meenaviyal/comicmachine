@@ -203,6 +203,29 @@ $(function() {
 
     $('#exportModal').on('shown.bs.modal', function () {
         console.log(imageURI);
+        var imgData = {'img_URI': imageURI}
+
+        var imgDataToSend = JSON.stringify(imgData)
+
+        $.ajax({
+            "url": "comicstrip/", // the endpoint
+            "type": "POST", // http method
+            "data": imgDataToSend, // data sent with the post request
+
+            // handle a successful response
+            success: function(data) {
+                recieved_data = JSON.parse(data)
+                console.log(data); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });//ajax
+
+
         $('#imagePreview').empty();
         $("#imagePreview").html("<img src='"+ imageURI +"' alt='Preview Image' width='200px;' height='150px'/>");
     });
