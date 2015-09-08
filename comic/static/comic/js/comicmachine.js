@@ -28,55 +28,55 @@ $(function() {
 
     var get_images = function(dataToSend) {
 
-        $.ajax({
-            "url": "library/", // the endpoint
-            "type": "POST", // http method
-            "data": dataToSend, // data sent with the post request
+            $.ajax({
+                "url": "library/", // the endpoint
+                "type": "POST", // http method
+                "data": dataToSend, // data sent with the post request
 
-            // handle a successful response
-            success: function(data) {
-                recieved_data = JSON.parse(data)
-                $('#libraryView').empty();
-                $.each(recieved_data, function(index, value){
-                    console.log(value);
-                    $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
+                // handle a successful response
+                success: function(data) {
+                    recieved_data = JSON.parse(data)
+                    $('#libraryView').empty();
+                    $.each(recieved_data, function(index, value) {
+                        console.log(value);
+                        $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
         <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
-                        "' alt=''></a></div>");
-                });//each
+                            "' alt=''></a></div>");
+                    }); //each
 
-                $(".img-responsive").click(function() {
-                    var thisImage = $(this).attr('src');
+                    $(".img-responsive").click(function() {
+                        var thisImage = $(this).attr('src');
 
-                    fabric.Image.fromURL(thisImage, function(oImg) {
-                        // scale image down, and flip it, before adding it onto canvas
-                        //oImg.scale(0.5);
-                        canvas.add(oImg);
-                    });
-                }); //bind click
-                console.log(data); // log the returned json to the console
-                console.log("success"); // another sanity check
-            },
+                        fabric.Image.fromURL(thisImage, function(oImg) {
+                            // scale image down, and flip it, before adding it onto canvas
+                            //oImg.scale(0.5);
+                            canvas.add(oImg);
+                        });
+                    }); //bind click
+                    console.log(data); // log the returned json to the console
+                    console.log("success"); // another sanity check
+                },
 
-            // handle a non-successful response
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                // handle a non-successful response
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            }); //ajax
+
+
+        } //fn get_images
+
+    var get_images_firstRun = function() {
+            var data_dict = {
+                'search_in': 'all',
+                'tags': 'all'
             }
-        });//ajax
 
-
-    }//fn get_images
-
-    var get_images_firstRun = function(){
-        var data_dict = {
-            'search_in': 'all',
-            'tags': 'all'
-        }
-
-        var dataToSend = JSON.stringify(data_dict)
-        // console.log(dataToSend);
-        // var dataToSend = JSON.stringify(data_dict);
-        get_images(dataToSend)
-    }//get_images_firstRun
+            var dataToSend = JSON.stringify(data_dict)
+                // console.log(dataToSend);
+                // var dataToSend = JSON.stringify(data_dict);
+            get_images(dataToSend)
+        } //get_images_firstRun
 
 
     $('#moodSelector').multiselect({
@@ -98,8 +98,8 @@ $(function() {
         }
 
         var dataToSend = JSON.stringify(data_dict)
-        // console.log(dataToSend);
-        // var dataToSend = JSON.stringify(data_dict);
+            // console.log(dataToSend);
+            // var dataToSend = JSON.stringify(data_dict);
         get_images(dataToSend);
 
 
@@ -184,12 +184,16 @@ $(function() {
 
     $('#exportBtn').on('click', function() {
         var activeObj = canvas.getActiveObject();
-        // activeObj.hasBorders = false;
-        // activeObj.hasControls = false;
+        if (activeObj) {
+        activeObj.hasBorders = false;
+        activeObj.hasControls = false;
+    }
         canvas.renderAll();
         imageURI = canvas.toDataURL('png');
-        // activeObj.hasBorders = true;
-        // activeObj.hasControls = true;
+        if (activeObj) {
+        activeObj.hasBorders = true;
+        activeObj.hasControls = true;
+    }
         canvas.renderAll();
 
         if (!fabric.Canvas.supports('toDataURL')) {
@@ -201,9 +205,10 @@ $(function() {
         }
     });
 
-    $('#exportModal').on('shown.bs.modal', function () {
-        console.log(imageURI);
-        var imgData = {'img_URI': imageURI}
+    $('#exportModal').on('shown.bs.modal', function() {
+        var imgData = {
+            'img_URI': imageURI
+        }
 
         var imgDataToSend = JSON.stringify(imgData)
 
@@ -223,11 +228,11 @@ $(function() {
             error: function(xhr, errmsg, err) {
                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
-        });//ajax
+        }); //ajax
 
 
         $('#imagePreview').empty();
-        $("#imagePreview").html("<img src='"+ imageURI +"' alt='Preview Image' width='200px;' height='150px'/>");
+        $("#imagePreview").html("<img src='" + imageURI + "' alt='Preview Image' width='200px;' height='150px'/>");
     });
 
     // Image adding

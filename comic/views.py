@@ -59,10 +59,8 @@ def tags(request):
 def strip(request):
     if request.is_ajax() and request.method == 'POST':
         recieved_data = json.loads(request.body)
-        print recieved_data['img_URI']
         imgdata = recieved_data['img_URI'].split(",",1)
         imgdata = base64.b64decode(imgdata[1])
-        print imgdata
         new_strip = ComicStrip()
         filename = time.strftime("%Y%m%d%H%M%S")
         new_strip.image = ContentFile(imgdata, '{}.png'.format(filename))
