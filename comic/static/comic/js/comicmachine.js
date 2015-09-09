@@ -35,7 +35,7 @@ $(function() {
 
                 // handle a successful response
                 success: function(data) {
-                    recieved_data = JSON.parse(data)
+                    recieved_data = JSON.parse(data);
                     $('#libraryView').empty();
                     $.each(recieved_data, function(index, value) {
                         console.log(value);
@@ -64,19 +64,19 @@ $(function() {
             }); //ajax
 
 
-        } //fn get_images
+    }; //fn get_images
 
     var get_images_firstRun = function() {
             var data_dict = {
                 'search_in': 'all',
                 'tags': 'all'
-            }
+            };
 
-            var dataToSend = JSON.stringify(data_dict)
+        var dataToSend = JSON.stringify(data_dict);
                 // console.log(dataToSend);
                 // var dataToSend = JSON.stringify(data_dict);
-            get_images(dataToSend)
-        } //get_images_firstRun
+        get_images(dataToSend);
+    }; //get_images_firstRun
 
     $('#moodSelectorBtn').prop('disabled', true);
     $('#moodSelector').multiselect({
@@ -103,9 +103,9 @@ $(function() {
         var data_dict = {
             'search_in': 'all',
             'tags': selectedMoods
-        }
+        };
 
-        var dataToSend = JSON.stringify(data_dict)
+        var dataToSend = JSON.stringify(data_dict);
             // console.log(dataToSend);
             // var dataToSend = JSON.stringify(data_dict);
         get_images(dataToSend);
@@ -169,14 +169,14 @@ $(function() {
     });
 
     $('#textAddBtn').on('click', function() {
-        var textToadd = $('#textAddArea').val()
+        var textToadd = $('#textAddArea').val();
         var newtext = new fabric.IText(textToadd, {
             fontFamily: selectedFont,
             left: canvas.getWidth() / 1.5,
             top: canvas.getHeight() / 1.5
         });
         canvas.add(newtext);
-        $('#textAddArea').val('')
+        $('#textAddArea').val('');
     });
 
     $('.img-responsive').on('click', function() {
@@ -216,9 +216,9 @@ $(function() {
     $('#exportModal').on('shown.bs.modal', function() {
         var imgData = {
             'img_URI': imageURI
-        }
+        };
 
-        var imgDataToSend = JSON.stringify(imgData)
+        var imgDataToSend = JSON.stringify(imgData);
 
         $.ajax({
             "url": "comicstrip/", // the endpoint
@@ -227,7 +227,7 @@ $(function() {
 
             // handle a successful response
             success: function(data) {
-                recieved_data = JSON.parse(data)
+                recieved_data = JSON.parse(data);
                 console.log(data); // log the returned json to the console
                 console.log("success"); // another sanity check
             },
@@ -258,11 +258,11 @@ $(function() {
                 var imgInstance = new fabric.Image(img, {
                     scaleX: 0.2,
                     scaleY: 0.2
-                })
+                });
                 canvas.add(imgInstance);
-            }
+            };
             img.src = event.target.result;
-        }
+        };
         reader.readAsDataURL(e.target.files[0]);
     }
 
@@ -287,10 +287,4 @@ $(function() {
     //     console.log(e, e.target)
     // $
     // });
-
-
-
-
-
-
 });
