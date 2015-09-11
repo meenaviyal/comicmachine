@@ -3,7 +3,7 @@ from django.core.context_processors import csrf
 from models import ComicImage, ComicCollection, ComicStrip
 import json
 from django.http import HttpResponse
-from taggit.models import Tag
+# from taggit.models import Tag
 import base64
 from django.core.files.base import ContentFile
 import time
@@ -14,7 +14,7 @@ def search_library(search_in, tags):
         images = ComicImage.objects.all()
         return images
     elif search_in == 'all':
-        images = ComicImage.objects.filter(tags__slug__in=tags).distinct()
+        images = ComicImage.objects.filter(mood_tags__slug__in=tags).distinct()
         return images
     else:
         coll = ComicCollection.objects.get(name =search_in)
@@ -22,12 +22,12 @@ def search_library(search_in, tags):
         if tags == 'all':
             images = ComicImage.objects.filter(collection=coll)
         else:
-            images = ComicImage.objects.filter(collection=coll, tags__slug__in=tags).distinct()
+            images = ComicImage.objects.filter(collection=coll, mood_tags__slug__in=tags).distinct()
         return images
 
 
 def comicgen(request):
-    tags = Tag.objects.all()
+    # mood_tags = Tag.objects.all()
     context = {'tags': tags}
     context.update(csrf(request))
     return render(request, 'comic/comicgen.html', context)
