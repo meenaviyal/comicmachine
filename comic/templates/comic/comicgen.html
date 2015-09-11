@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-md-3">
                 <select id="moodSelector" multiple="multiple">
-                    {% for t in tags %}
+                    {% for t in mood_tags %}
                     <option value="{{ t.slug }}">{{ t.name }}</option>
                     {% endfor %}
                 </select>

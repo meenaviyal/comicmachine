@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.core.context_processors import csrf
-from models import ComicImage, ComicCollection, ComicStrip
+from models import ComicImage, ComicCollection, ComicStrip, MoodTag, LangTag
 import json
 from django.http import HttpResponse
-# from taggit.models import Tag
 import base64
 from django.core.files.base import ContentFile
 import time
@@ -27,8 +26,8 @@ def search_library(search_in, tags):
 
 
 def comicgen(request):
-    # mood_tags = Tag.objects.all()
-    context = {'tags': tags}
+    mood_tags = MoodTag.objects.all()
+    context = {'mood_tags': mood_tags}
     context.update(csrf(request))
     return render(request, 'comic/comicgen.html', context)
 
