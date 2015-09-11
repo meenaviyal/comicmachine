@@ -58,4 +58,4 @@ target/
 
 # Local
 db.sqlite3
-images/
+images/*
