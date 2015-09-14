@@ -83,6 +83,9 @@ $(function() {
         maxHeight: '300',
         buttonWidth: '235',
         nonSelectedText: 'Select the Mood',
+        includeSelectAllOption: true,
+        selectAllText: 'Load all Images!',
+        selectAllValue: 'all',
         onChange: function(element, checked) {
             selectedMoods = $('#moodSelector').val();
 
