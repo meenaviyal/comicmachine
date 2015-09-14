@@ -1,5 +1,4 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,11 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Oley Oley Oley!</title>
-
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static "comic/css/comicgen.css" %}" />
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -50,25 +46,24 @@
                     </div>-->
                     <div id="collapseTwo" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <div class="row" id="libraryView">
-                                <!-- Populate this with AJAX
-                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <div id="libraryView2">
+                                <!-- Populate this with AJAX -->
+<!--                                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                     <a class="thumbnail" href="#">
-                                        <img class="img-responsive" src= alt="">
+                                        <img class="img-responsive" src="/media/images/characters-01.png" alt="">
                                     </a>
                                 </div> -->
-
                             </div>
-                            <div class="row">
-                                <nav>
+
+                        </div><!-- panel body -->
+                                                    <div class="row">
+                                <nav class="center-block">
                                     <ul class="pager">
                                         <li><a href="#">Previous</a></li>
                                         <li><a href="#">Next</a></li>
                                     </ul>
                                 </nav>
-
                             </div>
-                        </div>
                     </div>
                 </div>
                 <!--Accordion -->
@@ -91,16 +86,12 @@
 
 </div>
 </div>-->
-
                 <!-- <div class="row">
                     <ol class="breadcrumb">
                         <li><a href="#">Collections</a></li>
                         <li><a href="#">Orion</a></li>
                     </ol>
                 </div> -->
-
-
-
             </div>
             <div class="col-md-7">
                 <div class="row">
@@ -120,7 +111,6 @@
                 <div class="row" id="canvasWrap">
                     <canvas id="c" style="border:1px solid black;" width="800px" height="600px"></canvas>
                 </div>
-
             </div>
             <div class="col-md-2">
                 <div class="form-group">
@@ -134,57 +124,58 @@
                     <textarea class="form-control" rows="5" id="textAddArea"></textarea>
                 </div>
                 <div class="form-group dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Select Font
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a href="#" class="fontSelector" id="sans-serif">Default</a></li>
-    <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
-    <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
-    <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
-  </ul>
-</div>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Select Font
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#" class="fontSelector" id="sans-serif">Default</a></li>
+                        <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
+                        <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
+                        <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
+                    </ul>
+                </div>
                 <button type="button" class="btn btn-success" id="textAddBtn">Insert</button>
             </div>
         </div>
     </div>
-
     <!-- modal -->
     <div class="modal fade" role="dialog" id="exportModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Export your Comic!</h4>
-          </div>
-          <div class="modal-body">
-            <div class="col-md-8">
-                <p>
-                    Preview:
-                </p>
-                <div id="imagePreview"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Export your Comic!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-8">
+                        <p>
+                            Preview:
+                        </p>
+                        <div id="imagePreview"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Download in:
+                        </p>
+                        <select id="sizeSelector">
+                            <option value="800x600">800 x 600 (Default)</option>
+                            <option value="400x300">400 x 300 (50%)</option>
+                        </select>
+                        <p>
+                            Or Share:
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <p>
-                    Download in:
-                </p>
-                <select id="sizeSelector">
-                    <option value="800x600">800 x 600 (Default)</option>
-                    <option value="400x300">400 x 300 (50%)</option>
-                </select>
-                <p>
-                    Or Share:
-                </p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- Fabric.js from CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -192,11 +183,11 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Include the plugin's CSS and JS: -->
-<script type="text/javascript" src="{% static "comic/js/bootstrap-multiselect.js" %}"></script>
-<link rel="stylesheet" href="{% static "comic/css/bootstrap-multiselect.css" %}" type="text/css"/>
-
+    <script type="text/javascript" src="{% static "comic/js/bootstrap-multiselect.js" %}"></script>
+    <link rel="stylesheet" href="{% static "comic/css/bootstrap-multiselect.css" %}" type="text/css" />
     <script src="{% static "comic/js/jquery.cookie.js" %}"></script>
     <script src="{% static "comic/js/comicmachine.js" %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "comic/css/comicgen.css" %}" />
 </body>
 
 </html>

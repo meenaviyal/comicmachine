@@ -283,8 +283,9 @@ $(function() {
         selectedFont = $(this).attr('id');
     });
 
-    // canvas.on('text:changed', function(e) {
-    //     console.log(e, e.target)
-    // $
+    // canvas.on('object:selected', function(e) {
+    //     var selectedType = e.target.get('type')
+    //     console.log(selectedType);
+
     // });
 });
