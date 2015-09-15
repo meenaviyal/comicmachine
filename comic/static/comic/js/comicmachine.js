@@ -25,56 +25,95 @@ $(function() {
     canvas.selection = false;
     var selectedMoods;
     var imageURI;
+    // // create paginator
+    // $('#paginator').twbsPagination({
+    //     totalPages: 10,
+    //     visiblePages: 5,
+    //     first: '<<',
+    //     prev: '<',
+    //     next: '>',
+    //     last: '>>',
+    //     onPageClick: function(event, page) {
+    //         console.log('Page ' + page);
+    //     }
+    // });
 
     var get_images = function(dataToSend) {
 
-            $.ajax({
-                "url": "library/", // the endpoint
-                "type": "POST", // http method
-                "data": dataToSend, // data sent with the post request
+        $.ajax({
+            "url": "library/", // the endpoint
+            "type": "POST", // http method
+            "data": dataToSend, // data sent with the post request
 
-                // handle a successful response
-                success: function(data) {
-                    recieved_data = JSON.parse(data);
-                    $('#libraryView').empty();
-                    $.each(recieved_data, function(index, value) {
-                        console.log(value);
-                        $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
+            // handle a successful response
+            success: function(data) {
+                recieved_data = JSON.parse(data);
+                $('#libraryView').empty();
+                $.each(recieved_data['images'], function(index, value) {
+                    console.log(value);
+                    $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
         <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
-                            "' alt=''></a></div>");
-                    }); //each
+                        "' alt=''></a></div>");
+                }); //each
 
-                    $(".img-responsive").click(function() {
-                        var thisImage = $(this).attr('src');
+                $(".img-responsive").click(function() {
+                    var thisImage = $(this).attr('src');
 
-                        fabric.Image.fromURL(thisImage, function(oImg) {
-                            // scale image down, and flip it, before adding it onto canvas
-                            //oImg.scale(0.5);
-                            canvas.add(oImg);
-                        });
-                    }); //bind click
-                    console.log(data); // log the returned json to the console
-                    console.log("success"); // another sanity check
-                },
+                    fabric.Image.fromURL(thisImage, function(oImg) {
+                        // scale image down, and flip it, before adding it onto canvas
+                        //oImg.scale(0.5);
+                        canvas.add(oImg);
+                    });
+                }); //bind click
 
-                // handle a non-successful response
-                error: function(xhr, errmsg, err) {
-                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
-            }); //ajax
+                //update paginator
+                $('#paginator').twbsPagination({
+                    totalPages: recieved_data['total_pages'],
+                    visiblePages: 5,
+                    first: '<<',
+                    prev: '<',
+                    next: '>',
+                    last: '>>',
+                    onPageClick: function(event, page) {
+                        console.log('Page ' + page);
+                        var data_dict = {
+                            'search_in': 'all',
+                            'tags': 'all',
+                            'page': page
+                        };
+
+                        var dataToSend = JSON.stringify(data_dict);
+                        // console.log(dataToSend);
+                        // var dataToSend = JSON.stringify(data_dict);
+                        get_images(dataToSend);
+
+                    }
+                });
+
+                console.log(data); // log the returned json to the console
+                console.log("success"); // another sanity check
+
+            },
+
+            // handle a non-successful response
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        }); //ajax
 
 
     }; //fn get_images
 
     var get_images_firstRun = function() {
-            var data_dict = {
-                'search_in': 'all',
-                'tags': 'all'
-            };
+        var data_dict = {
+            'search_in': 'all',
+            'tags': 'all',
+            'page': 1
+        };
 
         var dataToSend = JSON.stringify(data_dict);
-                // console.log(dataToSend);
-                // var dataToSend = JSON.stringify(data_dict);
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
         get_images(dataToSend);
     }; //get_images_firstRun
 
@@ -91,8 +130,7 @@ $(function() {
 
             if (selectedMoods) {
                 $('#moodSelectorBtn').prop('disabled', false);
-            }
-            else {
+            } else {
                 $('#moodSelectorBtn').prop('disabled', true);
             }
 
@@ -109,8 +147,8 @@ $(function() {
         };
 
         var dataToSend = JSON.stringify(data_dict);
-            // console.log(dataToSend);
-            // var dataToSend = JSON.stringify(data_dict);
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
         get_images(dataToSend);
 
 
@@ -196,15 +234,15 @@ $(function() {
     $('#exportBtn').on('click', function() {
         var activeObj = canvas.getActiveObject();
         if (activeObj) {
-        activeObj.hasBorders = false;
-        activeObj.hasControls = false;
-    }
+            activeObj.hasBorders = false;
+            activeObj.hasControls = false;
+        }
         canvas.renderAll();
         imageURI = canvas.toDataURL('png');
         if (activeObj) {
-        activeObj.hasBorders = true;
-        activeObj.hasControls = true;
-    }
+            activeObj.hasBorders = true;
+            activeObj.hasControls = true;
+        }
         canvas.renderAll();
 
         if (!fabric.Canvas.supports('toDataURL')) {
