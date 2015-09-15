@@ -21,13 +21,16 @@ class LangTag(TagBase):
         verbose_name = "Lang Tag"
         verbose_name_plural = "Lang Tags"
 
+
 class MoodTaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(MoodTag,
                             related_name="%(app_label)s_%(class)s_items")
 
+
 class LangTaggedItem(GenericTaggedItemBase):
     tag = models.ForeignKey(LangTag,
                             related_name="%(app_label)s_%(class)s_items")
+
 
 class ComicCollection(models.Model):
     name = models.CharField(max_length=100, default='Collection with No Name')

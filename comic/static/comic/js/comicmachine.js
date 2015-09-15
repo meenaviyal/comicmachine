@@ -23,20 +23,8 @@ $(function() {
     canvas.counter = 0;
     var newleft = 0;
     canvas.selection = false;
-    var selectedMoods;
+    var selectedMoods = 'all';
     var imageURI;
-    // // create paginator
-    // $('#paginator').twbsPagination({
-    //     totalPages: 10,
-    //     visiblePages: 5,
-    //     first: '<<',
-    //     prev: '<',
-    //     next: '>',
-    //     last: '>>',
-    //     onPageClick: function(event, page) {
-    //         console.log('Page ' + page);
-    //     }
-    // });
 
     var get_images = function(dataToSend) {
 
@@ -68,6 +56,16 @@ $(function() {
 
                 //update paginator
                 $('#paginator').twbsPagination({
+                    totalPages: 1,
+                    visiblePages: 1,
+                    first: '<<',
+                    prev: '<',
+                    next: '>',
+                    last: '>>'
+                });//paginator
+
+                //update paginator
+                $('#paginator').twbsPagination({
                     totalPages: recieved_data['total_pages'],
                     visiblePages: 5,
                     first: '<<',
@@ -78,8 +76,8 @@ $(function() {
                         console.log('Page ' + page);
                         var data_dict = {
                             'search_in': 'all',
-                            'tags': 'all',
-                            'page': page
+                            'tags': selectedMoods,
+                            'page': recieved_data['current_page']
                         };
 
                         var dataToSend = JSON.stringify(data_dict);
@@ -88,7 +86,7 @@ $(function() {
                         get_images(dataToSend);
 
                     }
-                });
+                });//paginator
 
                 console.log(data); // log the returned json to the console
                 console.log("success"); // another sanity check
@@ -132,6 +130,7 @@ $(function() {
                 $('#moodSelectorBtn').prop('disabled', false);
             } else {
                 $('#moodSelectorBtn').prop('disabled', true);
+                selectedMoods = 'all';
             }
 
         }
@@ -143,7 +142,8 @@ $(function() {
 
         var data_dict = {
             'search_in': 'all',
-            'tags': selectedMoods
+            'tags': selectedMoods,
+            'page': 1
         };
 
         var dataToSend = JSON.stringify(data_dict);
