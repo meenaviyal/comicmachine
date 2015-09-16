@@ -54,20 +54,21 @@ $(function() {
                     });
                 }); //bind click
 
-                //update paginator
-                $('#paginator').twbsPagination({
-                    totalPages: 1,
-                    visiblePages: 1,
-                    first: '<<',
-                    prev: '<',
-                    next: '>',
-                    last: '>>'
-                });//paginator
+                // //update paginator
+                // $('#paginator').twbsPagination({
+                //     totalPages: 1,
+                //     // visiblePages: 1,
+                //     first: '<<',
+                //     prev: '<',
+                //     next: '>',
+                //     last: '>>'
+                // });//paginator
 
                 //update paginator
+
                 $('#paginator').twbsPagination({
                     totalPages: recieved_data['total_pages'],
-                    visiblePages: 5,
+                    // visiblePages: 5,
                     first: '<<',
                     prev: '<',
                     next: '>',
@@ -77,7 +78,7 @@ $(function() {
                         var data_dict = {
                             'search_in': 'all',
                             'tags': selectedMoods,
-                            'page': recieved_data['current_page']
+                            'page': page
                         };
 
                         var dataToSend = JSON.stringify(data_dict);
@@ -86,7 +87,7 @@ $(function() {
                         get_images(dataToSend);
 
                     }
-                });//paginator
+                }); //paginator
 
                 console.log(data); // log the returned json to the console
                 console.log("success"); // another sanity check
@@ -149,6 +150,8 @@ $(function() {
         var dataToSend = JSON.stringify(data_dict);
         // console.log(dataToSend);
         // var dataToSend = JSON.stringify(data_dict);
+        $('#paginationholder').html('');
+        $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
         get_images(dataToSend);
 
 
