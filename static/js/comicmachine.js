@@ -7,6 +7,7 @@ function csrfSafeMethod(method) {
 
 //document load
 $(function() {
+  var csrftoken = $.cookie('csrftoken');
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -16,7 +17,6 @@ $(function() {
     });
 
     var selectedFont = "sans-serif";
-    var csrftoken = $.cookie('csrftoken');
     // Obtain a canvas drawing surface from fabric.js
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
