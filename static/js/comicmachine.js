@@ -1,20 +1,23 @@
 // Run only when HTML is loaded and
 // DOM properly initialized (courtesy jquery)
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
+// function csrfSafeMethod(method) {
+//     // these HTTP methods do not require CSRF protection
+//     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+// }
 
 //document load
 $(function() {
-  var csrftoken = $.cookie('csrftoken');
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
+  var csrftoken = Cookies.get('csrftoken');
+//   console.log("csrf token is");
+//   console.log(csrftoken);
+// $.ajaxSetup({
+//         beforeSend: function(xhr, settings) {
+//             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+//                 // Only send the token to relative URLs i.e. locally.
+//                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//             }
+//         }
+//     });
 
     var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js

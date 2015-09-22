@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.context_processors import csrf
+from django.views.decorators.csrf import csrf_exempt
 from models import ComicImage, ComicCollection, ComicStrip, MoodTag, LangTag
 import json
 from django.http import HttpResponse
@@ -37,6 +38,7 @@ def comicgen(request):
     return render(request, 'comic/comicgen.html', context)
 
 
+@csrf_exempt
 def library(request):
     if request.is_ajax():
         recieved_data = json.loads(request.body)
@@ -57,6 +59,8 @@ def library(request):
 #         return HttpResponse(json.dumps(tags_list))
 
 
+
+@csrf_exempt
 def strip(request):
     if request.is_ajax() and request.method == 'POST':
         recieved_data = json.loads(request.body)
