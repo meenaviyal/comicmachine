@@ -1,35 +1,75 @@
+#canvasWrap {
+    margin: 0;
+    background-color: gray;
+    height: 500px;
+    width: 100%;
+    background: url('../images/halftone-bg.png');
+}
+#comictoolbar{
+    padding-bottom: 5px;
+}
+#cmleft {
+    margin-left: 10px;
+}
+
+#c {
+    border: 1px dashed silver;
+    margin-left: 50px;
+    margin-top: 10px;
+    }
+
+@media screen and (max-width: 1280px) {
+    #canvasWrap {
+        background-color: yellow;
+        height: 600px;
+        width: 600px;
+    }
+    #c {
+        border: 1px solid black;
+        height: 400px;
+        width: 400px;
+    }
+}
+
 @font-face {
     font-family: 'Chilanka';
     src: url('../fonts/Chilanka.woff');
 }
+
 @font-face {
     font-family: 'Keraleeyam';
     src: url('../fonts/Keraleeyam.woff');
 }
+
 @font-face {
     font-family: 'Rachana';
     src: url('../fonts/Rachana.woff');
 }
+
 .row {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display:         flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
+
 .pull-right {
-  float: right !important;
+    float: right !important;
 }
 
 .thumb {
     margin-bottom: 5px;
 }
+
 .fontSelector {
-        font-size:20px;
+    font-size: 20px;
 }
+
 .btn-file {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -47,11 +87,13 @@
 }
 
 #Chilanka {
-    font-family:'Chilanka';
+    font-family: 'Chilanka';
 }
+
 #Keraleeyam {
-    font-family:'Keraleeyam';
+    font-family: 'Keraleeyam';
 }
+
 #Rachana {
-    font-family:'Rachana';
+    font-family: 'Rachana';
 }
