@@ -1,21 +1,35 @@
+html,body{height:100%;
+overflow: hidden;
+overflow: hidden;}
+
+.container-fluid {
+    height:100%;
+}
 #canvasWrap {
-    margin: 0;
-    background-color: gray;
-    height: 500px;
-    width: 100%;
     background: url('../images/halftone-bg.png');
 }
 #comictoolbar{
     padding-bottom: 5px;
 }
 #cmleft {
+     height:100vh;
     margin-left: 10px;
 }
+#cmright {
+     height:80%;
+}
 
+
+.fill{
+    height: 75%;
+    background-color:#990000;
+    padding:10px;
+    color:#efefef;
+}
 #c {
     border: 1px dashed silver;
-    margin-left: 50px;
-    margin-top: 10px;
+    /*margin-left: 50px;*/
+    /*margin-top: 10px;*/
     }
 
 @media screen and (max-width: 1280px) {

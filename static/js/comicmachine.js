@@ -21,6 +21,14 @@ $(function() {
 
     var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js
+    var canvasWrap = $('#canvasWrap');
+    $('#canvasWrap').height(screen.availHeight - 200);
+    var cWidth = $('#canvasWrap').width() - 100
+    var cHeight = cWidth / (4 / 3)
+    $('#c').attr('height', cHeight);
+    $('#c').attr('width', cWidth);
+    $('#c').css('margin-left', '3.5em');
+    $('#c').css('margin-top', '1em');
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
@@ -28,6 +36,11 @@ $(function() {
     canvas.selection = false;
     var selectedMoods = 'all';
     var imageURI;
+
+
+    //Initial call
+    // respondCanvas();
+
 
     var get_images = function(dataToSend) {
 
