@@ -22,13 +22,13 @@ $(function() {
     var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js
     var canvasWrap = $('#canvasWrap');
-    $('#canvasWrap').height(screen.availHeight - 200);
-    var cWidth = $('#canvasWrap').width() - 100
+    $('#canvasWrap').height(screen.availHeight - (screen.availHeight*25/100));
+    var cWidth = $('#canvasWrap').width() - ($('#canvasWrap').width()*10/100)
     var cHeight = cWidth / (4 / 3)
     $('#c').attr('height', cHeight);
     $('#c').attr('width', cWidth);
-    $('#c').css('margin-left', '3.5em');
-    $('#c').css('margin-top', '1em');
+    $('#c').css('margin-left', ($('#canvasWrap').width()*5/100));
+    $('#c').css('margin-top', ($('#canvasWrap').width()*2/100));
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
