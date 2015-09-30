@@ -4,31 +4,48 @@
 //     // these HTTP methods do not require CSRF protection
 //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 // }
+function imageToDataUri(img, width, height) {
+
+    // create an off-screen canvas
+    var canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d');
+
+    // set its dimension to target size
+    canvas.width = width;
+    canvas.height = height;
+
+    // draw source image into the off-screen canvas:
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // encode image to data-uri with base64 version of compressed image
+    return canvas.toDataURL();
+}
 
 //document load
 $(function() {
-  var csrftoken = Cookies.get('csrftoken');
-//   console.log("csrf token is");
-//   console.log(csrftoken);
-// $.ajaxSetup({
-//         beforeSend: function(xhr, settings) {
-//             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-//                 // Only send the token to relative URLs i.e. locally.
-//                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
-//             }
-//         }
-//     });
+    var csrftoken = Cookies.get('csrftoken');
+    //   console.log("csrf token is");
+    //   console.log(csrftoken);
+    // $.ajaxSetup({
+    //         beforeSend: function(xhr, settings) {
+    //             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+    //                 // Only send the token to relative URLs i.e. locally.
+    //                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    //             }
+    //         }
+    //     });
 
     var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js
-    var canvasWrap = $('#canvasWrap');
-    $('#canvasWrap').height(screen.availHeight - (screen.availHeight*25/100));
-    var cWidth = $('#canvasWrap').width() - ($('#canvasWrap').width()*10/100)
+    var canvasWrap = $('.canvaswrap');
+    $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
+    var cWidth = $('.canvaswrap').width() - ($('.canvaswrap').width() * 10 / 100)
     var cHeight = cWidth / (4 / 3)
     $('#c').attr('height', cHeight);
     $('#c').attr('width', cWidth);
-    $('#c').css('margin-left', ($('#canvasWrap').width()*5/100));
-    $('#c').css('margin-top', ($('#canvasWrap').width()*2/100));
+    $('#c').css('margin-left', ($('.canvaswrap').width() * 5 / 100));
+    $('#c').css('margin-top', ($('.canvaswrap').width() * 2 / 100));
+    // $('#c').css('border', 'gray 1px solid');
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
@@ -300,7 +317,7 @@ $(function() {
 
 
         $('#imagePreview').empty();
-        $("#imagePreview").html("<img src='" + imageURI + "' alt='Preview Image' width='200px;' height='150px'/>");
+        $("#imagePreview").html("<img id ='previeImg' src='" + imageURI + "' alt='Preview Image' width='400px' height='300px'/>");
     });
 
     // Image adding
@@ -325,6 +342,26 @@ $(function() {
         };
         reader.readAsDataURL(e.target.files[0]);
     }
+
+    $('.downloadbtn').on('click', function() {
+        var resolution = $(this).attr('id');
+        resolution = resolution.split("x");
+        var tWidth = parseInt(resolution[0]);
+        var tHeight = parseInt(resolution[1]);
+        console.log(tWidth);
+        console.log(tHeight);
+
+        var img = new Image;
+
+        img.onload = resizeImage;
+        img.src = imageURI;
+
+        function resizeImage() {
+            var newDataUri = imageToDataUri(this, tWidth, tHeight);
+            // continue from here...
+            download(newDataUri, "ComicStrip.png", "image/png");
+        }
+    });
 
 
     // Create a text object.

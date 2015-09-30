@@ -5,7 +5,7 @@ overflow: hidden;}
 .container-fluid {
     height:100%;
 }
-#canvasWrap {
+.canvaswrap {
     background: url('../images/halftone-bg.png');
 }
 #comictoolbar{
@@ -18,7 +18,10 @@ overflow: hidden;}
 #cmright {
      height:80%;
 }
-
+#previeImg{
+    border: silver 1px solid;
+    margin-left: 2%;
+}
 
 .fill{
     height: 75%;
@@ -33,7 +36,7 @@ overflow: hidden;}
     }
 
 @media screen and (max-width: 1280px) {
-    #canvasWrap {
+    .canvaswrap {
         background-color: yellow;
         height: 600px;
         width: 600px;
@@ -110,4 +113,16 @@ overflow: hidden;}
 
 #Rachana {
     font-family: 'Rachana';
+}
+.downloadbtn{
+    margin-right: 10px;
+        margin-left: 10px;
+}
+#downloadPanel{
+    margin-top: 10px;
+    margin-left: 10%;
+}
+#previewPanel {
+    margin-top: 10px;
+    margin-left: 20%;
 }

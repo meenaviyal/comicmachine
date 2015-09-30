@@ -107,7 +107,17 @@
                         </div>
    </div>
    <div class="pull-right">
+<!--<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Size <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#" id="sizeSelector4x3">4:3 (Default)</a></li>
+    <li><a href="#" id="sizeSelector1x1">1:1 (Square)</a></li>
+  </ul>
+</div>-->
                              <div class="btn-group" role="group" aria-label="...">
+
                             <button type="button" class="btn btn-default" id="exportBtn">Export</button>
                             <!--<button type="button" class="btn btn-default" id="dimentionsBtn">Dimentions</button>-->
                         </div>
@@ -116,7 +126,7 @@
 <!--    <div class="span5 fill">
     Hello World
     </div>-->
-                <div id="canvasWrap">
+                <div class="canvaswrap">
                     <canvas id="c" height= "400px" width= "300px"></canvas>
                 </div>
             </div>
@@ -157,24 +167,15 @@
                     <h4 class="modal-title">Export your Comic!</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-8">
-                        <p>
-                            Preview:
-                        </p>
+                <div class="row" id="previewPanel">
                         <div id="imagePreview"></div>
+                </div>
+                <div class="row" id="downloadPanel">
+                          Download Size:
+                        <button type="button" class="btn btn-primary btn-sm downloadbtn" id="800x600">800x600</button>
+                        <button type="button" class="btn btn-primary btn-sm downloadbtn" id="400x300">400x300</button>
                     </div>
-                    <div class="col-md-4">
-                        <p>
-                            Select the size:
-                        </p>
-                        <select id="sizeSelector">
-                            <option value="800x600">800 x 600 (Default)</option>
-                            <option value="400x300">400 x 300 (50%)</option>
-                        </select>
-                        <p>
-                            Download:
-                        </p>
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -196,7 +197,7 @@
     <script type="text/javascript" src="{% static "js/bootstrap-multiselect.js" %}"></script>
     <link rel="stylesheet" href="{% static "css/bootstrap-multiselect.css" %}" type="text/css" />
     <script src="{% static "js/jquery.twbsPagination.min.js" %}"></script>
-
+    <script src="{% static "js/download.js" %}"></script>
     <script src="{% static "js/comicmachine.js" %}"></script>
 
 
