@@ -7,18 +7,18 @@
 function imageToDataUri(img, width, height) {
 
     // create an off-screen canvas
-    var canvas = document.createElement('canvas'),
-        ctx = canvas.getContext('2d');
+    var tempcanvas = document.createElement('canvas'),
+        ctx = tempcanvas.getContext('2d');
 
     // set its dimension to target size
-    canvas.width = width;
-    canvas.height = height;
+    tempcanvas.width = width;
+    tempcanvas.height = height;
 
     // draw source image into the off-screen canvas:
     ctx.drawImage(img, 0, 0, width, height);
 
     // encode image to data-uri with base64 version of compressed image
-    return canvas.toDataURL();
+    return tempcanvas.toDataURL();
 }
 
 //document load
@@ -268,11 +268,13 @@ $(function() {
     });
 
     $('#exportBtn').on('click', function() {
+        //remove selection controls
         var activeObj = canvas.getActiveObject();
         if (activeObj) {
             activeObj.hasBorders = false;
             activeObj.hasControls = false;
         }
+
         canvas.renderAll();
         imageURI = canvas.toDataURL('png');
         if (activeObj) {
@@ -284,14 +286,8 @@ $(function() {
         if (!fabric.Canvas.supports('toDataURL')) {
             alert('This browser doesn\'t provide means to serialize canvas to an image');
         } else {
-
-            $('#exportModal').modal('show');
-
-        }
-    });
-
-    $('#exportModal').on('shown.bs.modal', function() {
-        var imgData = {
+            //store exported Image
+var imgData = {
             'img_URI': imageURI
         };
 
@@ -316,9 +312,27 @@ $(function() {
         }); //ajax
 
 
-        $('#imagePreview').empty();
-        $("#imagePreview").html("<img id ='previeImg' src='" + imageURI + "' alt='Preview Image' width='400px' height='300px'/>");
-    });
+
+        // var resolution = $(this).attr('id');
+        // resolution = resolution.split("x");
+        // var tWidth = parseInt(resolution[0]);
+        // var tHeight = parseInt(resolution[1]);
+        var tWidth = 800;
+        var tHeight = 600;
+        var img = new Image;
+
+        img.onload = resizeImage;
+        img.src = imageURI;
+
+        function resizeImage() {
+            var newDataUri = imageToDataUri(this, tWidth, tHeight);
+            // continue from here...
+            download(newDataUri, "ComicStrip.png", "image/png");
+        }
+
+        }
+    });//export onclick
+
 
     // Image adding
     // TODO: Same image cant be added one after the other
@@ -342,26 +356,6 @@ $(function() {
         };
         reader.readAsDataURL(e.target.files[0]);
     }
-
-    $('.downloadbtn').on('click', function() {
-        var resolution = $(this).attr('id');
-        resolution = resolution.split("x");
-        var tWidth = parseInt(resolution[0]);
-        var tHeight = parseInt(resolution[1]);
-        console.log(tWidth);
-        console.log(tHeight);
-
-        var img = new Image;
-
-        img.onload = resizeImage;
-        img.src = imageURI;
-
-        function resizeImage() {
-            var newDataUri = imageToDataUri(this, tWidth, tHeight);
-            // continue from here...
-            download(newDataUri, "ComicStrip.png", "image/png");
-        }
-    });
 
 
     // Create a text object.
