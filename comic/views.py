@@ -16,11 +16,15 @@ def search_library(search_in, tags, page):
         images = ComicImage.objects.all()
     elif search_in == 'all' and tags != 'all':
         images = ComicImage.objects.filter(mood_tags__slug__in=tags).distinct()
+    elif search_in != 'all' and tags == 'all':
+        coll = ComicCollection.objects.get(id=search_in)
+        images = ComicImage.objects.filter(
+            collection=coll).distinct()
     else:
-        coll = ComicCollection.objects.get(name=search_in)
+        coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
             collection=coll, mood_tags__slug__in=tags).distinct()
-    image_pages = Paginator(images, 4)
+    image_pages = Paginator(images, 6)
     current_page = image_pages.page(page)
     images_list = []
     for o in current_page.object_list:
@@ -33,9 +37,16 @@ def search_library(search_in, tags, page):
 
 def comicgen(request):
     mood_tags = MoodTag.objects.all()
-    context = {'mood_tags': mood_tags}
+    collections = ComicCollection.objects.all()
+    context = {'mood_tags': mood_tags, 'collections': collections}
     context.update(csrf(request))
     return render(request, 'comic/comicgen.html', context)
+
+def collections(request):
+    collections = ComicCollection.objects.all()
+    context = {'collections': collections}
+    context.update(csrf(request))
+    return render(request, 'comic/collections.html', context)
 
 
 @csrf_exempt

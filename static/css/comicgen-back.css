@@ -1,0 +1,128 @@
+html,body{height:100%;
+overflow: hidden;
+overflow: hidden;}
+
+.container-fluid {
+    height:100%;
+}
+.canvaswrap {
+    background: url('../images/halftone-bg.png');
+}
+#comictoolbar{
+    padding-bottom: 5px;
+}
+#cmleft {
+     height:100vh;
+    margin-left: 10px;
+}
+#cmright {
+     height:80%;
+}
+#previeImg{
+    border: silver 1px solid;
+    margin-left: 2%;
+}
+
+.fill{
+    height: 75%;
+    background-color:#990000;
+    padding:10px;
+    color:#efefef;
+}
+#c {
+    border: 1px dashed silver;
+    /*margin-left: 50px;*/
+    /*margin-top: 10px;*/
+    }
+
+@media screen and (max-width: 1280px) {
+    .canvaswrap {
+        background-color: yellow;
+        height: 600px;
+        width: 600px;
+    }
+    #c {
+        border: 1px solid black;
+        height: 400px;
+        width: 400px;
+    }
+}
+
+@font-face {
+    font-family: 'Chilanka';
+    src: url('../fonts/Chilanka.woff');
+}
+
+@font-face {
+    font-family: 'Keraleeyam';
+    src: url('../fonts/Keraleeyam.woff');
+}
+
+@font-face {
+    font-family: 'Rachana';
+    src: url('../fonts/Rachana.woff');
+}
+
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.thumb {
+    margin-bottom: 5px;
+}
+
+.fontSelector {
+    font-size: 20px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#Chilanka {
+    font-family: 'Chilanka';
+}
+
+#Keraleeyam {
+    font-family: 'Keraleeyam';
+}
+
+#Rachana {
+    font-family: 'Rachana';
+}
+.downloadbtn{
+    margin-right: 10px;
+        margin-left: 10px;
+}
+#downloadPanel{
+    margin-top: 10px;
+    margin-left: 10%;
+}
+#previewPanel {
+    margin-top: 10px;
+    margin-left: 20%;
+}

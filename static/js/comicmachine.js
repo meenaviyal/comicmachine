@@ -62,7 +62,7 @@ $(function() {
     var get_images = function(dataToSend) {
 
         $.ajax({
-            "url": "library/", // the endpoint
+            "url": "/library/", // the endpoint
             "type": "POST", // http method
             "data": dataToSend, // data sent with the post request
 
@@ -72,7 +72,7 @@ $(function() {
                 $('#libraryView').empty();
                 $.each(recieved_data['images'], function(index, value) {
                     console.log(value);
-                    $('#libraryView').append("<div class='col-lg-3 col-md-4 col-xs-6 thumb'>\
+                    $('#libraryView').append("<div class='col-lg-4 col-md-4 col-xs-6 thumb'>\
         <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
                         "' alt=''></a></div>");
                 }); //each
@@ -190,6 +190,23 @@ $(function() {
 
     });
 
+    $('#collectionSel').on('change', function() {
+        var selectedColl = $("#collectionSel :selected").val();
+        if (selectedColl) {
+        var data_dict = {
+            'search_in': selectedColl,
+            'tags': 'all',
+            'page': 1
+        };
+
+        var dataToSend = JSON.stringify(data_dict);
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
+        $('#paginationholder').html('');
+        $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
+        get_images(dataToSend);
+        }
+    });
 
 
     var state = [];
@@ -287,51 +304,51 @@ $(function() {
             alert('This browser doesn\'t provide means to serialize canvas to an image');
         } else {
             //store exported Image
-var imgData = {
-            'img_URI': imageURI
-        };
+            var imgData = {
+                'img_URI': imageURI
+            };
 
-        var imgDataToSend = JSON.stringify(imgData);
+            var imgDataToSend = JSON.stringify(imgData);
 
-        $.ajax({
-            "url": "comicstrip/", // the endpoint
-            "type": "POST", // http method
-            "data": imgDataToSend, // data sent with the post request
+            $.ajax({
+                "url": "/comicstrip/", // the endpoint
+                "type": "POST", // http method
+                "data": imgDataToSend, // data sent with the post request
 
-            // handle a successful response
-            success: function(data) {
-                recieved_data = JSON.parse(data);
-                console.log(data); // log the returned json to the console
-                console.log("success"); // another sanity check
-            },
+                // handle a successful response
+                success: function(data) {
+                    recieved_data = JSON.parse(data);
+                    console.log(data); // log the returned json to the console
+                    console.log("success"); // another sanity check
+                },
 
-            // handle a non-successful response
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                // handle a non-successful response
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            }); //ajax
+
+
+
+            // var resolution = $(this).attr('id');
+            // resolution = resolution.split("x");
+            // var tWidth = parseInt(resolution[0]);
+            // var tHeight = parseInt(resolution[1]);
+            var tWidth = 800;
+            var tHeight = 600;
+            var img = new Image;
+
+            img.onload = resizeImage;
+            img.src = imageURI;
+
+            function resizeImage() {
+                var newDataUri = imageToDataUri(this, tWidth, tHeight);
+                // continue from here...
+                download(newDataUri, "ComicStrip.png", "image/png");
             }
-        }); //ajax
-
-
-
-        // var resolution = $(this).attr('id');
-        // resolution = resolution.split("x");
-        // var tWidth = parseInt(resolution[0]);
-        // var tHeight = parseInt(resolution[1]);
-        var tWidth = 800;
-        var tHeight = 600;
-        var img = new Image;
-
-        img.onload = resizeImage;
-        img.src = imageURI;
-
-        function resizeImage() {
-            var newDataUri = imageToDataUri(this, tWidth, tHeight);
-            // continue from here...
-            download(newDataUri, "ComicStrip.png", "image/png");
-        }
 
         }
-    });//export onclick
+    }); //export onclick
 
 
     // Image adding
@@ -361,10 +378,16 @@ var imgData = {
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.IText(':)', {
+    var hi = new fabric.IText('Click Me! :)', {
         left: canvas.getWidth() / 2,
-        top: canvas.getHeight() / 2
+        top: canvas.getHeight() / 2,
+//     hasBorders: false,
+// hasControls: false,
+// hasRotatingPoint: false,
+// lockMovementX: true,
+// lockMovementY: true
     });
+
 
     // Attach it to the canvas object, then (re)display
     // the canvas.
@@ -379,4 +402,20 @@ var imgData = {
     //     console.log(selectedType);
 
     // });
+
+    $('#insertICULogo').on('click', function(){
+        var logochoice = $(this).is(":checked");
+        if (!logochoice) {
+            // None
+        }
+        else {
+            
+
+            fabric.Image.fromURL('/static/images/iculogo.jpg', function(img) {
+
+              // add image onto canvas
+              canvas.add(img);
+            });
+        }
+    });
 });

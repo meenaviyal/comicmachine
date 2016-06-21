@@ -1,0 +1,151 @@
+$grey-bg: #e0dede;
+$base-green: #b1e690;
+$base-color: #9D6B3F;
+
+.navbar-text span.colored{
+    color: $base-color;
+}
+
+.navbar{
+    border-radius: 0px;
+    margin-bottom: 0px;
+    background: #1b1919;
+    border: 0px;
+    /* border-bottom: 1px solid black; */
+    box-shadow: 1px 1px 2px #000;
+    z-index: 90;
+}
+
+/* Colors */
+#left-panel,
+#right-panel{
+    label{
+        font-weight: 200;
+        padding-bottom: 2px;
+    }
+    
+    .multiselect{
+        width: 100%;
+        background-color: $grey-bg;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    a.thumbnail:focus{
+        border: 1px solid #52e00d;
+    }
+}
+
+i.fa{
+    opacity: 0.85;
+    font-size: 18px;
+    color: $base-color;
+    padding-right: 5px;
+}
+
+.flat-buttons {
+  display: inline-block;
+  margin: 0px 0px;
+  border-radius: 0px;
+  padding: 12px;
+  border: 0px;
+  background: #222222;
+  color: #dedcdc;
+  cursor: pointer;
+  outline: 0;    
+  &:hover {
+    background: #9D6B3F;
+    i.fa{
+        color: #fff;
+    }
+  }
+}
+
+.flat-buttons.cta {
+    // background-color: $base-green;
+    color: darken($base-green, 5%);
+    padding-right: 24px;
+    i.fa{
+        color: darken($base-green, 5%);
+    }
+    &:hover {
+        background: darken($base-green, 10%);
+        color: #fff;
+        i.fa{
+            color: #fff;
+        }
+    }
+}
+
+.btn-default{
+    border-color: transparent;
+    background: $grey-bg;
+}
+
+.btn-success {
+    background: $base-color;
+    border-color: $base-color;
+    padding: 6px 16px;
+    color: lighten($base-color, 70%);
+    &:hover {
+        background: #9D6B3F;
+        border-color: #9D6B3F;
+    }
+}
+
+.pagination>.disabled>a,
+.pagination>.disabled>a:focus,
+.pagination>.disabled>a:hover,
+.pagination>.disabled>span,
+.pagination>.disabled>span:focus,
+.pagination>.disabled>span:hover{
+    color: $base-color;
+    cursor: not-allowed;
+    background-color: $grey-bg;
+    border-color: transparent;
+}
+
+.insert-text{
+    textarea.form-control{
+        border-radius: 0;
+        background-color: $grey-bg;
+    }
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: $grey-bg;
+    border-radius: 0;
+    width: 100%;
+}
+
+.pad{
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.top__pad {
+    padding-top: 1.5rem;
+}
+.btn-group.btn-toolbar__group {
+    width: 100%;
+}
+
+.panel-body {
+    padding: 0;
+}
+.thumb {
+    background-color: transparent;
+    padding-left: 0;
+    border-radius:0;
+}
+.thumbnail{
+    border-radius: 0;
+}
+.panel-default{
+    background-color: transparent;
+    border:none;
+}
+.selector__btn{
+    width: 100%;    
+}
+

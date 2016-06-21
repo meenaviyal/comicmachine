@@ -1,0 +1,111 @@
+html,body {
+    height:100%;
+    overflow: hidden;
+}
+
+.navbar-text {
+    margin-bottom: 0px;
+    margin-left: 0px;
+    font-size: 30px;
+    color: white !important;
+}
+
+.btn-toolbar {
+    width: 100%;
+    background:#222222; 
+    margin-left: 0px;
+}
+
+.btn-group{
+    margin-left: 0px;
+}
+.container-fluid {
+    height: 100%;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+
+label {
+    color: white;
+    padding: 10px 10px 0px 0px
+}
+
+.dropdown-toggle {
+    padding-right: 10px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#left-panel{
+    height: 100vh;
+    background: #3E3E3E;
+    border-right: 1px solid black;
+}
+
+#centre-panel{
+    height: 100vh;
+    background: #2B2B2B;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#right-panel{
+    height: 100vh;
+    background: #3E3E3E;
+    border-left: 1px solid black;
+}
+
+
+#Chilanka {
+    font-family: 'Chilanka';
+}
+
+#Keraleeyam {
+    font-family: 'Keraleeyam';
+}
+
+#Rachana {
+    font-family: 'Rachana';
+}
+
+
+@font-face {
+    font-family: 'Chilanka';
+    src: url('../fonts/Chilanka.woff');
+}
+
+@font-face {
+    font-family: 'Keraleeyam';
+    src: url('../fonts/Keraleeyam.woff');
+}
+
+@font-face {
+    font-family: 'Rachana';
+    src: url('../fonts/Rachana.woff');
+}
+
+.bg-white{
+    background:#ffffff;
+}

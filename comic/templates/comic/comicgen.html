@@ -3,143 +3,91 @@
 <html lang="en">
 
 <head>
+    <title>Comic Machine</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Oley Oley Oley!</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" type="text/css" href="{% static "css/comicgen.css" %}" />
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-          CM
-        <!--<img alt="Brand" src="...">-->
-      </a>
-            </div>
-        </div>
-    </nav>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/theme.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comicgen.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- test comment -->
+    <script src="{% static 'js/mozhi.js' %}"></script>
+    <script src="{% static 'js/input.js' %}"></script>
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'images/logo.png' %}"> </a>
+                <h3 class="navbar-text" id="Keraleeyam">ചളി<span class="colored">മിഷ്യൻ</span></h3>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3" id="cmleft">
-            <div class="row">
-            <div class="form-group">
-                                <select id="moodSelector" multiple="multiple">
-                    {% for t in mood_tags %}
-                    <option value="{{ t.slug }}">{{ t.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="button" id="moodSelectorBtn" class="btn btn-info">Go!</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="panel panel-default">
-                    <!--<div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collections</a>
-                        </h4>
-                    </div>-->
-                    <div id="collapseTwo" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div id="libraryView">
-                                <!-- Populate this with AJAX -->
-<!--                                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                    <a class="thumbnail" href="#">
-                                        <img class="img-responsive" src="/media/images/characters-01.png" alt="">
-                                    </a>
-                                </div> -->
-                            </div>
-
-                        </div><!-- panel body -->
-
+            <div class="col-md-3" id="left-panel">
+            <!--<p>Select Image from our Collections</p>-->
+            <br>
+                <div class="row pad">
+                    <div class="form-group">
+                        <select id="collectionSel" class="form-control dropdown-toggle btn btn-default">
+                            <option value=''>Select Collection</option>
+                            {% for c in collections %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
-                </div><!-- row-->
-                 <div  id="paginationholder">
-                   <ul id="paginator" class="pagination-sm"></ul>
+                <div class="row pad">
+                    <div class="panel panel-default">
+                        <div id="collapseTwo" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div id="libraryView">
+
+                                </div>
                             </div>
-                <!--Accordion -->
-                <!-- <div class="row">
-                    <div id="accordion" class="panel-group">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Basic Shapes</a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse">
-            <div class="panel-body">
-                <p>
-                    Basic shapes like line, Button, Speech cloud etc
-                </p>
-            </div>
-        </div>
-    </div>
-
-</div>
-</div>-->
-                <!-- <div class="row">
-                    <ol class="breadcrumb">
-                        <li><a href="#">Collections</a></li>
-                        <li><a href="#">Orion</a></li>
-                    </ol>
-                </div> -->
-            </div>
-            <div class="col-md-7" id="cmright">
-        <div class="clearfix" id="comictoolbar">
-   <div class="pull-left">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" id="undoBtn">Undo</button>
-                            <button type="button" class="btn btn-default" id="redoBtn">Redo</button>
-                            <button type="button" class="btn btn-default" id="clearBtn">Clear All</button>
-                            <button type="button" class="btn btn-default" id="deleteBtn">Delete</button>
+                            <!-- panel body -->
                         </div>
-   </div>
-   <div class="pull-right">
-<!--<div class="btn-group">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Size <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#" id="sizeSelector4x3">4:3 (Default)</a></li>
-    <li><a href="#" id="sizeSelector1x1">1:1 (Square)</a></li>
-  </ul>
-</div>-->
-                             <div class="btn-group" role="group" aria-label="...">
-
-                            <button type="button" class="btn btn-default" id="exportBtn">Export</button>
-                            <!--<button type="button" class="btn btn-default" id="dimentionsBtn">Dimentions</button>-->
-                        </div>
-   </div>
-</div>
-<!--    <div class="span5 fill">
-    Hello World
-    </div>-->
+                    </div>
+                </div>
+                <!-- row-->
+                <div id="paginationholder">
+                    <ul id="paginator" class="pagination-sm pagination">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-7" id="centre-panel">
+                <div class="btn-toolbar" role="toolbar" aria-label="...">
+                    <div class="btn-group btn-toolbar__group" role="group" aria-label="...">
+                        <button type="button" class="flat-buttons" id="undoBtn"><i class="fa fa-undo"></i> Undo</button>
+                        <button type="button" class="flat-buttons" id="redoBtn"><i class="fa fa-repeat"></i> Redo</button>
+                        <button type="button" class="flat-buttons" id="deleteBtn"><i class="fa fa-trash-o"></i> Delete</button>
+                        <button type="button" class="flat-buttons" id="clearBtn"><i class="fa fa-refresh"></i> Clear All</button>
+                        <button type="button" class="flat-buttons cta pull-right" id="exportBtn"><i class="fa fa-download"></i> Download</button>
+                    </div>
+                </div>
                 <div class="canvaswrap">
-                    <canvas id="c" height= "400px" width= "300px"></canvas>
+                    <canvas id="c" height="400px" width="300px"></canvas>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <span class="btn btn-info btn-file">
-    Upload image <input type="file" id="imageAddBtn" name="imageAddBtn" accept="image/*">
-</span>
-                    <!--<button type="button" class="btn btn-success" id="imageAddBtn">Upload Image</button>-->
-                </div>
-                <div class="form-group">
-                    <label for="comment">Add Text:</label>
+            <div class="col-md-2" id="right-panel">
+                <div class="form-group insert-text">
+                    <label for="comment">Add Text</label>
+                    <div class="bg-white">
+                    <form id="editform">
                     <textarea class="form-control" rows="5" id="textAddArea"></textarea>
+                    </form>
+                    </div>
                 </div>
                 <div class="form-group dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -152,28 +100,38 @@
                         <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
                         <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
                     </ul>
-                                    <button type="button" class="btn btn-success" id="textAddBtn">Insert</button>
+                    <button type="button" class="btn btn-success" id="textAddBtn">Insert</button>
                 </div>
-
+                <div class="form-group insert-text">
+                    <!--<label for="comment">Upload Image</label>-->
+                    <span class="btn btn-info btn-file btn-success">
+                      Upload image <input type="file" id="imageAddBtn" name="imageAddBtn" accept="image/*">
+                    </span>
+                </div>
+                <div class="form-group insert-text">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Add Logo</label>
+                    <span class="btn btn-info btn-file btn-success">
+                      ICU
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Fabric.js from CDN -->
+      <!-- Fabric.js from CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Include the plugin's CSS and JS: -->
-    <script src="{% static "js/cookies.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap-multiselect.js" %}"></script>
-    <link rel="stylesheet" href="{% static "css/bootstrap-multiselect.css" %}" type="text/css" />
-    <script src="{% static "js/jquery.twbsPagination.min.js" %}"></script>
-    <script src="{% static "js/download.js" %}"></script>
-    <script src="{% static "js/comicmachine.js" %}"></script>
-
-
+    <script src="{% static 'js/cookies.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-multiselect.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-multiselect.css' %}" type="text/css" />
+    <script src="{% static 'js/jquery.twbsPagination.min.js' %}"></script>
+    <script src="{% static 'js/download.js' %}"></script>
+    <script src="{% static 'js/comicmachine.js' %}"></script>
 </body>
 
 </html>
