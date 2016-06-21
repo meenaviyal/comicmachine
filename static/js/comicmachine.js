@@ -149,26 +149,26 @@ $(function() {
         get_images(dataToSend);
     }; //get_images_firstRun
 
-    $('#moodSelectorBtn').prop('disabled', true);
-    $('#moodSelector').multiselect({
-        maxHeight: '300',
-        buttonWidth: '235',
-        nonSelectedText: 'Select the Mood',
-        includeSelectAllOption: true,
-        selectAllText: 'Load all Images!',
-        selectAllValue: 'all',
-        onChange: function(element, checked) {
-            selectedMoods = $('#moodSelector').val();
+    // $('#moodSelectorBtn').prop('disabled', true);
+    // $('#moodSelector').multiselect({
+    //     maxHeight: '300',
+    //     buttonWidth: '235',
+    //     nonSelectedText: 'Select the Mood',
+    //     includeSelectAllOption: true,
+    //     selectAllText: 'Load all Images!',
+    //     selectAllValue: 'all',
+    //     onChange: function(element, checked) {
+    //         selectedMoods = $('#moodSelector').val();
 
-            if (selectedMoods) {
-                $('#moodSelectorBtn').prop('disabled', false);
-            } else {
-                $('#moodSelectorBtn').prop('disabled', true);
-                selectedMoods = 'all';
-            }
+    //         if (selectedMoods) {
+    //             $('#moodSelectorBtn').prop('disabled', false);
+    //         } else {
+    //             $('#moodSelectorBtn').prop('disabled', true);
+    //             selectedMoods = 'all';
+    //         }
 
-        }
-    });
+    //     }
+    // });
 
     get_images_firstRun();
     //image library population on btn click
