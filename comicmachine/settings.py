@@ -76,33 +76,13 @@ WSGI_APPLICATION = 'comicmachine.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
-# [START db_setup]
-import os
-if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
-    # Running on production App Engine, so use a Google Cloud SQL database.
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/<your-project-id>:<your-cloud-sql-instance>',
-            'NAME': '<your-database-name>',
-            'USER': 'root',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-# [END db_setup]
 
 
 # Internationalization
@@ -121,11 +101,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-COMMON_STATIC = os.path.join(BASE_DIR, 'static')
+# COMMON_STATIC = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = (
-   COMMON_STATIC,
-)
+# STATICFILES_DIRS = (
+#    COMMON_STATIC,
+# )
 
 STATIC_ROOT='static'
 STATIC_URL = '/static/'
