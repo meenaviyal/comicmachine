@@ -193,18 +193,18 @@ $(function() {
     $('#collectionSel').on('change', function() {
         var selectedColl = $("#collectionSel :selected").val();
         if (selectedColl) {
-        var data_dict = {
-            'search_in': selectedColl,
-            'tags': 'all',
-            'page': 1
-        };
+            var data_dict = {
+                'search_in': selectedColl,
+                'tags': 'all',
+                'page': 1
+            };
 
-        var dataToSend = JSON.stringify(data_dict);
-        // console.log(dataToSend);
-        // var dataToSend = JSON.stringify(data_dict);
-        $('#paginationholder').html('');
-        $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
-        get_images(dataToSend);
+            var dataToSend = JSON.stringify(data_dict);
+            // console.log(dataToSend);
+            // var dataToSend = JSON.stringify(data_dict);
+            $('#paginationholder').html('');
+            $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
+            get_images(dataToSend);
         }
     });
 
@@ -381,11 +381,11 @@ $(function() {
     var hi = new fabric.IText('Click Me! :)', {
         left: canvas.getWidth() / 2,
         top: canvas.getHeight() / 2,
-//     hasBorders: false,
-// hasControls: false,
-// hasRotatingPoint: false,
-// lockMovementX: true,
-// lockMovementY: true
+        //     hasBorders: false,
+        // hasControls: false,
+        // hasRotatingPoint: false,
+        // lockMovementX: true,
+        // lockMovementY: true
     });
 
 
@@ -403,19 +403,11 @@ $(function() {
 
     // });
 
-    $('#insertICULogo').on('click', function(){
-        var logochoice = $(this).is(":checked");
-        if (!logochoice) {
-            // None
-        }
-        else {
-            
+    $('#insertICULogo').on('click', function() {
+        fabric.Image.fromURL('/static/images/iculogo.jpg', function(img) {
 
-            fabric.Image.fromURL('/static/images/iculogo.jpg', function(img) {
-
-              // add image onto canvas
-              canvas.add(img);
-            });
-        }
+            // add image onto canvas
+            canvas.add(img);
+        });
     });
 });
