@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'comicmachine.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cmdb',
+        'USER': 'cmdbuser',
+        'PASSWORD': 'kattachali679!',
+        'HOST': 'localhost',
+        'PORT': '',                      # Set to empty string for default.
     }
 }
 
@@ -103,11 +107,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 # COMMON_STATIC = os.path.join(BASE_DIR, 'static')
 
-# STATICFILES_DIRS = (
-#    COMMON_STATIC,
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
-STATIC_ROOT='static'
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'

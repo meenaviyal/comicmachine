@@ -8,4 +8,5 @@ urlpatterns = [
     # url(r'^tags/$', views.tags, name='tags'),
     url(r'^comicstrip/$', views.strip, name='comicstrip'),
     url(r'^create/$', views.comicgen, name='comicgen'),
+    url(r'^$', views.home, name='home'),
 ]

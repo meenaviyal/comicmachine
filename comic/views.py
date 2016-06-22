@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from models import ComicImage, ComicCollection, ComicStrip, MoodTag, LangTag
@@ -82,3 +82,7 @@ def strip(request):
         new_strip.image = ContentFile(imgdata, '{}.png'.format(filename))
         new_strip.save()
         return HttpResponse(json.dumps({'message': 'done'}))
+
+
+def home(request):
+    return redirect('/create')
