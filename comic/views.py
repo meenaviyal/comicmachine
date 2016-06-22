@@ -24,7 +24,7 @@ def search_library(search_in, tags, page):
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
             collection=coll, mood_tags__slug__in=tags).distinct()
-    image_pages = Paginator(images, 6)
+    image_pages = Paginator(images, 12)
     current_page = image_pages.page(page)
     images_list = []
     for o in current_page.object_list:

@@ -38,13 +38,15 @@ $(function() {
     var selectedFont = "sans-serif";
     // Obtain a canvas drawing surface from fabric.js
     var canvasWrap = $('.canvaswrap');
-    $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
-    var cWidth = $('.canvaswrap').width() - ($('.canvaswrap').width() * 10 / 100)
-    var cHeight = cWidth / (4 / 3)
+    // $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
+    // var cWidth = $('.canvaswrap').width() - ($('.canvaswrap').width() * 10 / 100)
+    // var cHeight = cWidth / (4 / 3)
+    var cHeight = 600;
+    var cWidth = 800;
     $('#c').attr('height', cHeight);
     $('#c').attr('width', cWidth);
-    $('#c').css('margin-left', ($('.canvaswrap').width() * 5 / 100));
-    $('#c').css('margin-top', ($('.canvaswrap').width() * 2 / 100));
+    // $('#c').css('margin-left', ($('.canvaswrap').width() * 5 / 100));
+    // $('#c').css('margin-top', ($('.canvaswrap').width() * 2 / 100));
     // $('#c').css('border', 'gray 1px solid');
     var canvas = new fabric.Canvas('c');
     canvas.setBackgroundColor('white');
@@ -77,6 +79,14 @@ $(function() {
                         "' alt=''></a></div>");
                 }); //each
 
+    $('.img-responsive').hover(function() {
+        $(this).addClass('transition');
+    
+    }, function() {
+        $(this).removeClass('transition');
+    });
+
+
                 $(".img-responsive").click(function() {
                     var thisImage = $(this).attr('src');
 
@@ -102,10 +112,10 @@ $(function() {
                 $('#paginator').twbsPagination({
                     totalPages: recieved_data['total_pages'],
                     // visiblePages: 5,
-                    first: '<<',
+                    first: '',
                     prev: '<',
                     next: '>',
-                    last: '>>',
+                    last: '',
                     onPageClick: function(event, page) {
                         console.log('Page ' + page);
                         var data_dict = {
@@ -403,11 +413,11 @@ $(function() {
 
     // });
 
-    $('#insertICULogo').on('click', function() {
-        fabric.Image.fromURL('/static/images/iculogo.jpg', function(img) {
+    // $('#insertICULogo').on('click', function() {
+    //     fabric.Image.fromURL('/static/images/iculogo.jpg', function(img) {
 
-            // add image onto canvas
-            canvas.add(img);
-        });
-    });
+    //         // add image onto canvas
+    //         canvas.add(img);
+    //     });
+    // });
 });

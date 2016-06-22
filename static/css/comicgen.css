@@ -1,6 +1,10 @@
-
+/*
 .canvaswrap {
     background: url('../images/halftone-bg.png');
+}*/
+
+.canvas-container{
+    margin: 0 auto;
 }
 
 #c {
@@ -53,3 +57,23 @@
 #Rachana {
     font-family: 'Rachana';
 }
+
+.transition {
+    -webkit-transform: scale(2.5); 
+    -moz-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+    position: relative;
+    z-index: 2;
+}
+.img-responsive {
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+}
+
+/*.img-responsive {
+    width:80px;
+    margin:25px;
+}*/
