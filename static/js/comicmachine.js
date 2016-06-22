@@ -41,8 +41,14 @@ $(function() {
     // $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
     // var cWidth = $('.canvaswrap').width() - ($('.canvaswrap').width() * 10 / 100)
     // var cHeight = cWidth / (4 / 3)
-    var cHeight = 600;
-    var cWidth = 800;
+    var cHeight = canvasWrap.height();
+    var cWidth = cHeight / (3 / 4);
+    console.log(cWidth);
+    console.log(cHeight);
+    // var cHeight = 600;
+    // var cWidth = 800;
+    // console.log($('.canvaswrap').width());
+    // console.log($('.canvaswrap').height());
     $('#c').attr('height', cHeight);
     $('#c').attr('width', cWidth);
     // $('#c').css('margin-left', ($('.canvaswrap').width() * 5 / 100));
@@ -238,6 +244,14 @@ $(function() {
         }
     }
 
+    // $('#zoominBtn').click(function(){
+    //     // canvas.setZoom(canvas.getZoom() * 1.1 ) ;
+    //     canvas.setWidth = canvas.width *2;
+    // }) ;
+    
+    // $('#zoomoutBtn').click(function(){
+    //     canvas.setZoom(canvas.getZoom() / 1.1 ) ;
+    // }) ;
     $('#undoBtn').on('click', function() {
         if (mods < state.length) {
             canvas.clear().renderAll();
