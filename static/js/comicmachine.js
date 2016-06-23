@@ -23,6 +23,7 @@ function imageToDataUri(img, width, height) {
 
 //document load
 $(function() {
+    $('#editform').attr('style', 'color:white;');
     var csrftoken = Cookies.get('csrftoken');
     //   console.log("csrf token is");
     //   console.log(csrftoken);
@@ -434,4 +435,9 @@ $(function() {
     //         canvas.add(img);
     //     });
     // });
+$(".dropdown-menu li a").click(function(){
+  var selText = $(this).text();
+  $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+});
+
 });
