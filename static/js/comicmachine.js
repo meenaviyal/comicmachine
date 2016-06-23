@@ -458,7 +458,7 @@ $(function() {
             function resizeImage() {
                 var newDataUri = imageToDataUri(this, tWidth, tHeight);
                 // continue from here...
-                download(newDataUri, "ComicStrip.png", "image/png");
+                download(newDataUri, "ChaliStrip.png", "image/png");
             }
 
         }
