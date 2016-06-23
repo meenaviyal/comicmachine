@@ -75,7 +75,7 @@
                         <button type="button" class="flat-buttons" id="redoBtn"><i class="fa fa-repeat"></i> Redo</button>
                         <button type="button" class="flat-buttons" id="deleteBtn"><i class="fa fa-trash-o"></i> Delete</button>
                         <button type="button" class="flat-buttons" id="clearBtn"><i class="fa fa-refresh"></i> Clear All</button>
-                        <button type="button" class="flat-buttons cta pull-right" id="exportBtn"><i class="fa fa-download"></i> Download</button>
+                        <button type="button" class="flat-buttons pull-right" id="exportBtn"><i class="fa fa-download"></i> Download</button>
                     </div>
                 </div>
                 <div class="canvaswrap">
@@ -119,12 +119,40 @@
             </div>
         </div>
     </div>
+    <div class="rotatemodal">
+        <img src="{% static 'images/splash-logo.png' %}" alt="Chali Machine Logo" id="splashLogo">
+    <svg width="400" height="200" viewBox="0 0 400 200">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />
+                <feComposite in="SourceGraphic" in2="cm">
+            </filter>
+            <filter id="f2" x="-200%" y="-40%" width="400%" height="200%">
+                <feOffset in="SourceAlpha" dx="9" dy="3" />
+                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />
+                <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.05" />
+                </feComponentTransfer>
+                <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+        </defs>
+        <g filter="url(#goo)" style="fill:#FFFFFF">
+            <ellipse id="drop" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058"/>
+            <ellipse id="drop2"cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058"/>
+        </g>
+    </svg>
+    </div>
       <!-- Fabric.js from CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js'></script>
     <!-- Include the plugin's CSS and JS: -->
     <script src="{% static 'js/cookies.min.js' %}"></script>
     <script src="{% static 'js/jquery.twbsPagination.min.js' %}"></script>
