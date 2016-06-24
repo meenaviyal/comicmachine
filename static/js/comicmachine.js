@@ -380,7 +380,7 @@ $(function() {
         var textToadd = $('#textAddArea').val();
         var newtext = new fabric.IText(textToadd, {
             fontFamily: selectedFont,
-            left: canvas.getWidth() / 1.5,
+            left: canvas.getWidth() / 0.5,
             top: canvas.getHeight() / 1.5
         });
         canvas.add(newtext);

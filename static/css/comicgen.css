@@ -16,6 +16,10 @@
                 no-repeat;
 }
 
+.pagination {
+    margin: 1px;
+}
+
 #splashLogo {
     left: 40%;
     top: 10%; 
