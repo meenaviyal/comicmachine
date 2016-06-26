@@ -157,16 +157,16 @@ $(function() {
 
 
     var get_images = function(dataToSend) {
-
+        reqid = String(Math.random()).split(".")[1]
         $.ajax({
-            "url": "/library/", // the endpoint
+            "url": "/library/?r="+reqid, // the endpoint
             "type": "POST", // http method
             "data": dataToSend, // data sent with the post request
 
             // handle a successful response
             success: function(data) {
                 recieved_data = JSON.parse(data);
-                $('#libraryView').empty();
+                $('#libraryView').html('');
                 $.each(recieved_data['images'], function(index, value) {
                     console.log(value);
                     $('#libraryView').append("<div class='col-lg-4 col-md-4 col-xs-6 thumb'>\
