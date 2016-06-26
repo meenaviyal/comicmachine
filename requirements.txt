@@ -1,4 +1,9 @@
 Django==1.9.7
+django-appconf==1.0.2
+django-compressor==2.0
 django-taggit==0.19.1
 Pillow==3.2.0
 psycopg2==2.6.1
+rcssmin==1.0.6
+rjsmin==1.0.12
+shortuuid==0.4.3

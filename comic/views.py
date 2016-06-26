@@ -13,9 +13,13 @@ import time
 def search_library(search_in, tags, page):
     images = ''
     if search_in == 'all' and tags == 'all':
-        images = ComicImage.objects.all()
+        coll = ComicCollection.objects.all()[0]
+        images = ComicImage.objects.filter(collection=coll)
     elif search_in == 'all' and tags != 'all':
-        images = ComicImage.objects.filter(mood_tags__slug__in=tags).distinct()
+        coll = ComicCollection.objects.all()[0]
+        images = ComicImage.objects.filter(
+            collection=coll,
+            mood_tags__slug__in=tags)
     elif search_in != 'all' and tags == 'all':
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
@@ -23,7 +27,7 @@ def search_library(search_in, tags, page):
     else:
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
-            collection=coll, mood_tags__slug__in=tags).distinct()
+            collection=coll, mood_tags__slug__in=tags)
     image_pages = Paginator(images, 12)
     current_page = image_pages.page(page)
     images_list = []
