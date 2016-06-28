@@ -31,7 +31,7 @@ def search_library(search_in, tags='all', page=1):
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
             collection=coll, mood_tags__slug__in=tags)
-    num_per_page = 12 if images.count >= 12 else images.count
+    num_per_page = 12 if images.count() >= 12 else images.count()
     image_pages = Paginator(images, num_per_page)
     current_page = image_pages.page(page)
     images_list = []
