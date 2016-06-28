@@ -6,8 +6,6 @@
 // }
 
 function toggleSplash() {
-
-        console.log("toggle start");
         $('.rotatemodal').attr('style', 'display:block;');
         // $('#splashDiv').hide();
         var container = document.getElementById('container');
@@ -107,6 +105,9 @@ function toggleSplash() {
 
 $body = $("body");
 //document load
+
+var selectedColl = 'all';
+var selectedMoods = 'all';
 $(function() {
 
 
@@ -132,6 +133,7 @@ $(function() {
     // var cHeight = cWidth / (4 / 3)
     var cHeight = canvasWrap.height();
     var cWidth = cHeight / (3 / 4);
+    console.log("Starting canvas with:\n")
     console.log(cWidth);
     console.log(cHeight);
     // var cHeight = 600;
@@ -148,7 +150,6 @@ $(function() {
     canvas.counter = 0;
     var newleft = 0;
     canvas.selection = false;
-    var selectedMoods = 'all';
     var imageURI;
 
 
@@ -156,7 +157,7 @@ $(function() {
     // respondCanvas();
 
 
-    var get_images = function(dataToSend) {
+    function get_images(dataToSend) {
         reqid = String(Math.random()).split(".")[1]
         $.ajax({
             "url": "/library/?r="+reqid, // the endpoint
@@ -168,7 +169,6 @@ $(function() {
                 recieved_data = JSON.parse(data);
                 $('#libraryView').html('');
                 $.each(recieved_data['images'], function(index, value) {
-                    console.log(value);
                     $('#libraryView').append("<div class='col-lg-4 col-md-4 col-xs-6 thumb'>\
         <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
                         "' alt=''></a></div>");
@@ -212,9 +212,8 @@ $(function() {
                     next: '>',
                     last: '',
                     onPageClick: function(event, page) {
-                        console.log('Page ' + page);
                         var data_dict = {
-                            'search_in': 'all',
+                            'search_in': selectedColl,
                             'tags': selectedMoods,
                             'page': page
                         };
@@ -227,8 +226,7 @@ $(function() {
                     }
                 }); //paginator
 
-                console.log(data); // log the returned json to the console
-                console.log("success"); // another sanity check
+                // console.log(data); // log the returned json to the console
 
             },
 
@@ -297,21 +295,23 @@ $(function() {
     });
 
     $('#collectionSel').on('change', function() {
-        var selectedColl = $("#collectionSel :selected").val();
-        if (selectedColl) {
-            var data_dict = {
-                'search_in': selectedColl,
-                'tags': 'all',
-                'page': 1
-            };
-
-            var dataToSend = JSON.stringify(data_dict);
-            // console.log(dataToSend);
-            // var dataToSend = JSON.stringify(data_dict);
-            $('#paginationholder').html('');
-            $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
-            get_images(dataToSend);
+        if (selectedColl != 'all') {
+            selectedColl = $("#collectionSel :selected").val();
         }
+        
+        var data_dict = {
+            'search_in': selectedColl,
+            'tags': 'all',
+            'page': 1
+        };
+
+        var dataToSend = JSON.stringify(data_dict);
+        // console.log(dataToSend);
+        // var dataToSend = JSON.stringify(data_dict);
+        $('#paginationholder').html('');
+        $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
+        get_images(dataToSend);
+
     });
 
 
@@ -432,8 +432,6 @@ $(function() {
                 // handle a successful response
                 success: function(data) {
                     recieved_data = JSON.parse(data);
-                    console.log(data); // log the returned json to the console
-                    console.log("success"); // another sanity check
                 },
 
                 // handle a non-successful response

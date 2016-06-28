@@ -63,3 +63,4 @@ comicmachine/settings_*
 settings_*
 staticroot/*
 Dev/*
+__init__.py
