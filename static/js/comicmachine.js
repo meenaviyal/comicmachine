@@ -111,7 +111,6 @@ $(function() {
 
 
     $('#editform').attr('style', 'color:white;');
-    var csrftoken = Cookies.get('csrftoken');
     //   console.log("csrf token is");
     //   console.log(csrftoken);
     // $.ajaxSetup({
