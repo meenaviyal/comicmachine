@@ -11,6 +11,8 @@ import time
 
 
 def search_library(search_in, tags, page):
+    print '#########'
+    print search_in, tags, page
     images = ''
     if search_in == 'all' and tags == 'all':
         coll = ComicCollection.objects.all()[0]
@@ -36,6 +38,8 @@ def search_library(search_in, tags, page):
     return_dict = {'images': images_list,
                    'total_pages': image_pages.num_pages,
                    'current_page': page}
+
+    print return_dict
     return return_dict
 
 

@@ -213,7 +213,7 @@ $(function() {
                     last: '',
                     onPageClick: function(event, page) {
                         var data_dict = {
-                            'search_in': selectedColl,
+                            'search_in': $("#collectionSel").val(),
                             'tags': selectedMoods,
                             'page': page
                         };
@@ -242,7 +242,7 @@ $(function() {
 
     var get_images_firstRun = function() {
         var data_dict = {
-            'search_in': 'all',
+            'search_in': $("#collectionSel").val(),
             'tags': 'all',
             'page': 1
         };
@@ -279,7 +279,7 @@ $(function() {
     $('#moodSelectorBtn').on('click', function() {
 
         var data_dict = {
-            'search_in': 'all',
+            'search_in': $("#collectionSel").val(),
             'tags': selectedMoods,
             'page': 1
         };
@@ -296,11 +296,11 @@ $(function() {
 
     $('#collectionSel').on('change', function() {
         if (selectedColl != 'all') {
-            selectedColl = $("#collectionSel :selected").val();
+            selectedColl = $("#collectionSel").val();
         }
         
         var data_dict = {
-            'search_in': selectedColl,
+            'search_in': $("#collectionSel").val(),
             'tags': 'all',
             'page': 1
         };
