@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from models import ComicImage, ComicCollection, ComicStrip, MoodTag, LangTag
@@ -8,9 +8,10 @@ import base64
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
 import time
+from django.template import RequestContext
 
 
-def search_library(search_in, tags, page):
+def search_library(search_in, tags='all', page=1):
     print '#########'
     print search_in, tags, page
     images = ''
@@ -30,7 +31,8 @@ def search_library(search_in, tags, page):
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
             collection=coll, mood_tags__slug__in=tags)
-    image_pages = Paginator(images, 12)
+    num_per_page = 12 if images.count >= 12 else images.count
+    image_pages = Paginator(images, num_per_page)
     current_page = image_pages.page(page)
     images_list = []
     for o in current_page.object_list:
@@ -44,11 +46,22 @@ def search_library(search_in, tags, page):
 
 
 def comicgen(request):
-    mood_tags = MoodTag.objects.all()
+    # mood_tags = MoodTag.objects.all()
     collections = ComicCollection.objects.all()
-    context = {'mood_tags': mood_tags, 'collections': collections}
+    context_dict = {'collections': collections}
+
+    context = RequestContext(request)
     context.update(csrf(request))
-    return render(request, 'comic/comicgen.html', context)
+
+    response = render_to_response(
+        'comic/comicgen.html',
+        context_dict, context)
+
+    coll = request.COOKIES.get('selected_collection')
+    if not coll:
+        response.set_cookie('selected_collection', 'all')
+    
+    return response
 
 def collections(request):
     collections = ComicCollection.objects.all()
@@ -63,20 +76,8 @@ def library(request):
         recieved_data = json.loads(request.body)
 
         return_dict = search_library(
-            recieved_data['search_in'], recieved_data['tags'], recieved_data['page'])
+            recieved_data['search_in'], 'all', recieved_data['page'])
         return HttpResponse(json.dumps(return_dict))
-
-
-# def tags(request):
-#     if request.is_ajax() and request.method == 'GET':
-
-#         tags = Tag.objects.all()
-#         tags_list = []
-#         for t in tags:
-#             tags_list.append({'tag_name': t.name, 'tag_slug': t.slug})
-
-#         return HttpResponse(json.dumps(tags_list))
-
 
 
 @csrf_exempt

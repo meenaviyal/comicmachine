@@ -6,43 +6,43 @@
 // }
 
 function toggleSplash() {
-        $('.rotatemodal').attr('style', 'display:block;');
-        // $('#splashDiv').hide();
-        var container = document.getElementById('container');
-        var drop = document.getElementById('drop');
-        var drop2 = document.getElementById('drop2');
-        var outline = document.getElementById('outline');
+    $('.rotatemodal').attr('style', 'display:block;');
+    // $('#splashDiv').hide();
+    var container = document.getElementById('container');
+    var drop = document.getElementById('drop');
+    var drop2 = document.getElementById('drop2');
+    var outline = document.getElementById('outline');
 
-        TweenMax.set(['svg'], {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            xPercent: -50,
-            yPercent: -50
-        })
+    TweenMax.set(['svg'], {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        xPercent: -50,
+        yPercent: -50
+    })
 
-        TweenMax.set([container], {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            xPercent: -50,
-            yPercent: -50
-        })
+    TweenMax.set([container], {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        xPercent: -50,
+        yPercent: -50
+    })
 
-        TweenMax.set(drop, {
-            transformOrigin: '50% 50%'
-        })
+    TweenMax.set(drop, {
+        transformOrigin: '50% 50%'
+    })
 
-        var tl = new TimelineMax({
-            repeat: -1,
-            paused: false,
-            repeatDelay: 0,
-            immediateRender: false
-        });
+    var tl = new TimelineMax({
+        repeat: -1,
+        paused: false,
+        repeatDelay: 0,
+        immediateRender: false
+    });
 
-        tl.timeScale(3);
+    tl.timeScale(3);
 
-        tl.to(drop, 4, {
+    tl.to(drop, 4, {
             attr: {
                 cx: 250,
                 rx: '+=10',
@@ -74,18 +74,18 @@ function toggleSplash() {
         }, '-=4')
 
 
-        
-        setTimeout(function() { 
-            $('.rotatemodal').attr('style', 'display:none;');
-        }, 3000);
+
+    setTimeout(function() {
+        $('.rotatemodal').attr('style', 'display:none;');
+    }, 3000);
 
     return
 }
 
 
- toggleSplash();
+toggleSplash();
 
- function imageToDataUri(img, width, height) {
+function imageToDataUri(img, width, height) {
 
     // create an off-screen canvas
     var tempcanvas = document.createElement('canvas'),
@@ -106,8 +106,6 @@ function toggleSplash() {
 $body = $("body");
 //document load
 
-var selectedColl = 'all';
-var selectedMoods = 'all';
 $(function() {
 
 
@@ -160,7 +158,7 @@ $(function() {
     function get_images(dataToSend) {
         reqid = String(Math.random()).split(".")[1]
         $.ajax({
-            "url": "/library/?r="+reqid, // the endpoint
+            "url": "/library/?r=" + reqid, // the endpoint
             "type": "POST", // http method
             "data": dataToSend, // data sent with the post request
 
@@ -174,12 +172,12 @@ $(function() {
                         "' alt=''></a></div>");
                 }); //each
 
-    $('.img-responsive').hover(function() {
-        $(this).addClass('transition');
-    
-    }, function() {
-        $(this).removeClass('transition');
-    });
+                $('.img-responsive').hover(function() {
+                    $(this).addClass('transition');
+
+                }, function() {
+                    $(this).removeClass('transition');
+                });
 
 
                 $(".img-responsive").click(function() {
@@ -192,18 +190,6 @@ $(function() {
                     });
                 }); //bind click
 
-                // //update paginator
-                // $('#paginator').twbsPagination({
-                //     totalPages: 1,
-                //     // visiblePages: 1,
-                //     first: '<<',
-                //     prev: '<',
-                //     next: '>',
-                //     last: '>>'
-                // });//paginator
-
-                //update paginator
-
                 $('#paginator').twbsPagination({
                     totalPages: recieved_data['total_pages'],
                     // visiblePages: 5,
@@ -213,8 +199,7 @@ $(function() {
                     last: '',
                     onPageClick: function(event, page) {
                         var data_dict = {
-                            'search_in': $("#collectionSel").val(),
-                            'tags': selectedMoods,
+                            'search_in': Cookies.get('selected_collection'),
                             'page': page
                         };
 
@@ -242,8 +227,7 @@ $(function() {
 
     var get_images_firstRun = function() {
         var data_dict = {
-            'search_in': $("#collectionSel").val(),
-            'tags': 'all',
+            'search_in': Cookies.get('selected_collection'),
             'page': 1
         };
 
@@ -253,55 +237,16 @@ $(function() {
         get_images(dataToSend);
     }; //get_images_firstRun
 
-    // $('#moodSelectorBtn').prop('disabled', true);
-    // $('#moodSelector').multiselect({
-    //     maxHeight: '300',
-    //     buttonWidth: '235',
-    //     nonSelectedText: 'Select the Mood',
-    //     includeSelectAllOption: true,
-    //     selectAllText: 'Load all Images!',
-    //     selectAllValue: 'all',
-    //     onChange: function(element, checked) {
-    //         selectedMoods = $('#moodSelector').val();
-
-    //         if (selectedMoods) {
-    //             $('#moodSelectorBtn').prop('disabled', false);
-    //         } else {
-    //             $('#moodSelectorBtn').prop('disabled', true);
-    //             selectedMoods = 'all';
-    //         }
-
-    //     }
-    // });
 
     get_images_firstRun();
     //image library population on btn click
-    $('#moodSelectorBtn').on('click', function() {
-
-        var data_dict = {
-            'search_in': $("#collectionSel").val(),
-            'tags': selectedMoods,
-            'page': 1
-        };
-
-        var dataToSend = JSON.stringify(data_dict);
-        // console.log(dataToSend);
-        // var dataToSend = JSON.stringify(data_dict);
-        $('#paginationholder').html('');
-        $('#paginationholder').html('<ul id="paginator" class="pagination-sm"></ul>');
-        get_images(dataToSend);
-
-
-    });
 
     $('#collectionSel').on('change', function() {
-        if (selectedColl != 'all') {
-            selectedColl = $("#collectionSel").val();
-        }
-        
+        Cookies.set('selected_collection', $("#collectionSel").val());
+        coll = Cookies.get('selected_collection');
+
         var data_dict = {
-            'search_in': $("#collectionSel").val(),
-            'tags': 'all',
+            'search_in': coll,
             'page': 1
         };
 
@@ -338,7 +283,7 @@ $(function() {
     //     // canvas.setZoom(canvas.getZoom() * 1.1 ) ;
     //     canvas.setWidth = canvas.width *2;
     // }) ;
-    
+
     // $('#zoomoutBtn').click(function(){
     //     canvas.setZoom(canvas.getZoom() / 1.1 ) ;
     // }) ;
@@ -522,9 +467,9 @@ $(function() {
     //         canvas.add(img);
     //     });
     // });
-$(".dropdown-menu li a").click(function(){
-  var selText = $(this).text();
-  $(this).parents('.dropdown').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-});
+    $(".dropdown-menu li a").click(function() {
+        var selText = $(this).text();
+        $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+    });
 
 });
