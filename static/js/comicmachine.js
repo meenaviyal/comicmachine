@@ -122,7 +122,7 @@ $(function() {
     //         }
     //     });
 
-    var selectedFont = "sans-serif";
+    var selectedFont = "Rachana";
     // Obtain a canvas drawing surface from fabric.js
     var canvasWrap = $('.canvaswrap');
     // $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));

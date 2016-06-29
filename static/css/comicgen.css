@@ -64,17 +64,27 @@ body.loading .rotatemodal {
 
 @font-face {
     font-family: 'Chilanka';
-    src: url('../fonts/Chilanka.woff');
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Chilanka.woff');
 }
 
 @font-face {
     font-family: 'Keraleeyam';
-    src: url('../fonts/Keraleeyam.woff');
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Keraleeyam.woff');
 }
 
 @font-face {
     font-family: 'Rachana';
-    src: url('../fonts/Rachana.woff');
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Rachana.woff');
+}
+
+@font-face {
+    font-family: 'RaghuMalayalam';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/RaghuMalayalamSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Uroob';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Uroob.ttf');
 }
 
 
@@ -92,6 +102,14 @@ body.loading .rotatemodal {
 
 #Rachana {
     font-family: 'Rachana';
+}
+
+#RaghuMalayalam {
+    font-family: 'RaghuMalayalam';
+}
+
+#Uroob {
+    font-family: 'Uroob';
 }
 
 .transition {
