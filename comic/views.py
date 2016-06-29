@@ -17,20 +17,20 @@ def search_library(search_in, tags='all', page=1):
     images = ''
     if search_in == 'all' and tags == 'all':
         coll = ComicCollection.objects.all()[0]
-        images = ComicImage.objects.filter(collection=coll)
+        images = ComicImage.objects.filter(collection=coll).order_by('id')
     elif search_in == 'all' and tags != 'all':
         coll = ComicCollection.objects.all()[0]
         images = ComicImage.objects.filter(
             collection=coll,
-            mood_tags__slug__in=tags)
+            mood_tags__slug__in=tags).order_by('id')
     elif search_in != 'all' and tags == 'all':
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
-            collection=coll).distinct()
+            collection=coll).order_by('id')
     else:
         coll = ComicCollection.objects.get(id=search_in)
         images = ComicImage.objects.filter(
-            collection=coll, mood_tags__slug__in=tags)
+            collection=coll, mood_tags__slug__in=tags).order_by('id')
     num_per_page = 12 if images.count() >= 12 else images.count()
     image_pages = Paginator(images, num_per_page)
     current_page = image_pages.page(page)
