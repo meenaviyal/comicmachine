@@ -12,8 +12,6 @@ from django.template import RequestContext
 
 
 def search_library(search_in, tags='all', page=1):
-    print '#########'
-    print search_in, tags, page
     images = ''
     if search_in == 'all' and tags == 'all':
         coll = ComicCollection.objects.all()[0]
@@ -41,7 +39,6 @@ def search_library(search_in, tags='all', page=1):
                    'total_pages': image_pages.num_pages,
                    'current_page': page}
 
-    print return_dict
     return return_dict
 
 
