@@ -171,6 +171,10 @@ $(function() {
                         "' alt=''></a></div>");
                 }); //each
 
+                // var m = new Masonry($('#libraryView').get()[0], {
+                //     itemSelector: ".thumb"
+                // });
+
                 $('.img-responsive').hover(function() {
                     $(this).addClass('transition');
 
