@@ -326,10 +326,13 @@ $(function() {
 
     $('#textAddBtn').on('click', function() {
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.IText(textToadd, {
+        var newtext = new fabric.Textbox(textToadd, {
             fontFamily: selectedFont,
             left: 100,
-            top: 100
+            top: 100,
+            width: 200,
+            height: 200,
+            textAlign: 'center'
         });
         canvas.add(newtext);
         $('#textAddArea').val('');
