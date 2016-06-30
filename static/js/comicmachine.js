@@ -107,80 +107,84 @@ $body = $("body");
 //document load
 
 
+
+$(function() {
+
 // Do some initializing stuff
 fabric.Object.prototype.set({
     transparentCorners: false,
-    hasRotatingPoint: false,
-    padding: 5
+    padding: 5,
+    borderColor: '#9D6B3F',
+    cornerSize: 10,
+    cornerColor: '#9D6B3F',
 });
 
-$(function() {
-    fabric.Canvas.prototype.customiseControls( {
-        tl: {
-            action: 'rotate',
-        },
-        tr: {
-            action: 'scale'
-        },
-        bl: {
-            action: 'remove',
-            cursor: 'pointer'
-        },
-        br: {
-            action: 'moveUp',
-            cursor: 'pointer'
-        },
-        mb: {
-            action: 'moveDown',
-            cursor: 'pointer'
-        },
-        mr: {
-            action: 'scaleX',
-            cursor: 'pointer'
-        },
-        ml: {
-            action: 'scaleX',
-            cursor: 'pointer'
-        },
-        mt: {
-            action: 'scaleY',
-            cursor: 'pointer'
-        }
-    } );
+//     fabric.Canvas.prototype.customiseControls( {
+//         tl: {
+//             action: 'rotate',
+//         },
+//         tr: {
+//             action: 'scale'
+//         },
+//         bl: {
+//             action: 'remove',
+//             cursor: 'pointer'
+//         },
+//         br: {
+//             action: 'moveUp',
+//             cursor: 'pointer'
+//         },
+//         mb: {
+//             action: 'moveDown',
+//             cursor: 'pointer'
+//         },
+//         mr: {
+//             action: 'scaleX',
+//             cursor: 'pointer'
+//         },
+//         ml: {
+//             action: 'scaleX',
+//             cursor: 'pointer'
+//         },
+//         mt: {
+//             action: 'scaleY',
+//             cursor: 'pointer'
+//         }
+//     } );
 
-fabric.Object.prototype.customiseCornerIcons( {
-    settings: {
-        borderColor: '#9D6B3F',
-        cornerSize: 25,
-        cornerBackgroundColor: '#9D6B3F',
-        cornerShape: 'circle',
-        cornerPadding: 10
-    },
-    tl: {
-        icon: '/static/icons/rotate.svg'
-    },
-    tr: {
-        icon: '/static/icons/scale.svg'
-    },
-    bl: {
-        icon: '/static/icons/delete.svg'
-    },
-    br: {
-        icon: '/static/icons/layer-up.svg'
-    },
-    mb: {
-        icon: '/static/icons/layer-down.svg'
-    },
-    mt: {
-        icon: '/static/icons/scaleup.svg'
-    },
-    mr: {
-        icon: '/static/icons/scaleright.svg'
-    },
-    ml: {
-        icon: '/static/icons/scaleleft.svg'
-    }
-});
+// fabric.Object.prototype.customiseCornerIcons( {
+//     settings: {
+//         borderColor: '#9D6B3F',
+//         cornerSize: 25,
+//         cornerBackgroundColor: '#9D6B3F',
+//         cornerShape: 'circle',
+//         cornerPadding: 10
+//     },
+//     tl: {
+//         icon: '/static/icons/rotate.svg'
+//     },
+//     tr: {
+//         icon: '/static/icons/scale.svg'
+//     },
+//     bl: {
+//         icon: '/static/icons/delete.svg'
+//     },
+//     br: {
+//         icon: '/static/icons/layer-up.svg'
+//     },
+//     mb: {
+//         icon: '/static/icons/layer-down.svg'
+//     },
+//     mt: {
+//         icon: '/static/icons/scaleup.svg'
+//     },
+//     mr: {
+//         icon: '/static/icons/scaleright.svg'
+//     },
+//     ml: {
+//         icon: '/static/icons/scaleleft.svg'
+//     }
+// });
 
 
     $('#editform').attr('style', 'color:white;');
