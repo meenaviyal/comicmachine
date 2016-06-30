@@ -400,6 +400,14 @@ fabric.Object.prototype.set({
         canvas.remove(canvas.getActiveObject());
     });
 
+    $('#moveUp').on('click', function() {
+        canvas.bringToFront(canvas.getActiveObject());
+    });
+
+    $('#moveDown').on('click', function() {
+        canvas.sendToBack(canvas.getActiveObject());
+    });
+
     $('#textAddBtn').on('click', function() {
         var textToadd = $('#textAddArea').val();
         var newtext = new fabric.IText(textToadd, {
