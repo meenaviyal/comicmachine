@@ -91,35 +91,53 @@
                 </div>
             </div>
             <div class="col-md-2" id="right-panel">
+            <div class="container-fluid">
+            <div class="row">
                 <div class="form-group">
                     <label for="comment">Add Text</label>
                     <form id="editform">
                     <textarea class="form-control" rows="5" col="10" wrap="hard" id="textAddArea"></textarea>
                     </form>
                 </div>
-                <div class="form-group dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Select Font
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
-                        <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
-                        <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
-                        <li><a href="#" class="fontSelector" id="RaghuMalayalam">രഘുമലയാളം</a></li>
-                        <li><a href="#" class="fontSelector" id="Uroob">ഉറൂബ്</a></li>
-                    </ul>
-                    <button type="button" class="btn btn-file btn-success" id="textAddBtn">Insert Text</button>
+            </div>
+                <div class="row">
+                    <div class="col-md-5 micro-col">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Font <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="fontSelector">
+                            <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
+                            <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
+                            <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
+                            <li><a href="#" class="fontSelector" id="RaghuMalayalam">രഘു</a></li>
+                            <li><a href="#" class="fontSelector" id="Uroob">ഉറൂബ്</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div class="col-md-4 micro-col">
+  <div class="input-group spinner">
+    <input type="text" class="form-control" value="20" id="fontSizeSelector">
+    <div class="input-group-btn-vertical">
+      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+    </div>
+    </div>
+                    </div>
+                    <div class="col-md-3 micro-col">
+                    <button type="button" class="btn btn-file btn-success" id="textAddBtn">Insert</button>
+                    </div>
                 </div>
-
-                <div class="form-group insert-text">
-                    <!--<label for="comment">Upload Image</label>-->
+                <br/>
+            <div class="row">
+                <div class="form-group">
+                    <label for="comment">Add Image</label>
                     <span class="btn btn-file btn-success">
-                      Upload image <input type="file" id="imageAddBtn" name="imageAddBtn" accept="image/*">
+                      Upload<input type="file" id="imageAddBtn" name="imageAddBtn" accept="image/*">
                     </span>
                 </div>
-                <div class="form-group insert-text">
-                </div>
+            </div>
+            </div>
             </div>
         </div>
     </div>

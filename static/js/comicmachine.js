@@ -105,7 +105,7 @@ function imageToDataUri(img, width, height) {
 
 $body = $("body");
 //document load
-
+var selectedFont = 'Rachana';
 
 
 $(function() {
@@ -199,7 +199,6 @@ fabric.Object.prototype.set({
     //         }
     //     });
 
-    var selectedFont = "Rachana";
     // Obtain a canvas drawing surface from fabric.js
     var canvasWrap = $('.canvaswrap');
     // $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
@@ -409,11 +408,14 @@ fabric.Object.prototype.set({
     });
 
     $('#textAddBtn').on('click', function() {
+        var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.IText(textToadd, {
+        var newtext = new fabric.Textbox(textToadd, {
             fontFamily: selectedFont,
             left: 100,
-            top: 100
+            top: 100,
+            textAlign: 'center',
+            fontSize: selectedFontSize
         });
         canvas.add(newtext);
         $('#textAddArea').val('');
@@ -537,9 +539,9 @@ fabric.Object.prototype.set({
     // the canvas.
     canvas.add(hi);
 
-    $('.fontSelector').on('click', function() {
-        selectedFont = $(this).attr('id');
-    });
+    // $('.fontSelector').on('click', function() {
+    //     selectedFont = $(this).attr('id');
+    // });
 
     // canvas.on('object:selected', function(e) {
     //     var selectedType = e.target.get('type')
@@ -554,9 +556,22 @@ fabric.Object.prototype.set({
     //         canvas.add(img);
     //     });
     // });
-    $(".dropdown-menu li a").click(function() {
-        var selText = $(this).text();
-        $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+    $(".dropdown-menu li a").click(function(){
+      var selText = $(this).text();
+      $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
     });
+
+    $("#fontSelector li a").click(function(){
+      selectedFont = $(this).attr('id');
+      console.log(selectedFont);
+    });
+
+
+  $('.spinner .btn:first-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+  });
+  $('.spinner .btn:last-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+  });
 
 });

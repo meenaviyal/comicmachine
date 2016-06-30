@@ -11,19 +11,19 @@
   z-index: 90; }
 
 /* Colors */
-#left-panel label,
+/*#left-panel label,
 #right-panel label {
   font-weight: 200;
-  padding-bottom: 2px; }
-#left-panel .multiselect,
+  padding-bottom: 2px; }*/
+/*#left-panel .multiselect,
 #right-panel .multiselect {
   width: 100%;
   background-color: #e0dede;
   overflow: hidden;
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis; }*/
 #left-panel a.thumbnail:focus,
-#right-panel a.thumbnail:focus {
-  border: 1px solid #52e00d; }
+/*#right-panel a.thumbnail:focus {
+  border: 1px solid #52e00d; }*/
 
 i.fa {
   opacity: 0.85;
