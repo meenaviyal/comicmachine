@@ -60,13 +60,6 @@ def comicgen(request):
     
     return response
 
-def collections(request):
-    collections = ComicCollection.objects.all()
-    context = {'collections': collections}
-    context.update(csrf(request))
-    return render(request, 'comic/collections.html', context)
-
-
 @csrf_exempt
 def library(request):
     if request.is_ajax():

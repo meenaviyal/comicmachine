@@ -59,8 +59,7 @@ target/
 # Local
 db.sqlite3
 media/*
-comicmachine/settings_*
-settings_*
+comicmachine/settings_prod*
 staticroot/*
 Dev/*
 __init__.py

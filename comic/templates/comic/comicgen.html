@@ -1,4 +1,3 @@
-
 {% load compress %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,20 +6,14 @@
     <title>ChaliMachine | ചളിമിഷ്യൻ</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-{% compress css %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> {% compress css %}
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/theme.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/comicgen.css" />
-{% endcompress %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- test comment -->
-{% compress js %}
+    <link rel="stylesheet" type="text/css" href="/static/css/comicgen.css" /> {% endcompress %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> {% compress js %}
     <script src="/static/js/mozhi.js"></script>
     <script src="/static/js/input.js"></script>
-{% endcompress %}
+    {% endcompress %}
 </head>
 
 <body>
@@ -42,8 +35,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2" id="left-panel">
-            <!--<p>Select Image from our Collections</p>-->
-            <br>
+                <br>
                 <div class="row pad">
                     <div class="form-group">
                         <select id="collectionSel" class="form-control dropdown-toggle btn btn-default">
@@ -59,7 +51,6 @@
                         <div id="collapseTwo" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <div id="libraryView">
-
                                 </div>
                             </div>
                             <!-- panel body -->
@@ -75,8 +66,6 @@
             <div class="col-md-8" id="centre-panel">
                 <div class="btn-toolbar" role="toolbar" aria-label="...">
                     <div class="btn-group btn-toolbar__group" role="group" aria-label="...">
-                        <!--<button type="button" class="flat-buttons" id="zoominBtn"><i class="fa fa-search-plus"></i> Zoom In</button>
-                        <button type="button" class="flat-buttons" id="zoomoutBtn"><i class="fa fa-search-minus"></i> Zoom Out</button>-->
                         <button type="button" class="flat-buttons" id="undoBtn"><i class="fa fa-undo"></i>Undo</button>
                         <button type="button" class="flat-buttons" id="redoBtn"><i class="fa fa-repeat"></i>Redo</button>
                         <button type="button" class="flat-buttons" id="deleteBtn"><i class="fa fa-trash-o"></i>Delete</button>
@@ -91,108 +80,110 @@
                 </div>
             </div>
             <div class="col-md-2" id="right-panel">
-            <div class="container-fluid">
-            <div class="row">
-                <div class="form-group">
-                    <label for="comment">Add Text</label>
-                    <form id="editform">
-                    <textarea class="form-control" rows="5" col="10" wrap="hard" id="textAddArea"></textarea>
-                    </form>
-                </div>
-            </div>
-                <div class="row">
-                    <div class="col-md-5 micro-col">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Font <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="fontSelector">
-                            <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
-                            <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
-                            <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
-                            <li><a href="#" class="fontSelector" id="RaghuMalayalam">രഘു</a></li>
-                            <li><a href="#" class="fontSelector" id="Uroob">ഉറൂബ്</a></li>
-                        </ul>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="comment">Add Text</label>
+                            <form id="editform">
+                                <textarea class="form-control" rows="5" col="10" wrap="hard" id="textAddArea"></textarea>
+                            </form>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-5 micro-col">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Font <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" id="fontSelector">
+                                    <li><a href="#" class="fontSelector" id="Rachana">രചന</a></li>
+                                    <li><a href="#" class="fontSelector" id="Chilanka">ചിലങ്ക</a></li>
+                                    <li><a href="#" class="fontSelector" id="Keraleeyam">കേരളീയം</a></li>
+                                    <li><a href="#" class="fontSelector" id="RaghuMalayalam">രഘു</a></li>
+                                    <li><a href="#" class="fontSelector" id="Uroob">ഉറൂബ്</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 micro-col">
+                            <div class="input-group spinner">
+                                <input type="text" class="form-control" value="20" id="fontSizeSelector">
+                                <div class="input-group-btn-vertical">
+                                    <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                                    <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 micro-col">
+                            <button type="button" class="btn btn-file btn-success" id="textAddBtn">Insert</button>
+                        </div>
                     </div>
-                    <div class="col-md-4 micro-col">
-  <div class="input-group spinner">
-    <input type="text" class="form-control" value="20" id="fontSizeSelector">
-    <div class="input-group-btn-vertical">
-      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-    </div>
-    </div>
-                    </div>
-                    <div class="col-md-3 micro-col">
-                    <button type="button" class="btn btn-file btn-success" id="textAddBtn">Insert</button>
-                    </div>
-                </div>
-                <br/>
-            <div class="row">
-                <div class="form-group">
-                    <label for="comment">Add Image</label>
-                    <span class="btn btn-file btn-success">
+                    <br/>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="comment">Add Image</label>
+                            <span class="btn btn-file btn-success">
                       Upload<input type="file" id="imageAddBtn" name="imageAddBtn" accept="image/*">
                     </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
             </div>
         </div>
     </div>
     <div class="rotatemodal">
-    <svg width="400" height="200" viewBox="0 0 400 200">
-        <defs>
-            <filter id="goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />
-                <feComposite in="SourceGraphic" in2="cm">
-            </filter>
-            <filter id="f2" x="-200%" y="-40%" width="400%" height="200%">
-                <feOffset in="SourceAlpha" dx="9" dy="3" />
-                <feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />
-                <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.05" />
-                </feComponentTransfer>
-                <feMerge>
-                    <feMergeNode/>
-                    <feMergeNode in="SourceGraphic" />
-                </feMerge>
-            </filter>
-        </defs>
-        <g filter="url(#goo)" style="fill:#FFFFFF">
-            <ellipse id="drop" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058"/>
-            <ellipse id="drop2"cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058"/>
-        </g>
-    </svg>
-    <img src="/static/images/splash-logo.png" alt="Chali Machine Logo" id="splashLogo">
+        <svg width="400" height="200" viewBox="0 0 400 200">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />
+                    <feComposite in="SourceGraphic" in2="cm">
+                </filter>
+                <filter id="f2" x="-200%" y="-40%" width="400%" height="200%">
+                    <feOffset in="SourceAlpha" dx="9" dy="3" />
+                    <feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.05" />
+                    </feComponentTransfer>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+            <g filter="url(#goo)" style="fill:#FFFFFF">
+                <ellipse id="drop" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058" />
+                <ellipse id="drop2" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="#CF9058" />
+            </g>
+        </svg>
+        <img src="/static/images/splash-logo.png" alt="Chali Machine Logo" id="splashLogo">
     </div>
-      <!-- Fabric.js from CDN -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.2/fabric.min.js"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js'></script>
-    <!-- Include the plugin's CSS and JS: -->
-{% compress js %}
+    {% compress js %}
     <script src="/static/js/jquery.twbsPagination.min.js"></script>
     <script src="/static/js/download.js"></script>
     <script src="/static/js/customcontrol.js"></script>
     <script src="/static/js/comicmachine.js"></script>
     <script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-79780450-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-{% endcompress %}
+    ga('create', 'UA-79780450-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    {% endcompress %}
 </body>
 
 </html>
