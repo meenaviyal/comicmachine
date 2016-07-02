@@ -6,6 +6,7 @@
 // }
 
 function toggleSplash() {
+    $('#splashbubble').show();
     $('.rotatemodal').attr('style', 'display:block;');
     // $('#splashDiv').hide();
     var container = document.getElementById('container');
