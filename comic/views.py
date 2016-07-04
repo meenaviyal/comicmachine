@@ -85,3 +85,6 @@ def strip(request):
 
 def home(request):
     return redirect('/create')
+
+def about(request):
+    return render_to_response('comic/about.html')
