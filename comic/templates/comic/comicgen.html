@@ -57,7 +57,8 @@
             </ul>
         </div>
     </div>
-    <div class="col-md-8" id="centre-panel">
+    <div class="col-md-8">
+    <div class="row">
         <div class="btn-toolbar" role="toolbar" aria-label="...">
             <div class="btn-group btn-toolbar__group" role="group" aria-label="...">
                 <button type="button" class="flat-buttons" id="undoBtn"><i class="fa fa-undo"></i>Undo</button>
@@ -69,9 +70,15 @@
                 <button type="button" class="flat-buttons" id="clearBtn"><i class="fa fa-refresh"></i>Clear All</button>
             </div>
         </div>
-        <div class="canvaswrap">
-            <canvas id="c" height="600px" width="800px"></canvas>
+    </div>
+    <div class="row" id="center-panel">
+    <div class="panel panel-default" id="canvaswrap">
+        <div class="panel-heading" id="canvashandle">Artboard <i class="fa fa-arrows pull-right" id="panicon"></i></div>
+        <div class="panel-body">
+            <canvas id="c"></canvas>
         </div>
+    </div>
+    </div>
     </div>
     <div class="col-md-2" id="right-panel">
         <div class="container-fluid">

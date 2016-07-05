@@ -5,15 +5,6 @@
 //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 // }
 
-function toggleSplash() {
-
-
-    return
-}
-
-
-toggleSplash();
-
 function imageToDataUri(img, width, height) {
 
     // create an off-screen canvas
@@ -48,100 +39,21 @@ fabric.Object.prototype.set({
     cornerColor: '#9D6B3F',
 });
 
-//     fabric.Canvas.prototype.customiseControls( {
-//         tl: {
-//             action: 'rotate',
-//         },
-//         tr: {
-//             action: 'scale'
-//         },
-//         bl: {
-//             action: 'remove',
-//             cursor: 'pointer'
-//         },
-//         br: {
-//             action: 'moveUp',
-//             cursor: 'pointer'
-//         },
-//         mb: {
-//             action: 'moveDown',
-//             cursor: 'pointer'
-//         },
-//         mr: {
-//             action: 'scaleX',
-//             cursor: 'pointer'
-//         },
-//         ml: {
-//             action: 'scaleX',
-//             cursor: 'pointer'
-//         },
-//         mt: {
-//             action: 'scaleY',
-//             cursor: 'pointer'
-//         }
-//     } );
-
-// fabric.Object.prototype.customiseCornerIcons( {
-//     settings: {
-//         borderColor: '#9D6B3F',
-//         cornerSize: 25,
-//         cornerBackgroundColor: '#9D6B3F',
-//         cornerShape: 'circle',
-//         cornerPadding: 10
-//     },
-//     tl: {
-//         icon: '/static/icons/rotate.svg'
-//     },
-//     tr: {
-//         icon: '/static/icons/scale.svg'
-//     },
-//     bl: {
-//         icon: '/static/icons/delete.svg'
-//     },
-//     br: {
-//         icon: '/static/icons/layer-up.svg'
-//     },
-//     mb: {
-//         icon: '/static/icons/layer-down.svg'
-//     },
-//     mt: {
-//         icon: '/static/icons/scaleup.svg'
-//     },
-//     mr: {
-//         icon: '/static/icons/scaleright.svg'
-//     },
-//     ml: {
-//         icon: '/static/icons/scaleleft.svg'
-//     }
-// });
-
 
     $('#editform').attr('style', 'color:white;');
-    //   console.log("csrf token is");
-    //   console.log(csrftoken);
-    // $.ajaxSetup({
-    //         beforeSend: function(xhr, settings) {
-    //             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-    //                 // Only send the token to relative URLs i.e. locally.
-    //                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    //             }
-    //         }
-    //     });
 
     // Obtain a canvas drawing surface from fabric.js
-    var canvasWrap = $('.canvaswrap');
+    var canvasWrap = $('#centre-panel');
     // $('.canvaswrap').height(screen.availHeight - (screen.availHeight * 25 / 100));
     // var cWidth = $('.canvaswrap').width() - ($('.canvaswrap').width() * 10 / 100)
     // var cHeight = cWidth / (4 / 3)
-    var cHeight = canvasWrap.height();
-    var cWidth = cHeight / (3 / 4);
-    console.log("Starting canvas with:\n")
-    console.log(cWidth);
-    console.log(cHeight);
-    // var cHeight = 600;
-    // var cWidth = 800;
-    // console.log($('.canvaswrap').width());
-    // console.log($('.canvaswrap').height());
+    // var cHeight = canvasWrap.height();
+    // var cWidth = cHeight / (3 / 4);
+    // console.log("Starting canvas with:\n")
+    // console.log(cWidth);
+    // console.log(cHeight);
+    var cHeight = 600;
+    var cWidth = 800;
     $('#c').attr('height', cHeight);
     $('#c').attr('width', cWidth);
     // $('#c').css('margin-left', ($('.canvaswrap').width() * 5 / 100));
@@ -153,10 +65,18 @@ fabric.Object.prototype.set({
     var newleft = 0;
     canvas.selection = false;
     var imageURI;
-
-
-
-
+    $('#canvaswrap')
+        .draggable({
+            handle: '#canvashandle'
+        })
+        .resizable()
+        .bind({
+            resize : function(event,ui) {
+                canvas.setHeight(ui.size.height-30);
+                canvas.setWidth(ui.size.width);
+                canvas.renderAll();
+            },
+        });
 
     //Initial call
     // respondCanvas();
@@ -501,6 +421,10 @@ fabric.Object.prototype.set({
   });
   $('.spinner .btn:last-of-type').on('click', function() {
     $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+  });
+
+  $('#canvashandle').hover(function (){
+    $('#panicon').toggle();
   });
 
 });

@@ -77,20 +77,43 @@ body.loading .rotatemodal {
     display: block;
 }
 
+/*html, body{
+    height: 100%;
+    }
 
-.canvas-container{
-    margin: 0 auto;
+.container-fluid {
+    min-height: 100%;
 }
 
-#c {
-    border: 1px dashed silver;
-    /*margin-left: 50px;*/
-    /*margin-top: 10px;*/
-    }
+#centre-panel{
+    margin-bottom: -9999px;
+    padding-bottom: 9999px;
+    overflow: auto;
+}*/
+
+#canvashandle{
+  padding: 5px 15px;
+}
+
+#center-panel {
+  margin-bottom: -9999px;
+  padding-bottom: 9999px;
+  overflow: auto;
+}
+
+#canvaswrap {
+    width: 800px;
+    height: 630px;
+    background-color: orange;
+    /*margin: 0 auto;*/
+}
+
+#panicon {
+  display: none;
+}
 
 @media screen and (max-width: 1280px) {
     .canvaswrap {
-        background-color: yellow;
         height: 600px;
         width: 600px;
     }
