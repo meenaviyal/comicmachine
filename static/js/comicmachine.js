@@ -94,9 +94,9 @@ fabric.Object.prototype.set({
                 recieved_data = JSON.parse(data);
                 $('#libraryView').html('');
                 $.each(recieved_data['images'], function(index, value) {
-                    $('#libraryView').append("<div class='col-lg-4 col-md-4 col-xs-6 thumb'>\
-        <a class='thumbnail' href='#'><img class='img-responsive' src='" + value +
-                        "' alt=''></a></div>");
+                    $('#libraryView').append("<div class='col-md-4 librarycol'>\
+        <div class='img-back'><img class='img-responsive' src='" + value +
+                        "' alt=''></div></div>");
                 }); //each
 
                 $('.img-responsive').hover(function() {
@@ -105,7 +105,6 @@ fabric.Object.prototype.set({
                 }, function() {
                     $(this).removeClass('transition');
                 });
-
 
                 $(".img-responsive").click(function() {
                     var thisImage = $(this).attr('src');
@@ -271,6 +270,7 @@ fabric.Object.prototype.set({
     });
 
     $('.img-responsive').on('click', function() {
+        $(this).removeClass('transition');
         var thisImage = $(this).attr('src');
 
         fabric.Image.fromURL(thisImage, function(oImg) {

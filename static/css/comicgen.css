@@ -150,10 +150,6 @@ body.loading .rotatemodal {
 }
 
 
-.thumb {
-    margin-bottom: 5px;
-}
-
 #Chilanka {
     font-family: 'Chilanka';
 }
@@ -180,9 +176,17 @@ body.loading .rotatemodal {
     -o-transform: scale(2.5);
     transform: scale(2.5);
     position: relative;
-    z-index: 2;
+    z-index: 9999;
+}
+
+.librarycol {
+  padding: 5px;
+}
+.img-back{
+  background-color: white;
 }
 .img-responsive {
+    /*margin: 0 auto;*/
     -webkit-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
