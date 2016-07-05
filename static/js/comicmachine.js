@@ -329,8 +329,8 @@ fabric.Object.prototype.set({
             // resolution = resolution.split("x");
             // var tWidth = parseInt(resolution[0]);
             // var tHeight = parseInt(resolution[1]);
-            var tWidth = 800;
-            var tHeight = 600;
+            var tWidth = canvas.width;
+            var tHeight = canvas.height;
             var img = new Image;
 
             img.onload = resizeImage;
