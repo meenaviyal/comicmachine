@@ -1,0 +1,524 @@
+header img {
+    position: fixed;
+    float: left;
+    margin-top: 30px;
+    height: 110px;
+}
+header[role="banner"] {
+    height: 75px;
+    margin-bottom: 2.5em;
+}
+
+
+@font-face {
+font-family: 'Rachana';
+src: url('Rachana.woff');
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+    border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+html {
+    font-size: 62.5%;
+    /* Corrects text resizing oddly in IE6/7 when body font-size is set using em units http://clagnut.com/blog/348/#c790 */
+    overflow-y: scroll;
+    /* Keeps page centred in all browsers regardless of content height */
+    -webkit-text-size-adjust: 100%;
+    /* Prevents iOS text size adjust after orientation change, without disabling user zoom */
+    -ms-text-size-adjust: 100%;
+    /* www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/ */
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+    display: block;
+}
+ol,
+ul {
+    list-style: none;
+}
+table {
+    /* tables still need 'cellspacing="0"' in the markup */
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption,
+th,
+td {
+    font-weight: normal;
+    text-align: left;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+}
+blockquote,
+q {
+    quotes: "" "";
+}
+a:focus {
+    outline: thin dotted;
+}
+a:hover,
+a:active {
+    /* Improves readability when focused and also mouse hovered in all browsers people.opera.com/patrickl/experiments/keyboard/test */
+    outline: 0;
+}
+a img {
+    border: 0;
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.container_12 {
+    display: block;
+    width: 960px;
+    margin: 0 auto;
+}
+.padding {
+    padding: 1em;
+}
+.col_1,
+.col_2,
+.col_3,
+.col_4,
+.col_5,
+.col_6,
+.col_7,
+.col_8,
+.col_9,
+.col_10,
+.col_11,
+.col_12,
+.col_4_narrow,
+.col_8_narrow,
+.row .col_3_list,
+.row .col_4_list {
+    display: block;
+    padding-left: 1em;
+    padding-right: 1em;
+    float: left;
+}
+.row {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.row .col_1 {
+    width: 8.333%;
+}
+.row .col_2 {
+    width: 16.667%;
+}
+.row .col_3,
+.row .col_3_list {
+    width: 25%;
+}
+.row .col_4,
+.row .col_4_narrow,
+.row .col_4_list {
+    width: 33.333%;
+}
+.row .col_5 {
+    width: 41.667%;
+}
+.row .col_6 {
+    width: 50%;
+}
+.row .col_7 {
+    width: 58.333%;
+}
+.row .col_8,
+.row .col_8_single {
+    width: 60%;
+}
+.row .col_9 {
+    width: 75%;
+}
+.row .col_10 {
+    width: 83.333%;
+}
+.row .col_11 {
+    width: 91.667%;
+}
+.row .col_12 {
+    width: 100%;
+}
+.row .push_1 {
+    margin-left: 8.333%;
+}
+.row .push_2,
+.row .push_2_single,
+.row .push_2_list {
+    margin-left: 16.667%;
+}
+.row .push_3,
+.push_3_list {
+    margin-left: 25%;
+}
+.row .push_4 {
+    margin-left: 33.333%;
+}
+.row .push_5 {
+    margin-left: 41.667%;
+}
+.row .push_6 {
+    margin-left: 50%;
+}
+.row .push_7 {
+    margin-left: 58.333%;
+}
+.row .push_8 {
+    margin-left: 66.667%;
+}
+.row .push_9 {
+    margin-left: 75%;
+}
+.row .push_10 {
+    margin-left: 83.333%;
+}
+.row .push_11 {
+    margin-left: 91.667%;
+}
+.row .pull_1 {
+    margin-right: 8.333%;
+}
+.row .pull_2 {
+    margin-right: 16.667%;
+}
+.row .pull_3 {
+    margin-right: 25%;
+}
+.row .pull_4 {
+    margin-right: 33.333%;
+}
+.row .pull_5 {
+    margin-right: 41.667%;
+}
+.row .pull_6 {
+    margin-right: 50%;
+}
+.row .pull_7 {
+    margin-right: 58.333%;
+}
+.row .pull_8 {
+    margin-right: 66.667%;
+}
+.row .pull_9 {
+    margin-right: 75%;
+}
+.row .pull_10 {
+    margin-right: 83.333%;
+}
+.row .pull_11 {
+    margin-right: 91.667%;
+}
+@media screen and (max-width: 1024px) {
+    .container_12 {
+        width: 800px;
+    }
+    .row .col_4_list {
+        width: 50%;
+    }
+    .row .push_2_list {
+        margin: 0;
+    }
+    .row .col_8_single {
+        width: 90%;
+    }
+    .row .push_2_single {
+        margin-left: 5%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container_12 {
+        width: 580px;
+    }
+    .row .col_3_list {
+        width: 50%;
+    }
+    .row .col_1,
+    .row .col_2,
+    .row .col_3,
+    .row .col_4,
+    .row .col_5,
+    .row .col_6,
+    .row .col_7,
+    .row .col_8,
+    .row .col_9,
+    .row .col_10,
+    .row .col_11,
+    .row .col_12 {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .row .push_1,
+    .row .push_2,
+    .row .push_3,
+    .row .push_4,
+    .row .push_5,
+    .row .push_6,
+    .row .push_7,
+    .row .push_8,
+    .row .push_9,
+    .row .push_10,
+    .row .push_11,
+    .row .push_12,
+    .row .pull_1,
+    .row .pull_2,
+    .row .pull_3,
+    .row .pull_4,
+    .row .pull_5,
+    .row .pull_6,
+    .row .pull_7,
+    .row .pull_8,
+    .row .pull_9,
+    .row .pull_10,
+    .row .pull_11,
+    .row .pull_12,
+    .row .push_3_list {
+        margin: 0;
+    }
+}
+@media screen and (max-width: 600px) {
+    .container_12 {
+        width: 450px;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+    .row .col_4_list {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .row .col_8_single {
+        width: 100%;
+    }
+    .row .push_2_single {
+        margin: 0;
+    }
+    .row .col_4_narrow {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 450px) {
+    .container_12 {
+        width: 100%;
+    }
+}
+body {
+    font-size: 18px;
+    font-family: 'Rachana';
+    color: #393939;
+    background-color: #ffffff;
+    font-weight: 400;
+}
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Rachana';
+    color: #393939;
+    font-weight: 300;
+}
+h1 {
+    font-size: 3em;
+}
+h2 {
+    font-size: 3em;
+}
+h3 {
+    font-size: 2em;
+}
+h4 {
+    font-size: 1.2em;
+}
+a {
+    color: #CF9058;
+    text-decoration: none;
+}
+a:hover {
+    color: #CF9058;
+    text-decoration: none;
+}
+.post-edit-link {
+    display: none;
+}
+.page-title h1 {
+    line-height: 1.2em;
+    margin-bottom: 1.25em;
+    text-align: center;
+}
+nav[role="navigation"] {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 8em;
+    overflow: hidden;
+}
+nav[role="navigation"] .nav-previous {
+    float: left;
+}
+nav[role="navigation"] .nav-next {
+    float: right;
+}
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 17px;
+    }
+}
+@media screen and (max-width: 800px) {
+    body {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 15px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.6em;
+    }
+    h3 {
+        font-size: 1.4em;
+    }
+    h4 {
+        font-size: 1.2em;
+    }
+}
+footer[role="contentinfo"] a {
+    color: #727272;
+}
+.page-header {
+    margin-bottom: 4em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #f1f1f1;
+}
+.page-header h1 {
+    font-size: 1.4em;
+    text-align: left;
+}
+footer[role="contentinfo"] {
+    height: 75px;
+    padding-top: 1.5em;
+    margin-top: 4em;
+    color: #ababab;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11.25px !important;
+}
+.page-simple,
+.search article.page {
+    padding-bottom: 8em;
+}
+.page-simple h1,
+{
+    line-height: 1.1em;
+    margin-bottom: 0.2em;
+    text-align: center;
+}
+.page-simple h2,
+{
+    line-height: 1.1em;
+    margin-bottom: .5em;
+}
+.page-simple h3 {
+    line-height: 1.1em;
+    margin-bottom: 0.3em;
+    margin-top: 0.6em;
+}
+.page-simple h4,
+{
+    line-height: 1.1em;
+    margin-bottom: .71em;
+}
+.page-simple .p,
+.page-simple p {
+    line-height: 1.55em;
+    margin-bottom: 1em;
+}
+
+.sound {
+    color: #CF9058;
+    font-size: 20px;
+}
