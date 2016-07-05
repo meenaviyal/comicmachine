@@ -239,3 +239,49 @@ body.loading .rotatemodal {
 h3, p, em, h4{
     color: white;
 }
+
+/*About page*/
+#about-row {
+  padding-top: 70px;
+  font-size: 18px;
+  font-family: 'Rachana';
+  color: #393939;
+  background-color: #ffffff;
+  font-weight: 400;
+}
+.about-main {
+  width: 80%;
+}
+.about-main p {
+    font-family: 'Rachana';
+    color: black;
+}
+.about-main h1, h2, h3, h4 {
+    font-family: 'Rachana';
+    color: #393939;
+    font-weight: 300;
+}
+.about-main h1, h2 {
+    font-size: 3em;
+}
+.about-main h3 {
+    font-size: 2em;
+}
+.about-main h4 {
+    font-size: 1.2em;
+}
+.about-main a {
+    color: #CF9058;
+    text-decoration: none;
+}
+.about-main a:hover {
+    color: #CF9058;
+    text-decoration: none;
+}
+.about-main .sound {
+    color: #CF9058;
+    font-size: 20px;
+}
+.about-sidebar {
+  position: fixed;
+}
