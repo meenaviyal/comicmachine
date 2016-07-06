@@ -241,8 +241,11 @@ h3, p, em, h4{
 }
 
 /*About page*/
+.main-content {
+  padding-top: 50px;
+}
 #about-row {
-  padding-top: 70px;
+  padding-top: 20px;
   font-size: 18px;
   font-family: 'Rachana';
   color: #393939;
