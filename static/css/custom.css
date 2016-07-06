@@ -78,34 +78,6 @@ label {
 }
 
 
-#Chilanka {
-    font-family: 'Chilanka';
-}
-
-#Keraleeyam {
-    font-family: 'Keraleeyam';
-}
-
-#Rachana {
-    font-family: 'Rachana';
-}
-
-
-@font-face {
-    font-family: 'Chilanka';
-    src: url('../fonts/Chilanka.woff');
-}
-
-@font-face {
-    font-family: 'Keraleeyam';
-    src: url('../fonts/Keraleeyam.woff');
-}
-
-@font-face {
-    font-family: 'Rachana';
-    src: url('../fonts/Rachana.woff');
-}
-
 .bg-white{
     background:#ffffff;
 }

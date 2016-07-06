@@ -3,6 +3,45 @@
     background: url('../images/halftone-bg.png');
 }*/
 
+
+@media screen and (max-width: 1280px) {
+    .canvaswrap {
+        height: 600px;
+        width: 600px;
+    }
+    #c {
+        border: 1px solid black;
+        height: 400px;
+        width: 400px;
+    }
+}
+
+@font-face {
+    font-family: 'Rachana';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Rachana.woff');
+}
+
+@font-face {
+    font-family: 'Chilanka';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Chilanka.woff');
+}
+
+@font-face {
+    font-family: 'Keraleeyam';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Keraleeyam.woff');
+}
+
+@font-face {
+    font-family: 'RaghuMalayalam';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/RaghuMalayalamSans-Regular.woff');
+}
+
+@font-face {
+    font-family: 'Uroob';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Uroob.woff');
+}
+
+
 body {
     background-color: #3E3E3E;
 }
@@ -112,61 +151,23 @@ body.loading .rotatemodal {
   display: none;
 }
 
-@media screen and (max-width: 1280px) {
-    .canvaswrap {
-        height: 600px;
-        width: 600px;
-    }
-    #c {
-        border: 1px solid black;
-        height: 400px;
-        width: 400px;
-    }
-}
-
-@font-face {
-    font-family: 'Chilanka';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Chilanka.woff');
-}
-
-@font-face {
-    font-family: 'Keraleeyam';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Keraleeyam.woff');
-}
-
-@font-face {
-    font-family: 'Rachana';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Rachana.woff');
-}
-
-@font-face {
-    font-family: 'RaghuMalayalam';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/RaghuMalayalamSans-Regular.ttf');
-}
-
-@font-face {
-    font-family: 'Uroob';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Uroob.ttf');
-}
-
-
-#Chilanka {
+#chilanka {
     font-family: 'Chilanka';
 }
 
-#Keraleeyam {
+#keraleeyam {
     font-family: 'Keraleeyam';
 }
 
-#Rachana {
+#rachana {
     font-family: 'Rachana';
 }
 
-#RaghuMalayalam {
+#raghuMalayalam {
     font-family: 'RaghuMalayalam';
 }
 
-#Uroob {
+#uroob {
     font-family: 'Uroob';
 }
 
