@@ -373,9 +373,9 @@ fabric.Object.prototype.set({
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.IText('Click Me! :)', {
-        left: canvas.getWidth() / 2,
-        top: canvas.getHeight() / 2,
+    // var hi = new fabric.IText('Click Me! :)', {
+    //     left: canvas.getWidth() / 2,
+    //     top: canvas.getHeight() / 2,
         //     hasBorders: false,
         // hasControls: false,
         // hasRotatingPoint: false,
