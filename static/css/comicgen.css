@@ -22,13 +22,13 @@
 }
 
 @font-face {
-    font-family: 'Chilanka';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Chilanka.woff');
+    font-family: 'Keraleeyam';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Keraleeyam.woff');
 }
 
 @font-face {
-    font-family: 'Keraleeyam';
-    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Keraleeyam.woff');
+    font-family: 'Chilanka';
+    src: url('https://dl.dropboxusercontent.com/u/8198933/Fonts/Chilanka.woff');
 }
 
 @font-face {
@@ -45,6 +45,7 @@
 body {
     background-color: #3E3E3E;
 }
+
 
 .pagination>.active>a,
 .pagination>.active>a:focus,
@@ -151,23 +152,23 @@ body.loading .rotatemodal {
   display: none;
 }
 
-#chilanka {
+.chilanka {
     font-family: 'Chilanka';
 }
 
-#keraleeyam {
+.keraleeyam {
     font-family: 'Keraleeyam';
 }
 
-#rachana {
+.rachana {
     font-family: 'Rachana';
 }
 
-#raghuMalayalam {
+.raghuMalayalam {
     font-family: 'RaghuMalayalam';
 }
 
-#uroob {
+.uroob {
     font-family: 'Uroob';
 }
 
