@@ -376,12 +376,12 @@ fabric.Object.prototype.set({
     // var hi = new fabric.IText('Click Me! :)', {
     //     left: canvas.getWidth() / 2,
     //     top: canvas.getHeight() / 2,
-        //     hasBorders: false,
-        // hasControls: false,
-        // hasRotatingPoint: false,
-        // lockMovementX: true,
-        // lockMovementY: true
-    });
+    //     //     hasBorders: false,
+    //     // hasControls: false,
+    //     // hasRotatingPoint: false,
+    //     // lockMovementX: true,
+    //     // lockMovementY: true
+    // });
 
 
     // Attach it to the canvas object, then (re)display
