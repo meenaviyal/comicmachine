@@ -63,7 +63,7 @@ fabric.Object.prototype.set({
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
     var newleft = 0;
-    canvas.selection = false;
+    canvas.selection = true;
     var imageURI;
     $('#canvaswrap')
         .draggable({
@@ -258,7 +258,7 @@ fabric.Object.prototype.set({
     $('#textAddBtn').on('click', function() {
         var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.Textbox(textToadd, {
+        var newtext = new fabric.IText(textToadd, {
             fontFamily: selectedFont,
             left: 100,
             top: 100,
