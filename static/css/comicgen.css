@@ -1,9 +1,3 @@
-/*
-.canvaswrap {
-    background: url('../images/halftone-bg.png');
-}*/
-
-
 @media screen and (max-width: 1280px) {
     .canvaswrap {
         height: 600px;
@@ -319,4 +313,24 @@ h3, p, em, h4{
 }
 .about-sidebar {
     position: fixed;
+}
+
+/*Unsupported page*/
+
+.mobile {
+    background-color: #fff;
+    height: 100%;
+}
+
+.mobile-img {
+    padding-top: 100px;
+}
+
+.mobile-header {
+    color: #CF9058;
+    font-weight: 300;
+}
+
+.mobile-text {
+    color: #000;
 }
