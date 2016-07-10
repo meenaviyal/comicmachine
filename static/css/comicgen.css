@@ -14,7 +14,7 @@
     font-family: 'Rachana';
     font-style: normal;
     font-weight: 400;
-    src: url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.woff2?v=7.0) format('woff2'), url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.woff?v=7.0) format('woff'), url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.ttf?v=7.0) format('truetype');
+    src: local("Rachana"), url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.woff2?v=7.0) format('woff2'), url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.woff?v=7.0) format('woff'), url(https://smc.org.in/downloads/fonts/rachana/Rachana-Regular.ttf?v=7.0) format('truetype');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
@@ -22,16 +22,22 @@
     font-family: 'Keraleeyam';
     font-style: normal;
     font-weight: 700;
-    src: url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.woff2?v=2.0) format('woff2'), url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.woff?v=2.0) format('woff'), url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.ttf?v=2.0) format('truetype');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
+    src: local("Keraleeyam"),
+        url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.woff2?v=2.0) format('woff2'),
+        url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.woff?v=2.0) format('woff'),
+        url(https://smc.org.in/downloads/fonts/keraleeyam/Keraleeyam.ttf?v=2.0) format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
 @font-face {
     font-family: 'Chilanka';
     font-style: normal;
     font-weight: 400;
-    src: url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.woff2?v=1.2.0) format('woff2'), url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.woff?v=1.2.0) format('woff'), url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.ttf?v=1.2.0) format('truetype');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
+    src: local("Chilanka"),
+        url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.woff2?v=1.2.0) format('woff2'),
+        url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.woff?v=1.2.0) format('woff'),
+        url(https://smc.org.in/downloads/fonts/chilanka/Chilanka-Regular.ttf?v=1.2.0) format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
 
@@ -39,24 +45,33 @@
     font-family: 'RaghuMalayalam';
     font-style: normal;
     font-weight: 400;
-    src: url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.woff2?v=2.1.1) format('woff2'), url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.woff?v=2.1.1) format('woff'), url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.ttf?v=2.1.1) format('truetype');
-    unicode-range: U+0000-02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
+    src: local("RaghuMalayalam"),
+        url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.woff2?v=2.1.1) format('woff2'),
+        url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.woff?v=2.1.1) format('woff'),
+        url(https://smc.org.in/downloads/fonts/raghumalayalamsans/RaghuMalayalamSans-Regular.ttf?v=2.1.1) format('truetype');
+        unicode-range: U+0000-02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
 @font-face {
     font-family: 'Uroob';
     font-style: normal;
     font-weight: 700;
-    src: url(https://smc.org.in/downloads/fonts/uroob/Uroob.woff2?v=2.0) format('woff2'), url(https://smc.org.in/downloads/fonts/uroob/Uroob.woff?v=2.0) format('woff'), url(https://smc.org.in/downloads/fonts/uroob/Uroob.ttf?v=2.0) format('truetype');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
+    src: local("Uroob"),
+        url(https://smc.org.in/downloads/fonts/uroob/Uroob.woff2?v=2.0) format('woff2'),
+        url(https://smc.org.in/downloads/fonts/uroob/Uroob.woff?v=2.0) format('woff'),
+        url(https://smc.org.in/downloads/fonts/uroob/Uroob.ttf?v=2.0) format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
 @font-face {
     font-family: 'Karumbi';
     font-style: normal;
     font-weight: 400;
-    src: url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.woff2?v=1.0) format('woff2'), url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.woff?v=1.0) format('woff'), url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.ttf?v=1.0) format('truetype');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
+    src: local("Karumbi"),
+        url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.woff2?v=1.0) format('woff2'),
+        url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.woff?v=1.0) format('woff'),
+        url(https://smc.org.in/downloads/fonts/karumbi/Karumbi.ttf?v=1.0) format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+0D01-0D7F, U+200C-U+200D, U+25CC;
 }
 
 
