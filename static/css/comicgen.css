@@ -319,13 +319,12 @@ h3, p, em, h4{
 
 .mobile {
     background-color: #fff;
-    height: 100%;
 }
 
-.mobile-img {
-    padding-top: 100px;
+.mobile img{
+    width: 100%;
+    display: block;
 }
-
 .mobile-header {
     color: #CF9058;
     font-weight: 300;

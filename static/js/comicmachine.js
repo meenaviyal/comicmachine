@@ -22,14 +22,6 @@ function imageToDataUri(img, width, height) {
     return tempcanvas.toDataURL();
 }
 
-function mobileRedirect(){
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	window.location = "/unsupported";
-    }
-}
-
-window.onload = mobileRedirect;
-
 $body = $("body");
 //document load
 var selectedFont = 'Rachana';
