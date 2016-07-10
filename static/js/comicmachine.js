@@ -260,10 +260,9 @@ fabric.Object.prototype.set({
         var textToadd = $('#textAddArea').val();
         var newtext = new fabric.Textbox(textToadd, {
             fontFamily: selectedFont,
-            left: 100,
-            top: 100,
-            textAlign: 'center',
-            fontSize: selectedFontSize
+            left: 50,
+            top: 50,
+            fontSize: selectedFontSize,
         });
         canvas.add(newtext);
         $('#textAddArea').val('');
@@ -375,12 +374,8 @@ fabric.Object.prototype.set({
     // know about it yet.
     var hi = new fabric.IText('Click Me! :)', {
         left: canvas.getWidth() / 2,
-        top: canvas.getHeight() / 2,
-        //     hasBorders: false,
-        // hasControls: false,
-        // hasRotatingPoint: false,
-        // lockMovementX: true,
-        // lockMovementY: true
+        top: canvas.getHeight() / 2
+
     });
 
 
