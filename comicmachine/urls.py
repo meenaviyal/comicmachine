@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^{}'.format(settings.ADMIN_URL), include(admin.site.urls)),
     # url(r'^images/', include('django_images.urls')),
     url(r'', include('comic.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

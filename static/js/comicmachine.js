@@ -22,7 +22,6 @@ function imageToDataUri(img, width, height) {
     return tempcanvas.toDataURL();
 }
 
-
 $body = $("body");
 //document load
 var selectedFont = 'Rachana';
@@ -247,6 +246,13 @@ fabric.Object.prototype.set({
         canvas.remove(canvas.getActiveObject());
     });
 
+    window.addEventListener("keydown", function(e){
+	// Allow use of backspace or delete key to delete objects
+	if(e.keyCode === 8 || e.keyCode === 46) {
+            canvas.remove(canvas.getActiveObject());
+	}
+    });
+
     $('#moveUp').on('click', function() {
         canvas.bringToFront(canvas.getActiveObject());
     });
@@ -260,10 +266,9 @@ fabric.Object.prototype.set({
         var textToadd = $('#textAddArea').val();
         var newtext = new fabric.Textbox(textToadd, {
             fontFamily: selectedFont,
-            left: 100,
-            top: 100,
-            textAlign: 'center',
-            fontSize: selectedFontSize
+            left: 50,
+            top: 50,
+            fontSize: selectedFontSize,
         });
         canvas.add(newtext);
         $('#textAddArea').val('');
@@ -373,14 +378,11 @@ fabric.Object.prototype.set({
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.IText('Click Me! :)', {
-        left: canvas.getWidth() / 2,
-        top: canvas.getHeight() / 2,
-        //     hasBorders: false,
-        // hasControls: false,
-        // hasRotatingPoint: false,
-        // lockMovementX: true,
-        // lockMovementY: true
+    var hi = new fabric.Textbox('Click Me! :)', {
+        left: 200,
+        top: 200,
+        width: 200
+
     });
 
 
