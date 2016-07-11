@@ -98,11 +98,20 @@ fabric.Object.prototype.set({
                         "' alt=''></div></div>");
                 }); //each
 
-                $('.img-responsive').hover(function() {
-                    $(this).addClass('transition');
+                $('.img-back').hover(function() {
+                    $(this).find(".img-responsive").addClass('transition');
 
                 }, function() {
-                    $(this).removeClass('transition');
+                    $(this).find(".img-responsive").removeClass('transition');
+                });
+
+                //fix for zoom blocking issue
+                $('.img-back').mousemove(function(event) { 
+                    var left = event.pageX - $(this).offset().left;
+                    var top = event.pageY - $(this).offset().top;
+                    if (left<0 || left>$(this).width() || top<0 || top>$(this).height()) {
+                        $(this).find(".img-responsive").removeClass('transition');
+                    }
                 });
 
                 $(".img-responsive").click(function() {
