@@ -273,6 +273,10 @@ fabric.Object.prototype.set({
         canvas.add(newtext);
         $('#textAddArea').val('');
     });
+    
+    $(document).on('focusin', '#textAddArea', function(e) { 
+        canvas.deactivateAll().renderAll();
+    });
 
     $('.img-responsive').on('click', function() {
         $(this).removeClass('transition');
