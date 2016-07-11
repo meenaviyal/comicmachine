@@ -337,8 +337,9 @@ h3, p, em, h4{
 }
 
 .mobile img{
-    width: 100%;
+    width: 50vw;
     display: block;
+    height: auto;
 }
 .mobile-header {
     color: #CF9058;
