@@ -258,7 +258,7 @@ fabric.Object.prototype.set({
     $('#textAddBtn').on('click', function() {
         var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.IText(textToadd, {
+        var newtext = new fabric.Textbox(textToadd, {
             fontFamily: selectedFont,
             left: 100,
             top: 100,
