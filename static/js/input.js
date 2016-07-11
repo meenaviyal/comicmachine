@@ -47,7 +47,7 @@ function addCheckbox(editform,textBox) {
 
     //Add tab key shortcut to switch language
     $(document).on('keydown', textBox, function(e) { 
-		if (e.keyCode == 9) { 
+		if (e.ctrlKey && e.keyCode == 77) { 
 			e.preventDefault(); 
 			rtClick();
 			element.checked = realTime;
