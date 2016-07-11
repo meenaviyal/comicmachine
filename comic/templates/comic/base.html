@@ -4,6 +4,7 @@
 
 <head>
     <title>ChaliMachine | ചളിമിഷ്യൻ</title>
+    <link rel="shortcut icon" type="image/png" href="/static/images/favicon.png"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -43,79 +44,85 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js'></script>
     <script type="text/javascript">
-    $('#splashbubble').show();
-    $('.rotatemodal').attr('style', 'display:block;');
-    // $('#splashDiv').hide();
-    var container = document.getElementById('container');
-    var drop = document.getElementById('drop');
-    var drop2 = document.getElementById('drop2');
-    var outline = document.getElementById('outline');
+    function mobileRedirect(){
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                window.location = "/unsupported";
+        }
+        else {
+                $('#splashbubble').show();
+                $('.rotatemodal').attr('style', 'display:block;');
+                var container = document.getElementById('container');
+                var drop = document.getElementById('drop');
+                var drop2 = document.getElementById('drop2');
+                var outline = document.getElementById('outline');
 
-    TweenMax.set(['svg'], {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        xPercent: -50,
-        yPercent: -50
-    })
+                TweenMax.set(['svg'], {
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    xPercent: -50,
+                    yPercent: -50
+                })
 
-    TweenMax.set([container], {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        xPercent: -50,
-        yPercent: -50
-    })
+                TweenMax.set([container], {
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    xPercent: -50,
+                    yPercent: -50
+                })
 
-    TweenMax.set(drop, {
-        transformOrigin: '50% 50%'
-    })
+                TweenMax.set(drop, {
+                    transformOrigin: '50% 50%'
+                })
 
-    var tl = new TimelineMax({
-        repeat: -1,
-        paused: false,
-        repeatDelay: 0,
-        immediateRender: false
-    });
+                var tl = new TimelineMax({
+                    repeat: -1,
+                    paused: false,
+                    repeatDelay: 0,
+                    immediateRender: false
+                });
 
-    tl.timeScale(3);
+                tl.timeScale(3);
 
-    tl.to(drop, 4, {
-            attr: {
-                cx: 250,
-                rx: '+=10',
-                ry: '+=10'
-            },
-            ease: Back.easeInOut.config(3)
-        })
-        .to(drop2, 4, {
-            attr: {
-                cx: 250
-            },
-            ease: Power1.easeInOut
-        }, '-=4')
-        .to(drop, 4, {
-            attr: {
-                cx: 125,
-                rx: '-=10',
-                ry: '-=10'
-            },
-            ease: Back.easeInOut.config(3)
-        })
-        .to(drop2, 4, {
-            attr: {
-                cx: 125,
-                rx: '-=10',
-                ry: '-=10'
-            },
-            ease: Power1.easeInOut
-        }, '-=4')
+                tl.to(drop, 4, {
+                        attr: {
+                            cx: 250,
+                            rx: '+=10',
+                            ry: '+=10'
+                        },
+                        ease: Back.easeInOut.config(3)
+                    })
+                    .to(drop2, 4, {
+                        attr: {
+                            cx: 250
+                        },
+                        ease: Power1.easeInOut
+                    }, '-=4')
+                    .to(drop, 4, {
+                        attr: {
+                            cx: 125,
+                            rx: '-=10',
+                            ry: '-=10'
+                        },
+                        ease: Back.easeInOut.config(3)
+                    })
+                    .to(drop2, 4, {
+                        attr: {
+                            cx: 125,
+                            rx: '-=10',
+                            ry: '-=10'
+                        },
+                        ease: Power1.easeInOut
+                    }, '-=4')
+            setTimeout(function() {
+                $('.rotatemodal').attr('style', 'display:none;');
+            }, 5000);
+        } //else
+    }// mobileredirect
 
+    window.onload = mobileRedirect;
 
-
-    setTimeout(function() {
-        $('.rotatemodal').attr('style', 'display:none;');
-    }, 5000);
     </script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.2/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>

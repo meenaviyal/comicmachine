@@ -57,7 +57,7 @@ def comicgen(request):
     coll = request.COOKIES.get('selected_collection')
     if not coll:
         response.set_cookie('selected_collection', 'all')
-    
+
     return response
 
 @csrf_exempt
@@ -88,3 +88,6 @@ def home(request):
 
 def about(request):
     return render_to_response('comic/about.html')
+
+def unsupported(request):
+    return render_to_response('comic/unsupported.html')
