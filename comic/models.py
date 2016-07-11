@@ -2,6 +2,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
 import shortuuid
+from django.utils.safestring import mark_safe
 # Create your models here.
 
 
@@ -61,6 +62,12 @@ class ComicStrip(models.Model):
     name = models.CharField(max_length=100, default='Comic with No Name')
     image = models.ImageField(upload_to="strips")
     featured = models.BooleanField(default=False)
+
+    def image_tag(self):
+        return mark_safe('<a href="%s"><img src="%s" width="150" height="150" /></a>' % (
+            self.image.url, self.image.url))
+
+    image_tag.short_description = 'Image'
 
     def __str__(self):              # __unicode__ on Python 2
         return self.name
