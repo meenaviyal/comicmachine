@@ -62,7 +62,7 @@ fabric.Object.prototype.set({
     canvas.setBackgroundColor('white');
     canvas.counter = 0;
     var newleft = 0;
-    canvas.selection = false;
+    canvas.selection = true;
     var imageURI;
     $('#canvaswrap')
         .draggable({
@@ -264,7 +264,7 @@ fabric.Object.prototype.set({
     $('#textAddBtn').on('click', function() {
         var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.Textbox(textToadd, {
+        var newtext = new fabric.ScalableTextbox(textToadd, {
             fontFamily: selectedFont,
             left: 50,
             top: 50,
@@ -378,11 +378,10 @@ fabric.Object.prototype.set({
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.Textbox('Click Me! :)', {
+    var hi = new fabric.ScalableTextbox('Click Me! :)', {
         left: 200,
         top: 200,
         width: 200
-
     });
 
 
