@@ -45,8 +45,17 @@ function addCheckbox(editform,textBox) {
     else if (element.attachEvent) 
         element.attachEvent("onclick", rtClick);
 
+    //Add tab key shortcut to switch language
+    $(document).on('keydown', textBox, function(e) { 
+		if (e.ctrlKey && e.keyCode == 77) { 
+			e.preventDefault(); 
+			rtClick();
+			element.checked = realTime;
+        } 
+    });
+
     var h = document.createElement("label")
-    var labelcheckBox = document.createTextNode('Type in Malayalam');
+    var labelcheckBox = document.createTextNode('Type in Malayalam [ Tab ↹ ]');
     editform.insertBefore(element,textBox);
     document.getElementById("realtime").checked = realTime;
     editform.insertBefore(labelcheckBox,textBox);
