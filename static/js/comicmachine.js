@@ -258,7 +258,7 @@ fabric.Object.prototype.set({
     $('#textAddBtn').on('click', function() {
         var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
-        var newtext = new fabric.Textbox(textToadd, {
+        var newtext = new fabric.ScalableTextbox(textToadd, {
             fontFamily: selectedFont,
             left: 100,
             top: 100,
@@ -373,7 +373,7 @@ fabric.Object.prototype.set({
     // Create a text object.
     // Does not display it-the canvas doesn't
     // know about it yet.
-    var hi = new fabric.IText('Click Me! :)', {
+    var hi = new fabric.ScalableTextbox('Click Me! :)', {
         left: canvas.getWidth() / 2,
         top: canvas.getHeight() / 2,
         //     hasBorders: false,
