@@ -258,6 +258,7 @@ fabric.Object.prototype.set({
     window.addEventListener("keydown", function(e){
 	// Allow use of backspace or delete key to delete objects
 	if(e.keyCode === 8 || e.keyCode === 46) {
+            e.preventDefault();
             canvas.remove(canvas.getActiveObject());
 	}
     });
