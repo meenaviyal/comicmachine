@@ -12,7 +12,7 @@ html,body {
 
 .btn-toolbar {
     width: 100%;
-    background:#222222; 
+    background:#222222;
     margin-left: 0px;
 }
 
@@ -59,7 +59,6 @@ label {
 }
 
 #left-panel{
-    height: 100vh;
     background: #3E3E3E;
     border-right: 1px solid black;
 }
@@ -72,7 +71,6 @@ label {
 }
 
 #right-panel{
-    height: 100vh;
     background: #3E3E3E;
     border-left: 1px solid black;
 }

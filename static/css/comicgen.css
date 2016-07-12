@@ -171,14 +171,12 @@ body.loading .rotatemodal {
 }
 
 #center-panel {
-    margin-bottom: -9999px;
-    padding-bottom: 9999px;
     overflow: auto;
 }
 
 #canvaswrap {
     width: 800px;
-    height: 630px;
+    height: 500px;
     background-color: orange;
     /*margin: 0 auto;*/
 }
