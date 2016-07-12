@@ -1,19 +1,19 @@
 /* calling functions  */
 
 function addLoadEvent(func) {
-    
-    if (window.addEventListener) 
+
+    if (window.addEventListener)
         window.addEventListener("load", func, false);
-    else if (window.attachEvent) 
+    else if (window.attachEvent)
         window.attachEvent("onload", func);
 }
 
 function addTranslit(editForm,textBox) {
     checkrt(editForm); // check for translit support
 
-    if (textBox.addEventListener) 
+    if (textBox.addEventListener)
         textBox.addEventListener("keypress", processKeys, false);
-    else if (textBox.attachEvent) 
+    else if (textBox.attachEvent)
         textBox.attachEvent("onkeypress", processKeys);
 }
 
@@ -23,7 +23,7 @@ function addTextEvent() {
         var textBox=document.getElementById('textAddArea');
         var textSummary = document.getElementById('wpSummary');
         addTranslit(editForm,textBox);
-        addCheckbox(editForm,textBox ); 
+        addCheckbox(editForm,textBox );
         if(textSummary) { addTranslit(editForm,textSummary); }
     }
 
@@ -38,24 +38,24 @@ function addCheckbox(editform,textBox) {
     var element = document.createElement("input");
     element.setAttribute("type","checkbox");
     element.setAttribute("id","realtime");
- 
 
-    if (element.addEventListener) 
+
+    if (element.addEventListener)
         element.addEventListener("click", rtClick, false);
-    else if (element.attachEvent) 
+    else if (element.attachEvent)
         element.attachEvent("onclick", rtClick);
 
     //Add tab key shortcut to switch language
-    $(document).on('keydown', textBox, function(e) { 
-		if (e.ctrlKey && e.keyCode == 77) { 
-			e.preventDefault(); 
+    $(document).on('keydown', textBox, function(e) {
+		if (e.ctrlKey && e.keyCode == 77) {
+			e.preventDefault();
 			rtClick();
 			element.checked = realTime;
-        } 
+        }
     });
 
     var h = document.createElement("label")
-    var labelcheckBox = document.createTextNode('Type in Malayalam[cntrl+m]');
+    var labelcheckBox = document.createTextNode(' Type in Malayalam[ctrl+m]');
     editform.insertBefore(element,textBox);
     document.getElementById("realtime").checked = realTime;
     editform.insertBefore(labelcheckBox,textBox);
@@ -77,7 +77,7 @@ function processKeys(event) {
             if (chk) { chk.checked = realTime; }
             return false;
         }
-        
+
         else if ((e.keyCode >= 3328 && e.keyCode <= 3455) || (e.which >= 3328 && e.which <= 3455)) {
             var chk = document.getElementById('realtime');
             if (imeStatus == false || realTime) {
@@ -88,12 +88,12 @@ function processKeys(event) {
                 return false;
             }
         }
-                    
+
         else if (realTime) {
             imeStatus = false;
             transliterateKey(event); // call transliteration function
         }
-    } 
+    }
 }
 
 var realTime = true;
@@ -103,27 +103,27 @@ function rtClick(event) {
 }
 
 var rtsupported = false;
-var error; 
+var error;
 
 function checkrt(editform) {
     try {
-    
+
     /*
     var nav = navigator.userAgent.toUpperCase();
     rtsupported = (nav.indexOf("GECKO") >= 0 || nav.indexOf("OPERA") >= 0 || nav.indexOf("SAFARI") >= 0);
     */
-    
+
         rtsupported = (document.selection != undefined)
-        
+
         if (!rtsupported) {
             var element = document.createElement("TEXTAREA");
             editform.appendChild(element);
-            
+
             if (element.selectionStart != undefined)
                 rtsupported = true;
                 editform.removeChild(element);
         }
-        
+
     } catch (error) {}
 }
 
