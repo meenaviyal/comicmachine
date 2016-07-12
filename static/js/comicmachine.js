@@ -264,10 +264,12 @@ fabric.Object.prototype.set({
     $('#textAddBtn').on('click', function() {
         var selectedFontSize =  $('#fontSizeSelector').val();
         var textToadd = $('#textAddArea').val();
+        var textColor = $('#textColorPicker').value;
         var newtext = new fabric.ScalableTextbox(textToadd, {
             fontFamily: selectedFont,
             left: 50,
             top: 50,
+            fill: textColor,
             fontSize: selectedFontSize,
         });
         canvas.add(newtext);
