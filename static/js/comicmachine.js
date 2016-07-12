@@ -252,22 +252,22 @@ fabric.Object.prototype.set({
     });
 
     $('#deleteBtn').on('click', function() {
-        canvas.remove(canvas.getActiveObject());
+        canvas.remove(getSelection());
     });
 
     window.addEventListener("keydown", function(e){
 	// Allow use of backspace or delete key to delete objects
 	if(e.keyCode === 8 || e.keyCode === 46) {
-            canvas.remove(canvas.getActiveObject());
+        canvas.remove(getSelection());
 	}
     });
 
     $('#moveUp').on('click', function() {
-        canvas.bringToFront(canvas.getActiveObject());
+        canvas.bringToFront(getSelection());
     });
 
     $('#moveDown').on('click', function() {
-        canvas.sendToBack(canvas.getActiveObject());
+        canvas.sendToBack(getSelection());
     });
 
     $('#textAddBtn').on('click', function() {
@@ -282,6 +282,10 @@ fabric.Object.prototype.set({
         canvas.add(newtext);
         $('#textAddArea').val('');
     });
+
+    function getSelection(){
+        return canvas.getActiveObject() == null ? canvas.getActiveGroup() : canvas.getActiveObject();
+    }
     
     $(document).on('focusin', '#textAddArea', function(e) { 
         canvas.deactivateAll().renderAll();
@@ -301,13 +305,14 @@ fabric.Object.prototype.set({
 
     $('#exportBtn').on('click', function() {
         //remove selection controls
-        var activeObj = canvas.getActiveObject();
-        if (activeObj) {
-            activeObj.hasBorders = false;
-            activeObj.hasControls = false;
-        }
+        // var activeObj = canvas.getActiveObject();
+        // if (activeObj) {
+        //     activeObj.hasBorders = false;
+        //     activeObj.hasControls = false;
+        // }
 
-        canvas.renderAll();
+        // canvas.renderAll();
+        canvas.deactivateAll().renderAll();
         imageURI = canvas.toDataURL('png');
         if (activeObj) {
             activeObj.hasBorders = true;
