@@ -55,10 +55,28 @@ function addCheckbox(editform,textBox) {
     });
 
     var h = document.createElement("label")
-    var labelcheckBox = document.createTextNode('Type in Malayalam[cntrl+m]');
+    
     editform.insertBefore(element,textBox);
     document.getElementById("realtime").checked = realTime;
+
+    var labelcheckBox = document.createTextNode('Type in Malayalam  ');
     editform.insertBefore(labelcheckBox,textBox);
+
+    var ctrl = document.createElement("kbd");
+    ctrl.className = 'light';
+    var ctrl_t = document.createTextNode("Ctrl");       // Create a text node
+    ctrl.appendChild(ctrl_t);
+    editform.insertBefore(ctrl,textBox);
+
+    var plus = document.createTextNode(' + ');
+    editform.insertBefore(plus,textBox);
+
+    var letterM = document.createElement("kbd");
+    letterM.className = 'light';
+    var letterM_t = document.createTextNode("M");       // Create a text node
+    letterM.appendChild(letterM_t);
+    editform.insertBefore(letterM,textBox);
+
     var p = document.createElement("p");
     p.setAttribute("style","width:100%;height:1px;");
     editform.insertBefore(p,textBox);
