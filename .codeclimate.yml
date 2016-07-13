@@ -19,4 +19,5 @@ ratings:
   - "**.css"
   - "**.js"
   - "**.py"
-exclude_paths: []
+exclude_paths:
+  - "comic/migrations/*"
