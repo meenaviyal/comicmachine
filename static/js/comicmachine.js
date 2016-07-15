@@ -80,6 +80,24 @@ fabric.Object.prototype.set({
     //Initial call
     // respondCanvas();
 
+    function getActiveElement() {
+        return (canvas.getActiveObject() || canvas.getActiveGroup());
+    };
+
+    function removeActiveElement() {
+        var e = getActiveElement();
+        if (e === null) {
+            return;
+        }
+        if (e.get('type') === 'group') {
+            canvas.getActiveGroup().forEachObject(function(o) { 
+                canvas.remove(o) 
+            });
+            canvas.discardActiveGroup().renderAll();
+        } else {
+            canvas.remove(e);
+        }
+    }
 
     function get_images(dataToSend) {
         reqid = String(Math.random()).split(".")[1]
@@ -252,22 +270,22 @@ fabric.Object.prototype.set({
     });
 
     $('#deleteBtn').on('click', function() {
-        canvas.remove(canvas.getActiveObject());
+        removeActiveElement();
     });
 
     window.addEventListener("keydown", function(e){
-	// Allow use of backspace or delete key to delete objects
-	if(e.keyCode === 8 || e.keyCode === 46) {
-            canvas.remove(canvas.getActiveObject());
-	}
+	   // Allow use of backspace or delete key to delete objects
+	   if(e.keyCode === 8 || e.keyCode === 46) {
+            removeActiveElement();
+	   }
     });
 
     $('#moveUp').on('click', function() {
-        canvas.bringToFront(canvas.getActiveObject());
+        canvas.bringToFront(getActiveElement());
     });
 
     $('#moveDown').on('click', function() {
-        canvas.sendToBack(canvas.getActiveObject());
+        canvas.sendToBack(getActiveElement());
     });
 
     $('#textAddBtn').on('click', function() {
@@ -300,20 +318,8 @@ fabric.Object.prototype.set({
     });
 
     $('#exportBtn').on('click', function() {
-        //remove selection controls
-        var activeObj = canvas.getActiveObject();
-        if (activeObj) {
-            activeObj.hasBorders = false;
-            activeObj.hasControls = false;
-        }
-
-        canvas.renderAll();
+        canvas.deactivateAll().renderAll();
         imageURI = canvas.toDataURL('png');
-        if (activeObj) {
-            activeObj.hasBorders = true;
-            activeObj.hasControls = true;
-        }
-        canvas.renderAll();
 
         if (!fabric.Canvas.supports('toDataURL')) {
             alert('This browser doesn\'t provide means to serialize canvas to an image');
