@@ -90,8 +90,8 @@ fabric.Object.prototype.set({
             return;
         }
         if (e.get('type') === 'group') {
-            canvas.getActiveGroup().forEachObject(function(o) { 
-                canvas.remove(o) 
+            canvas.getActiveGroup().forEachObject(function(o) {
+                canvas.remove(o)
             });
             canvas.discardActiveGroup().renderAll();
         } else {
@@ -124,7 +124,7 @@ fabric.Object.prototype.set({
                 });
 
                 //fix for zoom blocking issue
-                $('.img-back').mousemove(function(event) { 
+                $('.img-back').mousemove(function(event) {
                     var left = event.pageX - $(this).offset().left;
                     var top = event.pageY - $(this).offset().top;
                     if (left<0 || left>$(this).width() || top<0 || top>$(this).height()) {
@@ -273,12 +273,25 @@ fabric.Object.prototype.set({
         removeActiveElement();
     });
 
-    window.addEventListener("keydown", function(e){
-	   // Allow use of backspace or delete key to delete objects
-	   if(e.keyCode === 8 || e.keyCode === 46) {
-            removeActiveElement();
-	   }
-    });
+  // Allow use of backspace or delete key to delete objects
+  window.addEventListener("keydown", function(e) {
+    if (e.keyCode === 8 || e.keyCode === 46) {
+      // Prevent default function if used on canvas
+      var tag = e.srcElement || e.target;
+      var tagName = tag.tagName.toLowerCase();
+      if (isNotInput(tag, tagName)) {
+        e.preventDefault();
+        removeActiveElement();
+      }
+    }
+  });
+
+  function isNotInput(tag, tagName) {
+    if (tagName === "input" || tagName === "textarea") {
+      return (tag.readOnly || tag.disabled);
+    }
+    return true;
+  }
 
     $('#moveUp').on('click', function() {
         canvas.bringToFront(getActiveElement());
@@ -300,8 +313,8 @@ fabric.Object.prototype.set({
         canvas.add(newtext);
         $('#textAddArea').val('');
     });
-    
-    $(document).on('focusin', '#textAddArea', function(e) { 
+
+    $(document).on('focusin', '#textAddArea', function(e) {
         canvas.deactivateAll().renderAll();
     });
 
