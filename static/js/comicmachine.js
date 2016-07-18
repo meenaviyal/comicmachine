@@ -273,11 +273,23 @@ fabric.Object.prototype.set({
         removeActiveElement();
     });
 
-    window.addEventListener("keydown", function(e){
-	   // Allow use of backspace or delete key to delete objects
-	   if(e.keyCode === 8 || e.keyCode === 46) {
-            removeActiveElement();
-	   }
+    // Allow use of backspace or delete key to delete objects
+    window.addEventListener("keydown", function(e) {
+        if (e.keyCode === 8 || e.keyCode === 46) {
+            // Prevent default function if used on canvas
+            var isInput = false;
+            var tag = e.srcElement || e.target;
+            var tagName = tag.tagName.toLowerCase();
+            if (tagName === "input" || tagName === "textarea") {
+                isInput = !(tag.readOnly || tag.disabled);
+            } else {
+                isInput = false;
+            }
+            if (!isInput) {
+                e.preventDefault();
+                removeActiveElement();
+            }
+	    }
     });
 
     $('#moveUp').on('click', function() {
