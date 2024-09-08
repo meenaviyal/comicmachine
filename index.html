@@ -5,115 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComicMachine</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #f9f9f9;
-            color: #424242;
-        }
-        .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-        }
-        .navbar-brand {
-            font-weight: 600;
-            color: #424242;
-        }
-        .nav-link {
-            color: #424242;
-        }
-        .main-content {
-            padding-top: 2rem;
-        }
-        .card {
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-        }
-        .card-header {
-            background-color: #fff;
-            border-bottom: 1px solid #e0e0e0;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .btn-primary {
-            background-color: #387ed1;
-        }
-        .btn-primary:hover {
-            background-color: #2c6cb2;
-        }
-        .artboard-area {
-            background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-        }
-        .thumbnail {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.1s ease-in-out;
-        }
-        .thumbnail:hover {
-            transform: scale(1.05);
-        }
-        .pagination .page-link {
-            color: #424242;
-            border-color: #dee2e6;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-        }
-        .pagination .active .page-link {
-            background-color: #387ed1;
-            border-color: #387ed1;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
 </head>
 <body>
-    <nav class="navbar flex justify-between items-center px-6 py-4">
-        <a class="navbar-brand text-lg font-semibold" href="#">ComicMachine</a>
-        <div class="flex space-x-4">
-            <a class="nav-link" href="/gallery.html">Gallery</a>
-            <a class="nav-link" href="/fonts.html">Fonts</a>
-            <a class="nav-link" href="#">About</a>
-        </div>
-    </nav>
+    <div id="navbar"></div>
 
     <div class="container mx-auto main-content">
         <div class="flex flex-wrap">
-            <div class="w-full md:w-1/6 p-4">
+            <div class="w-full md:w-1/6 p-4" id="library">
                 <div class="card bg-white p-4">
-                    <div class="card-header mb-4">Library</div>
-                    <div class="library-grid grid grid-cols-2 gap-2">
-                        <img src="placeholder1.jpg" class="thumbnail" alt="Character 1">
-                        <img src="placeholder2.jpg" class="thumbnail" alt="Character 2">
-                        <img src="placeholder3.jpg" class="thumbnail" alt="Character 3">
-                        <img src="placeholder4.jpg" class="thumbnail" alt="Character 4">
-                        <img src="placeholder5.jpg" class="thumbnail" alt="Character 5">
-                        <img src="placeholder6.jpg" class="thumbnail" alt="Character 6">
+                    <div class="max-w-xs mx-auto">
+                        <h1 class="text-3xl font-bold mb-6 text-center">Images</h1>
+                
+                        <!-- Dropdown for selecting collection name -->
+                        <div class="mb-6">
+                            <label for="collectionSelect" class="block text-lg font-medium mb-2">Select Collection:</label>
+                            <select id="collectionSelect" class="border border-gray-300 rounded p-2 w-full">
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                
+                        <!-- Gallery Display -->
+                        <div id="galleryDisplay" class="grid grid-cols-3 gap-4 mb-6">
+                            <!-- Images will be displayed here -->
+                        </div>
+                
+                        <!-- Pagination Controls -->
+                        <div id="paginationControls" class="flex justify-center space-x-2">
+                            <button id="prevPage" class="bg-blue-500 text-white p-2 rounded" disabled>Previous</button>
+                            <span id="currentPage" class="text-lg"></span>
+                            <button id="nextPage" class="bg-blue-500 text-white p-2 rounded">Next</button>
+                        </div>
                     </div>
-                    <div class="mt-4">
-                        <nav aria-label="Library navigation">
-                            <ul class="pagination flex justify-center space-x-1 text-sm">
-                                <li>
-                                    <a class="page-link px-2 py-1 text-gray-400 cursor-not-allowed" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="active">
-                                    <a class="page-link px-2 py-1 bg-blue-500 text-white" href="#">1</a>
-                                </li>
-                                <li><a class="page-link px-2 py-1" href="#">2</a></li>
-                                <li><a class="page-link px-2 py-1" href="#">3</a></li>
-                                <li>
-                                    <a class="page-link px-2 py-1" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+                </div>                
             </div>
-            <div class="w-full md:w-7/12 p-4">
+            <div class="w-full md:w-7/12 p-4" id="artboard">
                 <div class="card bg-white p-4">
                     <div class="card-header mb-4 flex justify-between">
                         <span>Artboard</span>
@@ -131,8 +58,9 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
-            <div class="w-full md:w-1/4 p-4">
+            <div class="w-full md:w-1/4 p-4" id="tools">
                 <div class="card bg-white p-4">
                     <div class="card-header mb-4">Tools</div>
                     <div class="card-body">
@@ -155,9 +83,20 @@
                         <button class="btn btn-outline-secondary btn-sm w-full">Upload</button>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
+
+    <script>
+        // Load components
+        fetch('navbar.mustache')
+            .then(response => response.text())
+            .then(template => {
+                document.getElementById('navbar').innerHTML = Mustache.render(template);
+            });
+    </script>
+    <script defer src="show.js"></script>
 </body>
 </html>
 

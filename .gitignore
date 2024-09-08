@@ -63,3 +63,4 @@ comicmachine/settings_prod*
 staticroot/*
 Dev/*
 __init__.py
+.aider*

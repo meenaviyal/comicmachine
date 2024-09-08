@@ -3,57 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Text Adder with Custom Fonts and Local Storage</title>
+    <title>ComicMachine | Fonts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
     <style id="dynamicFonts"></style>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        canvas {
-            border: 1px solid #000;
-            margin-bottom: 20px;
-        }
-        .controls, .font-adder {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        #fontsList {
-            margin-top: 20px;
-        }
-        #progressBar {
-            width: 100%;
-            height: 20px;
-            background-color: #f0f0f0;
-            margin-top: 10px;
-            display: none;
-        }
-        #progressBar div {
-            height: 100%;
-            background-color: #4CAF50;
-            width: 0;
-        }
-    </style>
 </head>
-<body>
-    <canvas id="myCanvas" width="400" height="200"></canvas>
-    <div class="controls">
-        <input type="text" id="textInput" placeholder="Enter text">
-        <select id="fontSelect"></select>
-        <button id="addButton">Add</button>
+<body class="bg-gray-100">
+    <div id="navbar"></div>
+
+    <div class="container mx-auto main-content p-6">
+        <h1 class="text-3xl font-bold mb-6 text-center">Font Manager</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <canvas id="myCanvas" width="400" height="200" class="border border-gray-300 mb-4 mx-auto"></canvas>
+            
+            <div class="controls flex flex-wrap gap-4 mb-4">
+                <input type="text" id="textInput" placeholder="Enter text" class="flex-grow p-2 border border-gray-300 rounded">
+                <select id="fontSelect" class="p-2 border border-gray-300 rounded"></select>
+                <button id="addButton" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Add Text</button>
+            </div>
+            
+            <div class="font-adder flex flex-wrap gap-4 mb-4">
+                <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL" class="flex-grow p-2 border border-gray-300 rounded">
+                <button id="addFontButton" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">Add Font</button>
+            </div>
+            
+            <div id="progressBar" class="w-full h-4 bg-gray-200 rounded hidden">
+                <div class="h-full bg-green-500 rounded"></div>
+            </div>
+        </div>
+        
+        <div id="fontsList" class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Added Fonts</h2>
+            <!-- Font list will be populated here -->
+        </div>
     </div>
-    <div class="font-adder">
-        <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL">
-        <button id="addFontButton">Add Font</button>
-    </div>
-    <div id="progressBar"><div></div></div>
-    <div id="fontsList"></div>
 
     <script>
+        // Load navbar component
+        fetch('navbar.mustache')
+            .then(response => response.text())
+            .then(template => {
+                document.getElementById('navbar').innerHTML = Mustache.render(template);
+            });
+
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
         const textInput = document.getElementById('textInput');
@@ -84,9 +78,9 @@
         }
 
         function updateFontsList() {
-            fontsList.innerHTML = '<h3>Added Fonts:</h3>';
+            fontsList.innerHTML = '<h2 class="text-xl font-semibold mb-4">Added Fonts</h2>';
             storedFonts.forEach(font => {
-                fontsList.innerHTML += `<p>${font.family}</p>`;
+                fontsList.innerHTML += `<p class="mb-2">${font.family}</p>`;
             });
         }
 
