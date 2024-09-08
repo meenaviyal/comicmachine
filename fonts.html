@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Text Adder with Custom Fonts and Local Storage</title>
+    <style id="dynamicFonts"></style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-bottom: 20px;
+        }
+        .controls, .font-adder {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        #fontsList {
+            margin-top: 20px;
+        }
+        #progressBar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            margin-top: 10px;
+            display: none;
+        }
+        #progressBar div {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="200"></canvas>
+    <div class="controls">
+        <input type="text" id="textInput" placeholder="Enter text">
+        <select id="fontSelect"></select>
+        <button id="addButton">Add</button>
+    </div>
+    <div class="font-adder">
+        <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL">
+        <button id="addFontButton">Add Font</button>
+    </div>
+    <div id="progressBar"><div></div></div>
+    <div id="fontsList"></div>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        const textInput = document.getElementById('textInput');
+        const fontSelect = document.getElementById('fontSelect');
+        const addButton = document.getElementById('addButton');
+        const fontUrlInput = document.getElementById('fontUrlInput');
+        const addFontButton = document.getElementById('addFontButton');
+        const fontsList = document.getElementById('fontsList');
+        const dynamicFontsStyle = document.getElementById('dynamicFonts');
+        const progressBar = document.getElementById('progressBar');
+        const progressBarInner = progressBar.querySelector('div');
+
+        let yPosition = 30;
+        let fonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier', 'Georgia'];
+
+        // Load fonts from local storage
+        const storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+        fonts = [...fonts, ...storedFonts.map(f => f.family)];
+
+        function updateFontSelect() {
+            fontSelect.innerHTML = '';
+            fonts.forEach(font => {
+                const option = document.createElement('option');
+                option.value = font;
+                option.textContent = font;
+                fontSelect.appendChild(option);
+            });
+        }
+
+        function updateFontsList() {
+            fontsList.innerHTML = '<h3>Added Fonts:</h3>';
+            storedFonts.forEach(font => {
+                fontsList.innerHTML += `<p>${font.family}</p>`;
+            });
+        }
+
+        function addFontFace(fontFamily, fontData) {
+            const fontFace = new FontFace(fontFamily, fontData);
+            fontFace.load().then(function(loadedFace) {
+                document.fonts.add(loadedFace);
+            }).catch(function(error) {
+                console.error('Error loading font:', error);
+            });
+        }
+
+        // Load stored fonts
+        storedFonts.forEach(font => addFontFace(font.family, font.data));
+
+        updateFontSelect();
+        updateFontsList();
+
+        addButton.addEventListener('click', () => {
+            const text = textInput.value;
+            const font = fontSelect.value;
+            
+            if (text) {
+                ctx.font = `16px "${font}"`;
+                ctx.fillText(text, 10, yPosition);
+                
+                yPosition += 30;
+                if (yPosition > canvas.height) {
+                    yPosition = 30;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                textInput.value = '';
+            }
+        });
+
+        function showProgress(show) {
+            progressBar.style.display = show ? 'block' : 'none';
+            progressBarInner.style.width = '0%';
+        }
+
+        function updateProgress(percent) {
+            progressBarInner.style.width = `${percent}%`;
+        }
+
+        async function fetchWithProgress(url) {
+            const response = await fetch(url);
+            const reader = response.body.getReader();
+            const contentLength = +response.headers.get('Content-Length');
+            let receivedLength = 0;
+            let chunks = [];
+
+            while(true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                receivedLength += value.length;
+                updateProgress((receivedLength / contentLength) * 100);
+            }
+
+            let chunksAll = new Uint8Array(receivedLength);
+            let position = 0;
+            for(let chunk of chunks) {
+                chunksAll.set(chunk, position);
+                position += chunk.length;
+            }
+
+            return chunksAll;
+        }
+
+        function resolveUrl(baseUrl, relativeUrl) {
+            return new URL(relativeUrl, baseUrl).href;
+        }
+
+        function extractFontUrl(css) {
+            const urlMatch = css.match(/url\s*\(\s*(['"]?)(.+?\.woff2?(?:\?[^'")]+)?)\1\s*\)/i);
+            return urlMatch ? urlMatch[2] : null;
+        }
+
+        function extractFontFamily(css) {
+            const familyMatch = css.match(/font-family:\s*(['"])?(.*?)\1?;/i);
+            return familyMatch ? familyMatch[2].trim() : null;
+        }
+
+        addFontButton.addEventListener('click', async () => {
+            const fontUrl = fontUrlInput.value;
+            if (fontUrl) {
+                showProgress(true);
+                try {
+                    if (fontUrl.endsWith('.css')) {
+                        const cssResponse = await fetch(fontUrl);
+                        const css = await cssResponse.text();
+                        const relativeFontUrl = extractFontUrl(css);
+                        if (relativeFontUrl) {
+                            const absoluteFontUrl = resolveUrl(cssResponse.url, relativeFontUrl);
+                            const fontData = await fetchWithProgress(absoluteFontUrl);
+                            const fontFamily = extractFontFamily(css);
+                            if (fontFamily) {
+                                addNewFont(fontFamily, fontData);
+                            } else {
+                                throw new Error('Could not extract font family from CSS');
+                            }
+                        } else {
+                            throw new Error('Could not find font file URL in CSS');
+                        }
+                    } else {
+                        const fontData = await fetchWithProgress(fontUrl);
+                        const fontFamily = prompt("Enter a name for this font:");
+                        if (fontFamily) {
+                            addNewFont(fontFamily, fontData);
+                        } else {
+                            throw new Error('Font name is required');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error adding font:', error);
+                    alert('Error adding font. Please check the URL and try again.');
+                } finally {
+                    showProgress(false);
+                }
+            }
+        });
+
+        function addNewFont(fontFamily, fontData) {
+            if (!fonts.includes(fontFamily)) {
+                addFontFace(fontFamily, fontData);
+                fonts.push(fontFamily);
+                storedFonts.push({ family: fontFamily, data: fontData });
+                localStorage.setItem('customFonts', JSON.stringify(storedFonts));
+                updateFontSelect();
+                updateFontsList();
+                fontUrlInput.value = '';
+            } else {
+                alert('This font is already added!');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Creator</title>
+    <script defer src="gallery.js"></script>
+    <script defer src="show.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">Gallery Creator</h1>
+        
+        <button id="openModalButton" class="bg-blue-500 text-white p-2 rounded mb-6">Add to Gallery</button>
+
+        <table class="min-w-full bg-white rounded shadow-md">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4">ID</th>
+                    <th class="py-2 px-4">Image Preview</th>
+                    <th class="py-2 px-4">Collection Name</th>
+                    <th class="py-2 px-4">Image Name</th>
+                    <th class="py-2 px-4">Image Tags</th>
+                    <th class="py-2 px-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="galleryTableBody">
+                <!-- Table rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+    <div class="max-w-xs mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">View Gallery</h1>
+
+        <!-- Dropdown for selecting collection name -->
+        <div class="mb-6">
+            <label for="collectionSelect" class="block text-lg font-medium mb-2">Select Collection:</label>
+            <select id="collectionSelect" class="border border-gray-300 rounded p-2 w-full">
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
+
+        <!-- Gallery Display -->
+        <div id="galleryDisplay" class="grid grid-cols-3 gap-4 mb-6">
+            <!-- Images will be displayed here -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="paginationControls" class="flex justify-center space-x-2">
+            <button id="prevPage" class="bg-blue-500 text-white p-2 rounded" disabled>Previous</button>
+            <span id="currentPage" class="text-lg"></span>
+            <button id="nextPage" class="bg-blue-500 text-white p-2 rounded">Next</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">Add New Image</h2>
+            <form id="galleryForm">
+                <div class="grid grid-cols-1 gap-4">
+                    <input type="text" id="collectionName" class="border border-gray-300 rounded p-2" placeholder="Collection Name" required>
+                    <input type="text" id="imageName" class="border border-gray-300 rounded p-2" placeholder="Image Name" required>
+                    <input type="text" id="imageTags" class="border border-gray-300 rounded p-2" placeholder="Image Tags (comma-separated)" required>
+                    <input type="file" id="imageFile" class="border border-gray-300 rounded p-2" accept="image/*" required>
+                </div>
+                <div class="mt-4 flex justify-end space-x-2">
+                    <button type="button" id="closeModalButton" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
