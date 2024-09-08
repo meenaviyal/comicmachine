@@ -6,7 +6,7 @@
     <title>ComicMachine | Fonts</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style id="dynamicFonts"></style>
 </head>
 <body class="bg-gray-100">
@@ -41,12 +41,10 @@
     </div>
 
     <script>
-        // Load navbar component
-        fetch('navbar.mustache')
-            .then(response => response.text())
-            .then(template => {
-                document.getElementById('navbar').innerHTML = Mustache.render(template);
-            });
+        $(document).ready(function() {
+            // Load navbar component
+            $('#navbar').load('navbar.html');
+        });
 
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');

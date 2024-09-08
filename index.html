@@ -6,7 +6,7 @@
     <title>ComicMachine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div id="navbar"></div>
@@ -89,12 +89,10 @@
     </div>
 
     <script>
-        // Load components
-        fetch('navbar.mustache')
-            .then(response => response.text())
-            .then(template => {
-                document.getElementById('navbar').innerHTML = Mustache.render(template);
-            });
+        $(document).ready(function() {
+            // Load navbar component
+            $('#navbar').load('navbar.html');
+        });
     </script>
     <script defer src="show.js"></script>
 </body>
