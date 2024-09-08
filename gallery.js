@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const dbRequest = indexedDB.open(dbName, dbVersion);
     let db;
 
+    const exportButton = document.getElementById('exportButton');
+    const importButton = document.getElementById('importButton');
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
     dbRequest.onupgradeneeded = (event) => {
         db = event.target.result;
 
@@ -141,5 +149,100 @@ document.addEventListener('DOMContentLoaded', () => {
         request.onerror = (event) => {
             console.error('Error fetching collection names:', event.target.errorCode);
         };
+    }
+
+    exportButton.addEventListener('click', exportGallery);
+    importButton.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', importGallery);
+
+    function exportGallery() {
+        const transaction = db.transaction(['galleries'], 'readonly');
+        const objectStore = transaction.objectStore('galleries');
+        const request = objectStore.getAll();
+
+        request.onsuccess = (event) => {
+            const allImages = event.target.result;
+            const exportData = JSON.stringify(allImages);
+            
+            const blob = new Blob([exportData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gallery_export.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        request.onerror = (event) => {
+            console.error('Error exporting gallery:', event.target.errorCode);
+        };
+    }
+
+    function importGallery(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (!Array.isArray(importedData)) {
+                    throw new Error('Invalid import data format');
+                }
+
+                const transaction = db.transaction(['galleries'], 'readwrite');
+                const objectStore = transaction.objectStore('galleries');
+
+                let successCount = 0;
+                let errorCount = 0;
+
+                importedData.forEach((item) => {
+                    if (validateImportItem(item)) {
+                        const request = objectStore.add(item);
+                        request.onsuccess = () => {
+                            successCount++;
+                            if (successCount + errorCount === importedData.length) {
+                                finishImport(successCount, errorCount);
+                            }
+                        };
+                        request.onerror = () => {
+                            errorCount++;
+                            if (successCount + errorCount === importedData.length) {
+                                finishImport(successCount, errorCount);
+                            }
+                        };
+                    } else {
+                        errorCount++;
+                        if (successCount + errorCount === importedData.length) {
+                            finishImport(successCount, errorCount);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error importing gallery:', error);
+                alert('Error importing gallery: ' + error.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function validateImportItem(item) {
+        return (
+            item &&
+            typeof item.collectionName === 'string' &&
+            typeof item.imageName === 'string' &&
+            typeof item.imageTags === 'string' &&
+            typeof item.imageData === 'string' &&
+            item.imageData.startsWith('data:image/')
+        );
+    }
+
+    function finishImport(successCount, errorCount) {
+        alert(`Import completed. ${successCount} items imported successfully, ${errorCount} items failed.`);
+        loadGallery();
+        fileInput.value = '';
     }
 });

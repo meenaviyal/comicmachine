@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <script defer src="gallery.js"></script>
-    <script defer src="show.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -16,7 +15,13 @@
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-bold mb-6 text-center">Gallery Creator</h1>
         
-        <button id="openModalButton" class="bg-blue-500 text-white p-2 rounded mb-6">Add to Gallery</button>
+        <div class="flex justify-between items-center mb-6">
+            <button id="openModalButton" class="bg-blue-500 text-white p-2 rounded">Add to Gallery</button>
+            <div>
+                <button id="exportButton" class="bg-green-500 text-white p-2 rounded mr-2">Export</button>
+                <button id="importButton" class="bg-yellow-500 text-white p-2 rounded">Import</button>
+            </div>
+        </div>
 
         <table class="min-w-full bg-white rounded shadow-md">
             <thead class="bg-gray-200">
