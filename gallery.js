@@ -39,17 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const galleryForm = document.getElementById('galleryForm');
     const galleryTableBody = document.getElementById('galleryTableBody');
-    const galleryModal = document.getElementById('galleryModal');
-    const openModalButton = document.getElementById('openModalButton');
-    const closeModalButton = document.getElementById('closeModalButton');
+    const galleryModal = new bootstrap.Modal(document.getElementById('galleryModal'));
 
-    openModalButton.addEventListener('click', () => {
-        galleryModal.classList.remove('hidden');
-    });
 
-    closeModalButton.addEventListener('click', () => {
-        galleryModal.classList.add('hidden');
-    });
 
     galleryForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -62,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onloadend = () => {
             const imageData = reader.result;
             addImageToGallery(collectionName, imageName, imageTags, imageData);
-            galleryModal.classList.add('hidden');
+            galleryModal.hide();
         };
         reader.readAsDataURL(imageFile);
     });
@@ -95,14 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { id, collectionName, imageName, imageTags, imageData } = cursor.value;
                 const row = document.createElement('tr');
 
+                const getRandomColor = () => {
+                    const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+                    return colors[Math.floor(Math.random() * colors.length)];
+                };
+
+                const tagPills = imageTags.split(',').map(tag => 
+                    `<span class="badge bg-${getRandomColor()} me-1">${tag.trim()}</span>`
+                ).join('');
+
                 row.innerHTML = `
                     <td class="border px-4 py-2">${id}</td>
-                    <td class="border px-4 py-2"><img src="${imageData}" alt="${imageName}" class="w-16 h-16 object-cover rounded"></td>
+                    <td class="border px-4 py-2">
+                        <div class="image-preview-container">
+                            <img src="${imageData}" alt="${imageName}" class="image-preview">
+                            <div class="image-preview-full">
+                                <img src="${imageData}" alt="${imageName}">
+                            </div>
+                        </div>
+                    </td>
                     <td class="border px-4 py-2">${collectionName}</td>
                     <td class="border px-4 py-2">${imageName}</td>
-                    <td class="border px-4 py-2">${imageTags}</td>
+                    <td class="border px-4 py-2">${tagPills}</td>
                     <td class="border px-4 py-2">
-                        <button class="bg-red-500 text-white p-2 rounded" data-id="${id}">Delete</button>
+                        <button class="btn btn-danger btn-sm" data-id="${id}">Delete</button>
                     </td>
                 `;
 

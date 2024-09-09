@@ -4,65 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComicMachine | Gallery</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script defer src="gallery.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .image-preview-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+        .image-preview {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .image-preview-full {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .image-preview-full img {
+            max-width: 80vw;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .image-preview-container:hover .image-preview-full {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-    <div id="navbar"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+        <a class="navbar-brand" href="#">
+          <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+          ComicMachine
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/gallery.html">Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/fonts.html">Fonts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about.html">About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold mb-6 text-center">Gallery Creator</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gallery Creator</h1>
         
-        <div class="flex justify-between items-center mb-6">
-            <button id="openModalButton" class="bg-blue-500 text-white p-2 rounded">Add to Gallery</button>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <button id="openModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">Add to Gallery</button>
             <div>
-                <button id="exportButton" class="bg-green-500 text-white p-2 rounded mr-2">Export</button>
-                <button id="importButton" class="bg-yellow-500 text-white p-2 rounded">Import</button>
+                <button id="exportButton" class="btn btn-success me-2">Export</button>
+                <button id="importButton" class="btn btn-warning">Import</button>
             </div>
         </div>
 
-        <table class="min-w-full bg-white rounded shadow-md">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="py-2 px-4">ID</th>
-                    <th class="py-2 px-4">Image Preview</th>
-                    <th class="py-2 px-4">Collection Name</th>
-                    <th class="py-2 px-4">Image Name</th>
-                    <th class="py-2 px-4">Image Tags</th>
-                    <th class="py-2 px-4">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="galleryTableBody">
-                <!-- Table rows will be added here -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Image Preview</th>
+                        <th>Collection Name</th>
+                        <th>Image Name</th>
+                        <th>Image Tags</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="galleryTableBody">
+                    <!-- Table rows will be added here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal -->
-    <div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
-            <h2 class="text-xl font-bold mb-4">Add New Image</h2>
-            <form id="galleryForm">
-                <div class="grid grid-cols-1 gap-4">
-                    <input type="text" id="collectionName" class="border border-gray-300 rounded p-2" placeholder="Collection Name" required>
-                    <input type="text" id="imageName" class="border border-gray-300 rounded p-2" placeholder="Image Name" required>
-                    <input type="text" id="imageTags" class="border border-gray-300 rounded p-2" placeholder="Image Tags (comma-separated)" required>
-                    <input type="file" id="imageFile" class="border border-gray-300 rounded p-2" accept="image/*" required>
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">Add New Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mt-4 flex justify-end space-x-2">
-                    <button type="button" id="closeModalButton" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add</button>
+                <div class="modal-body">
+                    <form id="galleryForm">
+                        <div class="mb-3">
+                            <input type="text" id="collectionName" class="form-control" placeholder="Collection Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="imageName" class="form-control" placeholder="Image Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="imageTags" class="form-control" placeholder="Image Tags (comma-separated)" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" id="imageFile" class="form-control" accept="image/*" required>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            // Load navbar component
-            $('#navbar').load('navbar.html');
-        });
-    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
