@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ComicMachine | Fonts</title>
+    <title>ComicMachine | Font Preview</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style id="dynamicFonts"></style>
+    <style>
+        .font-preview-card {
+            height: 150px;
+            overflow: hidden;
+        }
+        .font-preview-text {
+            font-size: 32px;
+        }
+    </style>
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a class="navbar-brand" href="#">
           <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
-          ComicMachine
+          ComicMachine | Font Gallery
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -31,10 +37,10 @@
             </li>
           </ul>
         </div>
-      </nav>
+    </nav>
 
     <div class="container my-4">
-        <h1 class="display-4 text-center mb-4">Font Manager</h1>
+        <h1 class="display-4 text-center mb-4">Fonts</h1>
         
         <div class="card mb-4">
             <div class="card-body">
@@ -52,51 +58,45 @@
                 </div>
             </div>
         </div>
-        
-        <div id="fontsList" class="card">
+
+        <div class="card mb-4">
             <div class="card-body">
-                <h2 class="card-title">Added Fonts</h2>
-                <!-- Font list will be populated here -->
+                <input type="text" id="previewText" class="form-control" value="ആന അലറലോടലറൽ" placeholder="Enter preview text">
             </div>
         </div>
+
+        <div id="fontPreviews" class="row row-cols-1 row-cols-md-3 g-4"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const canvas = document.getElementById('myCanvas');
-        const ctx = canvas.getContext('2d');
-        const textInput = document.getElementById('textInput');
-        const fontSelect = document.getElementById('fontSelect');
-        const addButton = document.getElementById('addButton');
         const fontUrlInput = document.getElementById('fontUrlInput');
         const addFontButton = document.getElementById('addFontButton');
-        const fontsList = document.getElementById('fontsList');
-        const dynamicFontsStyle = document.getElementById('dynamicFonts');
         const progressBar = document.getElementById('progressBar');
         const progressBarInner = progressBar.querySelector('.progress-bar');
+        const previewText = document.getElementById('previewText');
+        const fontPreviews = document.getElementById('fontPreviews');
 
-        let yPosition = 30;
-        let fonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier', 'Georgia'];
-
-        // Load fonts from local storage
+        let fonts = ['Arial', 'Courier', 'Georgia'];
         const storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
         fonts = [...fonts, ...storedFonts.map(f => f.family)];
 
-        function updateFontSelect() {
-            fontSelect.innerHTML = '';
+        function updateFontPreviews() {
+            fontPreviews.innerHTML = '';
             fonts.forEach(font => {
-                const option = document.createElement('option');
-                option.value = font;
-                option.textContent = font;
-                fontSelect.appendChild(option);
-            });
-        }
-
-        function updateFontsList() {
-            const listContainer = fontsList.querySelector('.card-body');
-            listContainer.innerHTML = '<h2 class="card-title">Added Fonts</h2>';
-            storedFonts.forEach(font => {
-                listContainer.innerHTML += `<p class="mb-2">${font.family}</p>`;
+                const card = document.createElement('div');
+                card.className = 'col';
+                card.innerHTML = `
+                    <div class="card font-preview-card">
+                        <div class="card-body">
+                            <h5 class="card-title">${font}</h5>
+                            <p class="card-text font-preview-text" style="font-family: '${font}';">
+                                ${previewText.value}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                fontPreviews.appendChild(card);
             });
         }
 
@@ -104,34 +104,15 @@
             const fontFace = new FontFace(fontFamily, fontData);
             fontFace.load().then(function(loadedFace) {
                 document.fonts.add(loadedFace);
+                updateFontPreviews();
             }).catch(function(error) {
                 console.error('Error loading font:', error);
             });
         }
 
-        // Load stored fonts
         storedFonts.forEach(font => addFontFace(font.family, font.data));
 
-        updateFontSelect();
-        updateFontsList();
-
-        addButton.addEventListener('click', () => {
-            const text = textInput.value;
-            const font = fontSelect.value;
-            
-            if (text) {
-                ctx.font = `16px "${font}"`;
-                ctx.fillText(text, 10, yPosition);
-                
-                yPosition += 30;
-                if (yPosition > canvas.height) {
-                    yPosition = 30;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-                
-                textInput.value = '';
-            }
-        });
+        updateFontPreviews();
 
         function showProgress(show) {
             progressBar.classList.toggle('d-none', !show);
@@ -226,13 +207,14 @@
                 fonts.push(fontFamily);
                 storedFonts.push({ family: fontFamily, data: fontData });
                 localStorage.setItem('customFonts', JSON.stringify(storedFonts));
-                updateFontSelect();
-                updateFontsList();
+                updateFontPreviews();
                 fontUrlInput.value = '';
             } else {
                 alert('This font is already added!');
             }
         }
+
+        previewText.addEventListener('input', updateFontPreviews);
     </script>
 </body>
 </html>
