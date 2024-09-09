@@ -1,9 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Fabric.js canvas
-            var canvas = new fabric.Canvas('comic-artboard');
+    // Define ScalableTextbox
+    fabric.ScalableTextbox = fabric.util.createClass(fabric.Textbox, {
+        type: 'scalableTextbox',
+        initialize: function(text, options) {
+            options || (options = {});
+            this.callSuper('initialize', text, options);
+        },
+        _renderText: function(ctx) {
+            this.callSuper('_renderText', ctx);
+            ctx.scale(1 / this.scaleX, 1 / this.scaleY);
+        }
+    });
 
-            // Retrieve stored fonts from localStorage
-            var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+    // Initialize Fabric.js canvas
+    var canvas = new fabric.Canvas('comic-artboard');
+
+    // Retrieve stored fonts from localStorage
+    var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
     
             // Function to delete selected item
             function deleteSelectedItem() {
