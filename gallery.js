@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.style.display = 'none';
     document.body.appendChild(fileInput);
 
+    const ITEMS_PER_PAGE = 10;
+    let currentPage = 1;
+    let totalItems = 0;
+
     dbRequest.onupgradeneeded = (event) => {
         db = event.target.result;
 
@@ -29,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dbRequest.onsuccess = (event) => {
         db = event.target.result;
-        loadGallery();
-        getCollectionNames(); // Call to fetch the collection names
+        loadGallery(currentPage);
+        getCollectionNames();
     };
 
     dbRequest.onerror = (event) => {
@@ -40,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryForm = document.getElementById('galleryForm');
     const galleryTableBody = document.getElementById('galleryTableBody');
     const galleryModal = new bootstrap.Modal(document.getElementById('galleryModal'));
-
-
+    const paginationContainer = document.getElementById('paginationContainer');
 
     galleryForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -67,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         request.onsuccess = () => {
             galleryForm.reset();
-            loadGallery();
+            loadGallery(currentPage);
         };
 
         request.onerror = (event) => {
@@ -75,50 +78,91 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    function loadGallery() {
+    function loadGallery(page) {
         galleryTableBody.innerHTML = '';
         const transaction = db.transaction(['galleries'], 'readonly');
         const objectStore = transaction.objectStore('galleries');
-        const request = objectStore.openCursor();
+        const countRequest = objectStore.count();
 
-        request.onsuccess = (event) => {
-            const cursor = event.target.result;
-            if (cursor) {
-                const { id, collectionName, imageName, imageTags, imageData } = cursor.value;
-                const row = document.createElement('tr');
+        countRequest.onsuccess = () => {
+            totalItems = countRequest.result;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
-                const getRandomColor = () => {
-                    const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
-                    return colors[Math.floor(Math.random() * colors.length)];
-                };
+            const request = objectStore.openCursor();
+            let counter = 0;
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
 
-                const tagPills = imageTags.split(',').map(tag => 
-                    `<span class="badge bg-${getRandomColor()} me-1">${tag.trim()}</span>`
-                ).join('');
-
-                row.innerHTML = `
-                    <td class="border px-4 py-2">${id}</td>
-                    <td class="border px-4 py-2">
-                        <div class="image-preview-container">
-                            <img src="${imageData}" alt="${imageName}" class="image-preview">
-                            <div class="image-preview-full">
-                                <img src="${imageData}" alt="${imageName}">
-                            </div>
-                        </div>
-                    </td>
-                    <td class="border px-4 py-2">${collectionName}</td>
-                    <td class="border px-4 py-2">${imageName}</td>
-                    <td class="border px-4 py-2">${tagPills}</td>
-                    <td class="border px-4 py-2">
-                        <button class="btn btn-danger btn-sm" data-id="${id}">Delete</button>
-                    </td>
-                `;
-
-                galleryTableBody.appendChild(row);
-                cursor.continue();
-            }
+            request.onsuccess = (event) => {
+                const cursor = event.target.result;
+                if (cursor) {
+                    if (counter >= start && counter < end) {
+                        const { id, collectionName, imageName, imageTags, imageData } = cursor.value;
+                        const row = createTableRow(id, collectionName, imageName, imageTags, imageData);
+                        galleryTableBody.appendChild(row);
+                    }
+                    counter++;
+                    if (counter < end) {
+                        cursor.continue();
+                    } else {
+                        updatePagination(page, totalPages);
+                    }
+                } else {
+                    updatePagination(page, totalPages);
+                }
+            };
         };
     }
+
+    function createTableRow(id, collectionName, imageName, imageTags, imageData) {
+        const row = document.createElement('tr');
+        const getRandomColor = () => {
+            const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        };
+
+        const tagPills = imageTags.split(',').map(tag => 
+            `<span class="badge bg-${getRandomColor()} me-1">${tag.trim()}</span>`
+        ).join('');
+
+        row.innerHTML = `
+            <td class="border px-4 py-2">${id}</td>
+            <td class="border px-4 py-2">
+                <div class="image-preview-container">
+                    <img src="${imageData}" alt="${imageName}" class="image-preview">
+                    <div class="image-preview-full">
+                        <img src="${imageData}" alt="${imageName}">
+                    </div>
+                </div>
+            </td>
+            <td class="border px-4 py-2">${collectionName}</td>
+            <td class="border px-4 py-2">${imageName}</td>
+            <td class="border px-4 py-2">${tagPills}</td>
+            <td class="border px-4 py-2">
+                <button class="btn btn-danger btn-sm" data-id="${id}">Delete</button>
+            </td>
+        `;
+
+        return row;
+    }
+
+    function updatePagination(currentPage, totalPages) {
+        paginationContainer.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            li.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
+            paginationContainer.appendChild(li);
+        }
+    }
+
+    paginationContainer.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.tagName === 'A') {
+            currentPage = parseInt(event.target.dataset.page);
+            loadGallery(currentPage);
+        }
+    });
 
     galleryTableBody.addEventListener('click', (event) => {
         if (event.target.tagName === 'BUTTON') {
@@ -133,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const request = objectStore.delete(id);
 
         request.onsuccess = () => {
-            loadGallery();
+            loadGallery(currentPage);
         };
 
         request.onerror = (event) => {
@@ -141,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // New function to get the list of unique collection names
     function getCollectionNames() {
         const transaction = db.transaction(['galleries'], 'readonly');
         const objectStore = transaction.objectStore('galleries');
@@ -151,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const allImages = event.target.result;
             const collectionNames = [...new Set(allImages.map(image => image.collectionName))];
             console.log('Collection Names:', collectionNames);
-            // You can use collectionNames array for your purpose, like populating a dropdown.
         };
 
         request.onerror = (event) => {
@@ -250,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function finishImport(successCount, errorCount) {
         alert(`Import completed. ${successCount} items imported successfully, ${errorCount} items failed.`);
-        loadGallery();
+        loadGallery(currentPage);
         fileInput.value = '';
     }
 });
