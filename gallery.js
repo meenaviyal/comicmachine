@@ -194,12 +194,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const allImages = event.target.result;
             const collectionNames = [...new Set(allImages.map(image => image.collectionName))];
             console.log('Collection Names:', collectionNames);
+            updateCollectionSuggestions(collectionNames);
         };
 
         request.onerror = (event) => {
             console.error('Error fetching collection names:', event.target.errorCode);
         };
     }
+
+    function updateCollectionSuggestions(collectionNames) {
+        const suggestionsContainer = document.getElementById('collectionSuggestions');
+        suggestionsContainer.innerHTML = '';
+        collectionNames.forEach(name => {
+            const pill = document.createElement('span');
+            pill.className = 'badge bg-secondary me-1 mb-1';
+            pill.textContent = name;
+            pill.style.cursor = 'pointer';
+            pill.addEventListener('click', () => {
+                document.getElementById('collectionName').value = name;
+            });
+            suggestionsContainer.appendChild(pill);
+        });
+    }
+
+    document.getElementById('openModalButton').addEventListener('click', () => {
+        getCollectionNames();
+    });
 
     exportButton.addEventListener('click', exportGallery);
     importButton.addEventListener('click', () => fileInput.click());
