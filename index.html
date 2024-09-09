@@ -60,11 +60,15 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Artboard</span>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Move Up"><i class="bi bi-arrow-up"></i></button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Move Down"><i class="bi bi-arrow-down"></i></button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Clear All"><i class="bi bi-x-lg"></i></button>
-                            <button type="button" class="btn btn-outline-primary btn-sm" title="Download"><i class="bi bi-download"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Delete selected item" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-trash"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item up" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-up"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item down" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-down"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Clear all items from canvas" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-x-lg"></i></button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" title="Download canvas as image" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-download"></i></button>
+                            <label class="btn btn-outline-success btn-sm" title="Upload image to canvas" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="bi bi-image"></i>
+                                <input type="file" id="imageUpload" accept="image/png, image/jpeg" style="display: none;">
+                            </label>
                         </div>
                     </div>
                     <div class="card-body">
@@ -110,8 +114,6 @@
                                 <button id="addTextButton" class="btn btn-primary btn-sm w-100">Add text</button>
                             </div>
                         </div>
-                        <h6 class="card-subtitle mb-2">Add Image</h6>
-                        <button class="btn btn-outline-secondary btn-sm w-100">Upload</button>
                     </div>
                 </div>
             </div>
@@ -287,6 +289,48 @@
             } else {
                 alert('Please enter text, select a font, and specify a font size.');
             }
+        });
+
+        // Image upload functionality
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                var img = new Image();
+                img.onload = function() {
+                    var fabricImage = new fabric.Image(img);
+                    
+                    // Set maximum dimensions for the image
+                    const maxWidth = canvas.width * 0.5;  // 50% of canvas width
+                    const maxHeight = canvas.height * 0.5;  // 50% of canvas height
+
+                    // Calculate scale factor to fit within max dimensions
+                    var scaleFactor = Math.min(maxWidth / img.width, maxHeight / img.height);
+                    
+                    // Scale the image
+                    fabricImage.scale(scaleFactor);
+
+                    // Center the image on the canvas
+                    fabricImage.set({
+                        left: canvas.width / 2,
+                        top: canvas.height / 2,
+                        originX: 'center',
+                        originY: 'center'
+                    });
+
+                    canvas.add(fabricImage);
+                    canvas.renderAll();
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
         });
     </script>
 </body>
