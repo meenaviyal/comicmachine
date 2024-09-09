@@ -63,7 +63,7 @@
                             <button type="button" id="deleteBtn" class="btn btn-outline-secondary btn-sm" title="Delete selected item" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-trash"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item up" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-up"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item down" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-down"></i></button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Clear all items from canvas" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-x-lg"></i></button>
+                            <button type="button" id="clearCanvasBtn" class="btn btn-outline-secondary btn-sm" title="Clear all items from canvas" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-x-lg"></i></button>
                             <button type="button" id="downloadBtn" class="btn btn-outline-primary btn-sm" title="Download canvas as image" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-download"></i></button>
                             <label class="btn btn-outline-success btn-sm" title="Upload image to canvas" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                 <i class="bi bi-image"></i>
@@ -190,6 +190,14 @@
                 canvas.renderAll();
             } else {
                 alert('Please select an item to delete.');
+            }
+        }
+
+        // Function to clear all items from canvas
+        function clearCanvas() {
+            if (confirm('Are you sure you want to clear all items from the canvas?')) {
+                canvas.clear();
+                canvas.renderAll();
             }
         }
 
@@ -383,6 +391,9 @@
 
         // Add event listener for delete button
         document.getElementById('deleteBtn').addEventListener('click', deleteSelectedItem);
+
+        // Add event listener for clear canvas button
+        document.getElementById('clearCanvasBtn').addEventListener('click', clearCanvas);
     </script>
 </body>
 </html>
