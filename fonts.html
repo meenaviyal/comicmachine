@@ -4,42 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ComicMachine | Fonts</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style id="dynamicFonts"></style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-light">
     <div id="navbar"></div>
 
-    <div class="container mx-auto main-content p-6">
-        <h1 class="text-3xl font-bold mb-6 text-center">Font Manager</h1>
+    <div class="container my-4">
+        <h1 class="display-4 text-center mb-4">Font Manager</h1>
         
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <canvas id="myCanvas" width="400" height="200" class="border border-gray-300 mb-4 mx-auto"></canvas>
-            
-            <div class="controls flex flex-wrap gap-4 mb-4">
-                <input type="text" id="textInput" placeholder="Enter text" class="flex-grow p-2 border border-gray-300 rounded">
-                <select id="fontSelect" class="p-2 border border-gray-300 rounded"></select>
-                <button id="addButton" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Add Text</button>
-            </div>
-            
-            <div class="font-adder flex flex-wrap gap-4 mb-4">
-                <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL" class="flex-grow p-2 border border-gray-300 rounded">
-                <button id="addFontButton" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">Add Font</button>
-            </div>
-            
-            <div id="progressBar" class="w-full h-4 bg-gray-200 rounded hidden">
-                <div class="h-full bg-green-500 rounded"></div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <canvas id="myCanvas" width="400" height="200" class="border rounded mx-auto d-block mb-4"></canvas>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-md">
+                        <input type="text" id="textInput" placeholder="Enter text" class="form-control">
+                    </div>
+                    <div class="col-md">
+                        <select id="fontSelect" class="form-select"></select>
+                    </div>
+                    <div class="col-md-auto">
+                        <button id="addButton" class="btn btn-primary">Add Text</button>
+                    </div>
+                </div>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col">
+                        <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL" class="form-control">
+                    </div>
+                    <div class="col-auto">
+                        <button id="addFontButton" class="btn btn-success">Add Font</button>
+                    </div>
+                </div>
+                
+                <div id="progressBar" class="progress d-none">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                </div>
             </div>
         </div>
         
-        <div id="fontsList" class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4">Added Fonts</h2>
-            <!-- Font list will be populated here -->
+        <div id="fontsList" class="card">
+            <div class="card-body">
+                <h2 class="card-title">Added Fonts</h2>
+                <!-- Font list will be populated here -->
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
             // Load navbar component
@@ -56,7 +71,7 @@
         const fontsList = document.getElementById('fontsList');
         const dynamicFontsStyle = document.getElementById('dynamicFonts');
         const progressBar = document.getElementById('progressBar');
-        const progressBarInner = progressBar.querySelector('div');
+        const progressBarInner = progressBar.querySelector('.progress-bar');
 
         let yPosition = 30;
         let fonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier', 'Georgia'];
@@ -76,9 +91,10 @@
         }
 
         function updateFontsList() {
-            fontsList.innerHTML = '<h2 class="text-xl font-semibold mb-4">Added Fonts</h2>';
+            const listContainer = fontsList.querySelector('.card-body');
+            listContainer.innerHTML = '<h2 class="card-title">Added Fonts</h2>';
             storedFonts.forEach(font => {
-                fontsList.innerHTML += `<p class="mb-2">${font.family}</p>`;
+                listContainer.innerHTML += `<p class="mb-2">${font.family}</p>`;
             });
         }
 
@@ -116,7 +132,7 @@
         });
 
         function showProgress(show) {
-            progressBar.style.display = show ? 'block' : 'none';
+            progressBar.classList.toggle('d-none', !show);
             progressBarInner.style.width = '0%';
         }
 
