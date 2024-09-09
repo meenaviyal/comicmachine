@@ -32,7 +32,7 @@ Contributions to ComicMachine are welcome! Please feel free to submit a Pull Req
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for more details.
 
 ## Acknowledgements
 
