@@ -107,7 +107,7 @@
                                 <input type="number" class="form-control form-control-sm" value="20">
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-primary btn-sm w-100">Add text</button>
+                                <button id="addTextButton" class="btn btn-primary btn-sm w-100">Add text</button>
                             </div>
                         </div>
                         <h6 class="card-subtitle mb-2">Add Image</h6>
@@ -254,6 +254,38 @@
         document.getElementById('galleryDisplay').addEventListener('click', function(e) {
             if (e.target.tagName === 'IMG') {
                 addImageToCanvas(e.target.src);
+            }
+        });
+
+        // Function to add text to canvas
+        function addTextToCanvas(text, font, size) {
+            var textbox = new fabric.ScalableTextbox(text, {
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fontSize: size,
+                fontFamily: font,
+                fill: '#000000',
+                originX: 'center',
+                originY: 'center',
+                width: 200,  // Set a fixed initial width
+                padding: 5,  // Add some padding
+                textAlign: 'center'  // Center-align the text
+            });
+            canvas.add(textbox);
+            canvas.setActiveObject(textbox);
+            canvas.renderAll();
+        }
+
+        // Add text button functionality
+        document.getElementById('addTextButton').addEventListener('click', function() {
+            var text = document.getElementById('input').value;
+            var font = document.getElementById('fontSelector').value;
+            var size = document.querySelector('input[type="number"]').value;
+            
+            if (text && font && size) {
+                addTextToCanvas(text, font, parseInt(size));
+            } else {
+                alert('Please enter text, select a font, and specify a font size.');
             }
         });
     </script>
