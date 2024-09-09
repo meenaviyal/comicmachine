@@ -10,27 +10,34 @@
     <style id="dynamicFonts"></style>
 </head>
 <body class="bg-light">
-    <div id="navbar"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+        <a class="navbar-brand" href="#">
+          <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+          ComicMachine
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/gallery.html">Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/fonts.html">Fonts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about.html">About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
     <div class="container my-4">
         <h1 class="display-4 text-center mb-4">Font Manager</h1>
         
         <div class="card mb-4">
             <div class="card-body">
-                <canvas id="myCanvas" width="400" height="200" class="border rounded mx-auto d-block mb-4"></canvas>
-                
-                <div class="row g-3 mb-3">
-                    <div class="col-md">
-                        <input type="text" id="textInput" placeholder="Enter text" class="form-control">
-                    </div>
-                    <div class="col-md">
-                        <select id="fontSelect" class="form-select"></select>
-                    </div>
-                    <div class="col-md-auto">
-                        <button id="addButton" class="btn btn-primary">Add Text</button>
-                    </div>
-                </div>
-                
                 <div class="row g-3 mb-3">
                     <div class="col">
                         <input type="text" id="fontUrlInput" placeholder="Enter Font CSS or File URL" class="form-control">
@@ -56,11 +63,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Load navbar component
-            $('#navbar').load('navbar.html');
-        });
-
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
         const textInput = document.getElementById('textInput');
