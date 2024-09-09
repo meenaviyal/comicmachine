@@ -116,13 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createTableRow(id, collectionName, imageName, imageTags, imageData) {
         const row = document.createElement('tr');
-        const getRandomColor = () => {
-            const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        };
 
         const tagPills = imageTags.split(',').map(tag => 
-            `<span class="badge bg-${getRandomColor()} me-1">${tag.trim()}</span>`
+            `<span class="badge border border-info text-info me-1">${tag.trim()}</span>`
         ).join('');
 
         row.innerHTML = `
