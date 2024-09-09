@@ -10,9 +10,27 @@
         .font-preview-card {
             height: 150px;
             overflow: hidden;
+            position: relative;
         }
         .font-preview-text {
             font-size: 32px;
+        }
+        .delete-font-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .font-preview-card:hover .delete-font-btn {
+            display: block;
         }
     </style>
 </head>
@@ -79,7 +97,7 @@
         const fontPreviews = document.getElementById('fontPreviews');
 
         let fonts = ['Arial', 'Courier', 'Georgia'];
-        const storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+        let storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
         fonts = [...fonts, ...storedFonts.map(f => f.family)];
 
         function updateFontPreviews() {
@@ -95,6 +113,8 @@
                                 ${previewText.value}
                             </p>
                         </div>
+                        ${font !== 'Arial' && font !== 'Courier' && font !== 'Georgia' ? 
+                            `<button class="delete-font-btn" data-font="${font}">X</button>` : ''}
                     </div>
                 `;
                 fontPreviews.appendChild(card);
@@ -216,6 +236,18 @@
         }
 
         previewText.addEventListener('input', updateFontPreviews);
+
+        fontPreviews.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-font-btn')) {
+                const fontToDelete = event.target.getAttribute('data-font');
+                if (confirm(`Are you sure you want to delete the font "${fontToDelete}"?`)) {
+                    fonts = fonts.filter(font => font !== fontToDelete);
+                    storedFonts = storedFonts.filter(font => font.family !== fontToDelete);
+                    localStorage.setItem('customFonts', JSON.stringify(storedFonts));
+                    updateFontPreviews();
+                }
+            }
+        });
     </script>
 </body>
 </html>
