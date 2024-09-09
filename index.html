@@ -60,7 +60,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Artboard</span>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" title="Delete selected item" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-trash"></i></button>
+                            <button type="button" id="deleteBtn" class="btn btn-outline-secondary btn-sm" title="Delete selected item" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-trash"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item up" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-up"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item down" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-down"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Clear all items from canvas" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-x-lg"></i></button>
@@ -181,6 +181,17 @@
 
         // Retrieve stored fonts from localStorage
         var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+
+        // Function to delete selected item
+        function deleteSelectedItem() {
+            var activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.remove(activeObject);
+                canvas.renderAll();
+            } else {
+                alert('Please select an item to delete.');
+            }
+        }
 
         // Function to populate font select dropdown
         function populateFontSelect() {
@@ -369,6 +380,9 @@
             };
             img.src = dataURL;
         });
+
+        // Add event listener for delete button
+        document.getElementById('deleteBtn').addEventListener('click', deleteSelectedItem);
     </script>
 </body>
 </html>
