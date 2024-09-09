@@ -64,7 +64,7 @@
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item up" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-up"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Move selected item down" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-arrow-down"></i></button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" title="Clear all items from canvas" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-x-lg"></i></button>
-                            <button type="button" class="btn btn-outline-primary btn-sm" title="Download canvas as image" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-download"></i></button>
+                            <button type="button" id="downloadBtn" class="btn btn-outline-primary btn-sm" title="Download canvas as image" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="bi bi-download"></i></button>
                             <label class="btn btn-outline-success btn-sm" title="Upload image to canvas" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                 <i class="bi bi-image"></i>
                                 <input type="file" id="imageUpload" accept="image/png, image/jpeg" style="display: none;">
@@ -331,6 +331,43 @@
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        // Download canvas as PNG with white background
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // Get the original dimensions of the canvas
+            var originalWidth = canvas.width;
+            var originalHeight = canvas.height;
+
+            // Create a new canvas with white background
+            var tempCanvas = document.createElement('canvas');
+            var tempContext = tempCanvas.getContext('2d');
+            tempCanvas.width = originalWidth;
+            tempCanvas.height = originalHeight;
+
+            // Fill with white background
+            tempContext.fillStyle = 'white';
+            tempContext.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Draw the Fabric.js canvas content onto the new canvas
+            var dataURL = canvas.toDataURL({
+                format: 'png',
+                multiplier: 1,
+                width: originalWidth,
+                height: originalHeight
+            });
+
+            var img = new Image();
+            img.onload = function() {
+                tempContext.drawImage(img, 0, 0);
+
+                // Create download link
+                var link = document.createElement('a');
+                link.download = 'comic_strip.png';
+                link.href = tempCanvas.toDataURL('image/png');
+                link.click();
+            };
+            img.src = dataURL;
         });
     </script>
 </body>
