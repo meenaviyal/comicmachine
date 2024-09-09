@@ -99,7 +99,7 @@
                         </div>
                         <div class="row g-2 mb-3">
                             <div class="col-6">
-                                <select class="form-select form-select-sm">
+                                <select class="form-select form-select-sm" id="fontSelector">
                                     <option>Font</option>
                                 </select>
                             </div>
@@ -176,6 +176,36 @@
     <script>
         // Initialize Fabric.js canvas
         var canvas = new fabric.Canvas('comic-artboard');
+
+        // Retrieve stored fonts from localStorage
+        var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+
+        // Function to populate font select dropdown
+        function populateFontSelect() {
+            var fontSelect = document.getElementById('fontSelector');
+            fontSelect.innerHTML = '<option value="">Select Font</option>';
+            
+            // Add default fonts
+            var defaultFonts = ['Arial', 'Courier', 'Georgia'];
+            
+            defaultFonts.forEach(function(font) {
+                var option = document.createElement('option');
+                option.value = font;
+                option.textContent = font;
+                fontSelect.appendChild(option);
+            });
+
+            // Add stored custom fonts
+            storedFonts.forEach(function(font) {
+                var option = document.createElement('option');
+                option.value = font.family;
+                option.textContent = font.family;
+                fontSelect.appendChild(option);
+            });
+        }
+
+        // Call the function to populate font select
+        populateFontSelect();
 
         // Function to make canvas responsive
         function resizeCanvas() {
