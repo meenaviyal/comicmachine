@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicMachine | About</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+        <a class="navbar-brand" href="index.html">
+          <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+          ComicMachine
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="fonts.html">Fonts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">About ComicMachine</h1>
+        
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <p>ComicMachine is an open-source web application that allows users to create and edit comic strips using a variety of images and fonts. It provides a user-friendly interface for adding text, manipulating images, and managing a gallery of assets.</p>
+
+                <h2>Features</h2>
+                <ul>
+                    <li>Image gallery management</li>
+                    <li>Custom font support</li>
+                    <li>Text addition with multilingual support</li>
+                    <li>Canvas-based comic strip creation</li>
+                    <li>Export and import functionality</li>
+                </ul>
+
+                <h2>Technologies Used</h2>
+                <p>ComicMachine 2.0 runs completely in your browser without any backends and databases. The new version uses IndexedDB to store the image gallery. Special thanks to the following libraries:</p>
+                <ul>
+                    <li><a href="http://fabricjs.com/" target="_blank">Fabric.js</a> - For canvas manipulation and object management.</li>
+                    <li><a href="https://varnamproject.com/" target="_blank">Varnam Project</a> - For multi-language transliteration support.</li>
+                    <li><a href="https://smc.org.in/fonts" target="_blank">SMC Project Fonts</a> - For default set of Malayalam language fonts.</li>
+                </ul>
+
+                <h2>Contributing</h2>
+                <p>Contributions to ComicMachine are welcome! Please feel free to submit a Pull Request on our <a href="https://github.com/meenaviyal/comicmachine/" target="_blank">GitHub repository</a>.</p>
+
+                <h2>License</h2>
+                <p>This project is open source and available under the <a href="LICENSE">MIT License</a>.</p>
+
+                <h2>Acknowledgements</h2>
+                <p>Special thanks to all the developers and maintainers of the open-source libraries and tools used in this project. Your work makes projects like ComicMachine possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
