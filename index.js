@@ -236,7 +236,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('clearCanvasBtn').addEventListener('click', clearCanvas);
             
     let currentPage = 1;
-    const itemsPerPage = 6;
     let selectedCollection = '';
 
     const collectionSelect = document.getElementById('collectionSelect');
@@ -250,6 +249,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentPage = 1;
         displayGallery();
     });
+
+    // Ensure "All Collections" option exists
+    if (!collectionSelect.querySelector('option[value=""]')) {
+        const allCollectionsOption = document.createElement('option');
+        allCollectionsOption.value = '';
+        allCollectionsOption.textContent = 'All Collections';
+        collectionSelect.insertBefore(allCollectionsOption, collectionSelect.firstChild);
+    }
 
     prevPageButton.addEventListener('click', () => {
         if (currentPage > 1) {
@@ -265,6 +272,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function populateCollectionDropdown() {
         try {
+            // Clear existing options except the first one (All Collections)
+            while (collectionSelect.options.length > 1) {
+                collectionSelect.remove(1);
+            }
+
             const collectionNames = await gallery.getCollectionNames();
             collectionNames.forEach(name => {
                 const option = document.createElement('option');
@@ -273,37 +285,44 @@ document.addEventListener('DOMContentLoaded', async () => {
                 collectionSelect.appendChild(option);
             });
 
-            if (collectionNames.length > 0) {
-                selectedCollection = collectionNames[0];
-                displayGallery();
-            }
+            // Set selectedCollection to empty string (All Collections) by default
+            selectedCollection = '';
+            collectionSelect.value = '';
+            displayGallery();
         } catch (error) {
             console.error('Error fetching collection names:', error);
         }
     }
 
     async function displayGallery() {
+        console.log("display gallery");
         galleryDisplay.innerHTML = '';
         try {
-            const { results, totalPages } = await gallery.loadGallery(currentPage);
-            const filteredResults = results.filter(image => image.collectionName === selectedCollection);
+            const { results, totalPages } = await gallery.getGalleryItems(currentPage, selectedCollection);
 
-            filteredResults.forEach(image => {
-                const imgElement = document.createElement('img');
-                imgElement.src = image.imageData;
-                imgElement.alt = image.imageName;
-                imgElement.classList.add('w-full', 'h-auto', 'object-cover', 'rounded');
-                galleryDisplay.appendChild(imgElement);
-            });
+            if (results.length === 0) {
+                galleryDisplay.innerHTML = '<p>No images found.</p>';
+            } else {
+                results.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = image.imageData;
+                    imgElement.alt = image.imageName;
+                    imgElement.classList.add('w-full', 'h-auto', 'object-cover', 'rounded');
+                    galleryDisplay.appendChild(imgElement);
+                });
+            }
 
             // Update pagination controls
             currentPageSpan.textContent = `Page ${currentPage} of ${totalPages}`;
             prevPageButton.disabled = currentPage === 1;
-            nextPageButton.disabled = currentPage === totalPages;
+            nextPageButton.disabled = currentPage === totalPages || results.length < gallery.ITEMS_PER_PAGE;
         } catch (error) {
             console.error('Error displaying gallery:', error);
+            galleryDisplay.innerHTML = '<p>Error loading images. Please try again.</p>';
         }
     }
 
+    // Initial setup
     populateCollectionDropdown();
+    displayGallery();
 });

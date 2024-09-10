@@ -3,7 +3,7 @@ class Gallery {
         this.dbName = dbName;
         this.version = version;
         this.db = null;
-        this.ITEMS_PER_PAGE = 10;
+        this.ITEMS_PER_PAGE = 6;
     }
 
     async init() {
@@ -44,41 +44,32 @@ class Gallery {
         });
     }
 
-    async loadGallery(page) {
+    async getGalleryItems(page, selectedCollection) {
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(['galleries'], 'readonly');
             const objectStore = transaction.objectStore('galleries');
-            const countRequest = objectStore.count();
+            
+            const getAllRequest = objectStore.getAll();
 
-            countRequest.onsuccess = () => {
-                const totalItems = countRequest.result;
+            getAllRequest.onsuccess = () => {
+                let allItems = getAllRequest.result;
+                
+                // Filter items if a collection is selected
+                if (selectedCollection) {
+                    allItems = allItems.filter(item => item.collectionName === selectedCollection);
+                }
+
+                const totalItems = allItems.length;
                 const totalPages = Math.ceil(totalItems / this.ITEMS_PER_PAGE);
 
-                const request = objectStore.openCursor();
-                let counter = 0;
                 const start = (page - 1) * this.ITEMS_PER_PAGE;
                 const end = start + this.ITEMS_PER_PAGE;
-                const results = [];
+                const results = allItems.slice(start, end);
 
-                request.onsuccess = (event) => {
-                    const cursor = event.target.result;
-                    if (cursor) {
-                        if (counter >= start && counter < end) {
-                            results.push(cursor.value);
-                        }
-                        counter++;
-                        if (counter < end) {
-                            cursor.continue();
-                        } else {
-                            resolve({ results, totalPages, currentPage: page });
-                        }
-                    } else {
-                        resolve({ results, totalPages, currentPage: page });
-                    }
-                };
-
-                request.onerror = (event) => reject(`Error loading gallery: ${event.target.errorCode}`);
+                resolve({ results, totalPages, currentPage: page });
             };
+
+            getAllRequest.onerror = (event) => reject(`Error loading gallery: ${event.target.errorCode}`);
         });
     }
 
