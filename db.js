@@ -186,6 +186,24 @@ class Gallery {
             item.imageData.startsWith('data:image/')
         );
     }
+
+    async getCollectionNames() {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(['galleries'], 'readonly');
+            const objectStore = transaction.objectStore('galleries');
+            const request = objectStore.getAll();
+
+            request.onsuccess = (event) => {
+                const allImages = event.target.result;
+                const collectionNames = [...new Set(allImages.map(image => image.collectionName))];
+                resolve(collectionNames);
+            };
+
+            request.onerror = (event) => {
+                reject(`Error fetching collection names: ${event.target.errorCode}`);
+            };
+        });
+    }
 }
 
 export default Gallery;

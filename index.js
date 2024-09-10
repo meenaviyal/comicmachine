@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+import Gallery from './db.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const gallery = new Gallery('galleryDB', 1);
+    await gallery.init();
     // Define ScalableTextbox
     fabric.ScalableTextbox = fabric.util.createClass(fabric.Textbox, {
         type: 'scalableTextbox',
@@ -231,24 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add event listener for clear canvas button
             document.getElementById('clearCanvasBtn').addEventListener('click', clearCanvas);
             
-    const dbName = 'galleryDB';
-    const dbVersion = 1;
-    let db;
     let currentPage = 1;
     const itemsPerPage = 6;
     let selectedCollection = '';
-
-    // Open the database
-    const dbRequest = indexedDB.open(dbName, dbVersion);
-
-    dbRequest.onsuccess = (event) => {
-        db = event.target.result;
-        populateCollectionDropdown();
-    };
-
-    dbRequest.onerror = (event) => {
-        console.error('IndexedDB error:', event.target.errorCode);
-    };
 
     const collectionSelect = document.getElementById('collectionSelect');
     const galleryDisplay = document.getElementById('galleryDisplay');
@@ -274,15 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
         displayGallery();
     });
 
-    function populateCollectionDropdown() {
-        const transaction = db.transaction(['galleries'], 'readonly');
-        const objectStore = transaction.objectStore('galleries');
-        const request = objectStore.getAll();
-
-        request.onsuccess = (event) => {
-            const allImages = event.target.result;
-            const collectionNames = [...new Set(allImages.map(image => image.collectionName))];
-
+    async function populateCollectionDropdown() {
+        try {
+            const collectionNames = await gallery.getCollectionNames();
             collectionNames.forEach(name => {
                 const option = document.createElement('option');
                 option.value = name;
@@ -294,30 +277,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedCollection = collectionNames[0];
                 displayGallery();
             }
-        };
-
-        request.onerror = (event) => {
-            console.error('Error fetching collection names:', event.target.errorCode);
-        };
+        } catch (error) {
+            console.error('Error fetching collection names:', error);
+        }
     }
 
-    function displayGallery() {
+    async function displayGallery() {
         galleryDisplay.innerHTML = '';
-        const transaction = db.transaction(['galleries'], 'readonly');
-        const objectStore = transaction.objectStore('galleries');
-        const index = objectStore.index('collectionName');
-        const request = index.getAll(selectedCollection);
+        try {
+            const { results, totalPages } = await gallery.loadGallery(currentPage);
+            const filteredResults = results.filter(image => image.collectionName === selectedCollection);
 
-        request.onsuccess = (event) => {
-            const images = event.target.result;
-            const totalItems = images.length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const currentImages = images.slice(startIndex, endIndex);
-
-            currentImages.forEach(image => {
+            filteredResults.forEach(image => {
                 const imgElement = document.createElement('img');
                 imgElement.src = image.imageData;
                 imgElement.alt = image.imageName;
@@ -329,10 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPageSpan.textContent = `Page ${currentPage} of ${totalPages}`;
             prevPageButton.disabled = currentPage === 1;
             nextPageButton.disabled = currentPage === totalPages;
-        };
-
-        request.onerror = (event) => {
-            console.error('Error displaying gallery:', event.target.errorCode);
-        };
+        } catch (error) {
+            console.error('Error displaying gallery:', error);
+        }
     }
+
+    populateCollectionDropdown();
 });
