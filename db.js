@@ -23,7 +23,15 @@ class Gallery {
 
             request.onsuccess = (event) => {
                 this.db = event.target.result;
-                resolve();
+                // Check if 'galleries' object store exists
+                if (!this.db.objectStoreNames.contains('galleries')) {
+                    // If it doesn't exist, close the database and increment the version
+                    this.db.close();
+                    this.version++;
+                    this.init().then(resolve).catch(reject);
+                } else {
+                    resolve();
+                }
             };
 
             request.onerror = (event) => {
