@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const dbName = 'galleryDB';
-    const dbVersion = 1;
+import Gallery from './db.js';
 
-    // Open the database and upgrade if necessary
-    const dbRequest = indexedDB.open(dbName, dbVersion);
-    let db;
+document.addEventListener('DOMContentLoaded', async () => {
+    const gallery = new Gallery('galleryDB', 1);
+    await gallery.init();
+
+    let currentPage = 1;
 
     const exportButton = document.getElementById('exportButton');
     const importButton = document.getElementById('importButton');
@@ -14,39 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.style.display = 'none';
     document.body.appendChild(fileInput);
 
-    const ITEMS_PER_PAGE = 10;
-    let currentPage = 1;
-    let totalItems = 0;
-
-    dbRequest.onupgradeneeded = (event) => {
-        db = event.target.result;
-
-        // Check if the object store already exists, and if not, create it
-        if (!db.objectStoreNames.contains('galleries')) {
-            const objectStore = db.createObjectStore('galleries', { keyPath: 'id', autoIncrement: true });
-            objectStore.createIndex('collectionName', 'collectionName', { unique: false });
-            objectStore.createIndex('imageName', 'imageName', { unique: false });
-            objectStore.createIndex('imageTags', 'imageTags', { unique: false });
-            objectStore.createIndex('imageData', 'imageData', { unique: false });
-        }
-    };
-
-    dbRequest.onsuccess = (event) => {
-        db = event.target.result;
-        loadGallery(currentPage);
-        getCollectionNames();
-    };
-
-    dbRequest.onerror = (event) => {
-        console.error('IndexedDB error:', event.target.errorCode);
-    };
-
     const galleryForm = document.getElementById('galleryForm');
     const galleryTableBody = document.getElementById('galleryTableBody');
     const galleryModal = new bootstrap.Modal(document.getElementById('galleryModal'));
     const paginationContainer = document.getElementById('paginationContainer');
 
-    galleryForm.addEventListener('submit', (event) => {
+    loadGallery(currentPage);
+    updateCollectionSuggestions();
+
+    galleryForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const collectionName = document.getElementById('collectionName').value;
         const imageName = document.getElementById('imageName').value;
@@ -54,64 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageFile = document.getElementById('imageFile').files[0];
 
         const reader = new FileReader();
-        reader.onloadend = () => {
+        reader.onloadend = async () => {
             const imageData = reader.result;
-            addImageToGallery(collectionName, imageName, imageTags, imageData);
+            await gallery.addImage(collectionName, imageName, imageTags, imageData);
+            galleryForm.reset();
+            loadGallery(currentPage);
             galleryModal.hide();
         };
         reader.readAsDataURL(imageFile);
     });
 
-    function addImageToGallery(collectionName, imageName, imageTags, imageData) {
-        const transaction = db.transaction(['galleries'], 'readwrite');
-        const objectStore = transaction.objectStore('galleries');
-        const newImage = { collectionName, imageName, imageTags, imageData };
-        const request = objectStore.add(newImage);
-
-        request.onsuccess = () => {
-            galleryForm.reset();
-            loadGallery(currentPage);
-        };
-
-        request.onerror = (event) => {
-            console.error('Error adding image:', event.target.errorCode);
-        };
-    }
-
-    function loadGallery(page) {
+    async function loadGallery(page) {
+        const { results, totalPages } = await gallery.loadGallery(page);
         galleryTableBody.innerHTML = '';
-        const transaction = db.transaction(['galleries'], 'readonly');
-        const objectStore = transaction.objectStore('galleries');
-        const countRequest = objectStore.count();
-
-        countRequest.onsuccess = () => {
-            totalItems = countRequest.result;
-            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
-            const request = objectStore.openCursor();
-            let counter = 0;
-            const start = (page - 1) * ITEMS_PER_PAGE;
-            const end = start + ITEMS_PER_PAGE;
-
-            request.onsuccess = (event) => {
-                const cursor = event.target.result;
-                if (cursor) {
-                    if (counter >= start && counter < end) {
-                        const { id, collectionName, imageName, imageTags, imageData } = cursor.value;
-                        const row = createTableRow(id, collectionName, imageName, imageTags, imageData);
-                        galleryTableBody.appendChild(row);
-                    }
-                    counter++;
-                    if (counter < end) {
-                        cursor.continue();
-                    } else {
-                        updatePagination(page, totalPages);
-                    }
-                } else {
-                    updatePagination(page, totalPages);
-                }
-            };
-        };
+        results.forEach(item => {
+            const row = createTableRow(item.id, item.collectionName, item.imageName, item.imageTags, item.imageData);
+            galleryTableBody.appendChild(row);
+        });
+        updatePagination(page, totalPages);
     }
 
     function createTableRow(id, collectionName, imageName, imageTags, imageData) {
@@ -160,45 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    galleryTableBody.addEventListener('click', (event) => {
+    galleryTableBody.addEventListener('click', async (event) => {
         if (event.target.tagName === 'BUTTON') {
             const id = Number(event.target.dataset.id);
-            deleteImageFromGallery(id);
+            await gallery.deleteImage(id);
+            loadGallery(currentPage);
         }
     });
 
-    function deleteImageFromGallery(id) {
-        const transaction = db.transaction(['galleries'], 'readwrite');
-        const objectStore = transaction.objectStore('galleries');
-        const request = objectStore.delete(id);
-
-        request.onsuccess = () => {
-            loadGallery(currentPage);
-        };
-
-        request.onerror = (event) => {
-            console.error('Error deleting image:', event.target.errorCode);
-        };
-    }
-
-    function getCollectionNames() {
-        const transaction = db.transaction(['galleries'], 'readonly');
-        const objectStore = transaction.objectStore('galleries');
-        const request = objectStore.getAll();
-
-        request.onsuccess = (event) => {
-            const allImages = event.target.result;
-            const collectionNames = [...new Set(allImages.map(image => image.collectionName))];
-            console.log('Collection Names:', collectionNames);
-            updateCollectionSuggestions(collectionNames);
-        };
-
-        request.onerror = (event) => {
-            console.error('Error fetching collection names:', event.target.errorCode);
-        };
-    }
-
-    function updateCollectionSuggestions(collectionNames) {
+    async function updateCollectionSuggestions() {
+        const collectionNames = await gallery.getCollectionNames();
         const suggestionsContainer = document.getElementById('collectionSuggestions');
         suggestionsContainer.innerHTML = '';
         collectionNames.forEach(name => {
@@ -213,102 +120,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.getElementById('openModalButton').addEventListener('click', () => {
-        getCollectionNames();
+    document.getElementById('openModalButton').addEventListener('click', updateCollectionSuggestions);
+
+    exportButton.addEventListener('click', async () => {
+        const exportData = await gallery.exportGallery();
+        const blob = new Blob([exportData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gallery_export.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     });
 
-    exportButton.addEventListener('click', exportGallery);
     importButton.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', importGallery);
-
-    function exportGallery() {
-        const transaction = db.transaction(['galleries'], 'readonly');
-        const objectStore = transaction.objectStore('galleries');
-        const request = objectStore.getAll();
-
-        request.onsuccess = (event) => {
-            const allImages = event.target.result;
-            const exportData = JSON.stringify(allImages);
-            
-            const blob = new Blob([exportData], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'gallery_export.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        };
-
-        request.onerror = (event) => {
-            console.error('Error exporting gallery:', event.target.errorCode);
-        };
-    }
-
-    function importGallery(event) {
+    fileInput.addEventListener('change', async (event) => {
         const file = event.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
             try {
                 const importedData = JSON.parse(e.target.result);
-                if (!Array.isArray(importedData)) {
-                    throw new Error('Invalid import data format');
-                }
-
-                const transaction = db.transaction(['galleries'], 'readwrite');
-                const objectStore = transaction.objectStore('galleries');
-
-                let successCount = 0;
-                let errorCount = 0;
-
-                importedData.forEach((item) => {
-                    if (validateImportItem(item)) {
-                        const request = objectStore.add(item);
-                        request.onsuccess = () => {
-                            successCount++;
-                            if (successCount + errorCount === importedData.length) {
-                                finishImport(successCount, errorCount);
-                            }
-                        };
-                        request.onerror = () => {
-                            errorCount++;
-                            if (successCount + errorCount === importedData.length) {
-                                finishImport(successCount, errorCount);
-                            }
-                        };
-                    } else {
-                        errorCount++;
-                        if (successCount + errorCount === importedData.length) {
-                            finishImport(successCount, errorCount);
-                        }
-                    }
-                });
+                const { successCount, errorCount } = await gallery.importGallery(importedData);
+                alert(`Import completed. ${successCount} items imported successfully, ${errorCount} items failed.`);
+                loadGallery(currentPage);
+                fileInput.value = '';
             } catch (error) {
                 console.error('Error importing gallery:', error);
                 alert('Error importing gallery: ' + error.message);
             }
         };
         reader.readAsText(file);
-    }
-
-    function validateImportItem(item) {
-        return (
-            item &&
-            typeof item.collectionName === 'string' &&
-            typeof item.imageName === 'string' &&
-            typeof item.imageTags === 'string' &&
-            typeof item.imageData === 'string' &&
-            item.imageData.startsWith('data:image/')
-        );
-    }
-
-    function finishImport(successCount, errorCount) {
-        alert(`Import completed. ${successCount} items imported successfully, ${errorCount} items failed.`);
-        loadGallery(currentPage);
-        fileInput.value = '';
-    }
+    });
 });
