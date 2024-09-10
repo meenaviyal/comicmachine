@@ -19,8 +19,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize Fabric.js canvas
     var canvas = new fabric.Canvas('comic-artboard');
 
+    // Load canvas from localStorage if exists
+    const savedCanvas = localStorage.getItem('canvasState');
+    if (savedCanvas) {
+        canvas.loadFromJSON(savedCanvas, canvas.renderAll.bind(canvas));
+    }
+
     // Retrieve stored fonts from localStorage
     var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
+
+    // Function to save canvas state to localStorage
+    function saveCanvasState() {
+        localStorage.setItem('canvasState', JSON.stringify(canvas.toJSON()));
+    }
+
+    // Add event listener for canvas modifications
+    canvas.on('object:modified', saveCanvasState);
+    canvas.on('object:added', saveCanvasState);
+    canvas.on('object:removed', saveCanvasState);
     
             // Function to delete selected item
             function deleteSelectedItem() {
@@ -38,6 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (confirm('Are you sure you want to clear all items from the canvas?')) {
                     canvas.clear();
                     canvas.renderAll();
+                    localStorage.removeItem('canvasState');
                 }
             }
     
