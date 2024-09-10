@@ -19,59 +19,70 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize Fabric.js canvas
     var canvas = new fabric.Canvas('comic-artboard');
 
-    // Load canvas from localStorage if exists
-    const savedCanvas = localStorage.getItem('canvasState');
-    if (savedCanvas) {
-        canvas.loadFromJSON(savedCanvas, canvas.renderAll.bind(canvas));
-    } else {
-        // If canvas is empty, add a random image and text
-        const randomImage = await gallery.getRandomImage();
-        if (randomImage) {
-            fabric.Image.fromURL(randomImage.imageData, function(img) {
-                img.scaleToWidth(canvas.width * 0.7);
-                img.scaleToHeight(canvas.height * 0.7);
-                img.set({
-                    left: canvas.width / 2,
-                    top: canvas.height / 2,
-                    originX: 'center',
-                    originY: 'center'
-                });
-                canvas.add(img);
-                
-                // Add hello in an Indian language
-                const indianGreetings = ['नमस्ते', 'வணக்கம்', 'ನಮಸ್ಕಾರ', 'നമസ്കാരം'];
-                const randomGreeting = indianGreetings[Math.floor(Math.random() * indianGreetings.length)];
-                
-                const text = new fabric.ScalableTextbox(randomGreeting, {
-                    left: canvas.width / 2,
-                    top: 50,
-                    fontSize: 40,
-                    fontFamily: 'Arial',
-                    fill: '#000000',
-                    originX: 'center',
-                    originY: 'center',
-                    width: 200,
-                    textAlign: 'center'
-                });
-                canvas.add(text);
-                canvas.renderAll();
-                saveCanvasState();
-            });
-        }
-    }
+    // Load canvas from localStorage or initialize with random content
+    await loadCanvasState(canvas, gallery);
 
     // Retrieve stored fonts from localStorage
     var storedFonts = JSON.parse(localStorage.getItem('customFonts')) || [];
 
-    // Function to save canvas state to localStorage
+    // Function to save canvas state to localStorage as SVG
     function saveCanvasState() {
-        localStorage.setItem('canvasState', JSON.stringify(canvas.toJSON()));
+        const svg = canvas.toSVG();
+        localStorage.setItem('canvasStateSVG', svg);
+    }
+
+    // Function to load canvas state from localStorage or initialize with random content
+    async function loadCanvasState(canvas, gallery) {
+        const savedCanvasSVG = localStorage.getItem('canvasStateSVG');
+        if (savedCanvasSVG) {
+            fabric.loadSVGFromString(savedCanvasSVG, function(objects, options) {
+                canvas.clear();
+                canvas.add(...objects);
+                canvas.renderAll();
+            });
+        } else {
+            // If canvas is empty, add a random image and text
+            const randomImage = await gallery.getRandomImage();
+            if (randomImage) {
+                fabric.Image.fromURL(randomImage.imageData, function(img) {
+                    img.scaleToWidth(canvas.width * 0.7);
+                    img.scaleToHeight(canvas.height * 0.7);
+                    img.set({
+                        left: canvas.width / 2,
+                        top: canvas.height / 2,
+                        originX: 'center',
+                        originY: 'center'
+                    });
+                    canvas.add(img);
+                    
+                    // Add hello in an Indian language
+                    const indianGreetings = ['नमस्ते', 'வணக்கம்', 'ನಮಸ್ಕಾರ', 'നമസ്കാരം'];
+                    const randomGreeting = indianGreetings[Math.floor(Math.random() * indianGreetings.length)];
+                    
+                    const text = new fabric.ScalableTextbox(randomGreeting, {
+                        left: canvas.width / 2,
+                        top: 50,
+                        fontSize: 40,
+                        fontFamily: 'Arial',
+                        fill: '#000000',
+                        originX: 'center',
+                        originY: 'center',
+                        width: 200,
+                        textAlign: 'center'
+                    });
+                    canvas.add(text);
+                    canvas.renderAll();
+                    saveCanvasState();
+                });
+            }
+        }
     }
 
     // Add event listener for canvas modifications
     canvas.on('object:modified', saveCanvasState);
     canvas.on('object:added', saveCanvasState);
     canvas.on('object:removed', saveCanvasState);
+    canvas.on('text:changed', saveCanvasState);
     
             // Function to delete selected item
             function deleteSelectedItem() {
@@ -89,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (confirm('Are you sure you want to clear all items from the canvas?')) {
                     canvas.clear();
                     canvas.renderAll();
-                    localStorage.removeItem('canvasState');
+                    localStorage.removeItem('canvasStateSVG');
                 }
             }
     
