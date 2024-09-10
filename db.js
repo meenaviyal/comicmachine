@@ -3,7 +3,7 @@ class Gallery {
         this.dbName = dbName;
         this.version = version;
         this.db = null;
-        this.ITEMS_PER_PAGE = 6;
+        this.ITEMS_PER_PAGE = 12;
     }
 
     async init() {

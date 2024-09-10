@@ -324,5 +324,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initial setup
     populateCollectionDropdown();
-    displayGallery();
 });
