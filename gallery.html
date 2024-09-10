@@ -73,7 +73,12 @@
         <h1 class="text-center mb-4">Gallery Creator</h1>
         
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <button id="openModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#galleryModal">Add to Gallery</button>
+            <div>
+                <button id="openModalButton" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#galleryModal">Add to Gallery</button>
+                <select id="collectionSelect" class="form-select d-inline-block" style="width: auto;">
+                    <option value="">All Collections</option>
+                </select>
+            </div>
             <div>
                 <button id="exportButton" class="btn btn-success me-2">Export</button>
                 <button id="importButton" class="btn btn-warning">Import</button>

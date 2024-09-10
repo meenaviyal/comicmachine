@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await gallery.init();
 
     let currentPage = 1;
+    let selectedCollection = '';
 
     const exportButton = document.getElementById('exportButton');
     const importButton = document.getElementById('importButton');
@@ -18,9 +19,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const galleryTableBody = document.getElementById('galleryTableBody');
     const galleryModal = new bootstrap.Modal(document.getElementById('galleryModal'));
     const paginationContainer = document.getElementById('paginationContainer');
+    const collectionSelect = document.getElementById('collectionSelect');
 
     loadGallery(currentPage);
     updateCollectionSuggestions();
+    populateCollectionDropdown();
+
+    collectionSelect.addEventListener('change', () => {
+        selectedCollection = collectionSelect.value;
+        currentPage = 1;
+        loadGallery(currentPage);
+    });
 
     galleryForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -41,12 +50,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     async function loadGallery(page) {
-        const { results, totalPages } = await gallery.loadGallery(page);
+        const { results, totalPages } = await gallery.getGalleryItems(page, selectedCollection);
         galleryTableBody.innerHTML = '';
-        results.forEach(item => {
-            const row = createTableRow(item.id, item.collectionName, item.imageName, item.imageTags, item.imageData);
-            galleryTableBody.appendChild(row);
-        });
+        if (results.length === 0) {
+            galleryTableBody.innerHTML = '<tr><td colspan="6" class="text-center">No images found.</td></tr>';
+        } else {
+            results.forEach(item => {
+                const row = createTableRow(item.id, item.collectionName, item.imageName, item.imageTags, item.imageData);
+                galleryTableBody.appendChild(row);
+            });
+        }
         updatePagination(page, totalPages);
     }
 
@@ -121,6 +134,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     document.getElementById('openModalButton').addEventListener('click', updateCollectionSuggestions);
+
+    async function populateCollectionDropdown() {
+        try {
+            const collectionNames = await gallery.getCollectionNames();
+            collectionSelect.innerHTML = '<option value="">All Collections</option>';
+            collectionNames.forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                collectionSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching collection names:', error);
+        }
+    }
 
     exportButton.addEventListener('click', async () => {
         const exportData = await gallery.exportGallery();
