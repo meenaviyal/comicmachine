@@ -177,6 +177,26 @@ class Gallery {
             item.imageData.startsWith('data:image/')
         );
     }
+
+    async getRandomImage() {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(['galleries'], 'readonly');
+            const objectStore = transaction.objectStore('galleries');
+            const request = objectStore.getAll();
+
+            request.onsuccess = (event) => {
+                const allImages = event.target.result;
+                if (allImages.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * allImages.length);
+                    resolve(allImages[randomIndex]);
+                } else {
+                    resolve(null);
+                }
+            };
+
+            request.onerror = (event) => reject(`Error fetching random image: ${event.target.errorCode}`);
+        });
+    }
 }
 
 export default Gallery;

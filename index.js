@@ -23,6 +23,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     const savedCanvas = localStorage.getItem('canvasState');
     if (savedCanvas) {
         canvas.loadFromJSON(savedCanvas, canvas.renderAll.bind(canvas));
+    } else {
+        // If canvas is empty, add a random image and text
+        const randomImage = await gallery.getRandomImage();
+        if (randomImage) {
+            fabric.Image.fromURL(randomImage.imageData, function(img) {
+                img.scaleToWidth(canvas.width * 0.7);
+                img.scaleToHeight(canvas.height * 0.7);
+                img.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                canvas.add(img);
+                
+                // Add hello in an Indian language
+                const indianGreetings = ['नमस्ते', 'வணக்கம்', 'ನಮಸ್ಕಾರ', 'നമസ്കാരം'];
+                const randomGreeting = indianGreetings[Math.floor(Math.random() * indianGreetings.length)];
+                
+                const text = new fabric.ScalableTextbox(randomGreeting, {
+                    left: canvas.width / 2,
+                    top: 50,
+                    fontSize: 40,
+                    fontFamily: 'Arial',
+                    fill: '#000000',
+                    originX: 'center',
+                    originY: 'center',
+                    width: 200,
+                    textAlign: 'center'
+                });
+                canvas.add(text);
+                canvas.renderAll();
+                saveCanvasState();
+            });
+        }
     }
 
     // Retrieve stored fonts from localStorage
