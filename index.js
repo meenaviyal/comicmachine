@@ -1,8 +1,18 @@
 import Gallery from './db.js';
+import AutoImport from './autoImport.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const gallery = new Gallery('galleryDB', 1);
     await gallery.init();
+    
+    // Auto-import orion collection if it doesn't exist
+    const autoImport = new AutoImport();
+    await autoImport.init(gallery);
+    try {
+        await autoImport.autoImportOrion();
+    } catch (error) {
+        console.error('Auto-import failed, but continuing with application startup:', error);
+    }
     // Define ScalableTextbox
     fabric.ScalableTextbox = fabric.util.createClass(fabric.Textbox, {
         type: 'scalableTextbox',
